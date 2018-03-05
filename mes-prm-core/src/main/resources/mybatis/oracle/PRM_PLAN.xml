@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yonyou.mes.er.core.inspectionplan.repository.InspectionPlanHeadMapper">
+    <resultMap id="BaseResultMap" type="com.yonyou.mes.er.core.inspectionplan.entity.InspectionPlanHeadVO">
+		<id column="ID" property="id"/>
+		<result column="PK_DEPT" property="pk_dept"/>
+		<result column="PK_DEPT_NAME" property="pk_dept_name"/>
+		<result column="CODE" property="code"/>
+		<result column="NAME" property="name"/>
+		<result column="PK_REGION" property="pk_region"/>
+		<result column="PK_REGION_NAME" property="pk_region_name"/>
+		<result column="ENABLESTATE" property="enablestate"/>
+		<result column="TENANTID" property="tenantid"/>
+		<result column="SYSID" property="sysid"/>
+		<result column="ORGID" property="orgid"/>
+		<result column="ORGID_NAME" property="orgid_name"/>
+		<result column="TS" property="ts"/>
+		<result column="DR" property="dr"/>
+		<result column="CREATOR" property="creator"/>
+		<result column="CREATIONTIME" property="creationtime"/>
+		<result column="MODIFIER" property="modifier"/>
+		<result column="MODIFIEDTIME" property="modifiedtime"/>
+		<result column="CREATOR_NAME" property="creator_name"/>
+		<result column="MODIFIER_NAME" property="modifier_name"/>
+		<result column="PK_POST" property="pk_post"/>
+		<result column="PK_POST_NAME" property="pk_post_name"/>
+		<result column="CYCLE" property="cycle"/>
+		<result column="ROUTEFLAG" property="routeflag"/>
+		<result column="IVERSION" property="iversion"/>
+		<result column="VNOTE" property="vnote"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+		PK_DEPT,PK_DEPT_NAME,CODE,NAME,PK_REGION,PK_REGION_NAME,ENABLESTATE,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,PK_POST,PK_POST_NAME,CYCLE,ROUTEFLAG,IVERSION,VNOTE
+	</sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from PRM_PLAN
+		where ID = #{id}
+	</select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		update PRM_PLAN 
+		set dr = 1
+		where ID = #{id}
+	</delete>
+    <delete id="batchDeleteByPrimaryKey" parameterType="java.util.List">
+		update PRM_PLAN 
+		set dr = 1
+		where
+		ID in
+		<foreach collection="list" item="item" index="index"
+			separator="," open="(" close=")">
+		#{item}
+		</foreach>
+	</delete>
+
+    <insert id="insert" parameterType="com.yonyou.mes.er.core.inspectionplan.entity.InspectionPlanHeadVO">
+		insert into PRM_PLAN (
+		PK_DEPT,PK_DEPT_NAME,CODE,NAME,PK_REGION,PK_REGION_NAME,ENABLESTATE,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,PK_POST,PK_POST_NAME,CYCLE,ROUTEFLAG,IVERSION,VNOTE
+		)
+		values (
+		#{pk_dept,jdbcType=VARCHAR},
+		#{pk_dept_name,jdbcType=VARCHAR},
+		#{code,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{pk_region,jdbcType=VARCHAR},
+		#{pk_region_name,jdbcType=VARCHAR},
+		#{enablestate,jdbcType=INTEGER},
+		#{id,jdbcType=VARCHAR},
+		#{tenantid,jdbcType=VARCHAR},
+		#{sysid,jdbcType=VARCHAR},
+		#{orgid,jdbcType=VARCHAR},
+		#{orgid_name,jdbcType=VARCHAR},
+		#{ts,jdbcType=TIMESTAMP},
+		#{dr,jdbcType=INTEGER},
+		#{creator,jdbcType=VARCHAR},
+		#{creationtime,jdbcType=TIMESTAMP},
+		#{modifier,jdbcType=VARCHAR},
+		#{modifiedtime,jdbcType=TIMESTAMP},
+		#{creator_name,jdbcType=VARCHAR},
+		#{modifier_name,jdbcType=VARCHAR},
+		#{pk_post,jdbcType=VARCHAR},
+		#{pk_post_name,jdbcType=VARCHAR},
+		#{cycle,jdbcType=DECIMAL},
+		#{routeflag,jdbcType=VARCHAR},
+		#{iversion,jdbcType=VARCHAR},
+		#{vnote,jdbcType=VARCHAR}
+		)
+	</insert>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+		insert into PRM_PLAN (
+		PK_DEPT,PK_DEPT_NAME,CODE,NAME,PK_REGION,PK_REGION_NAME,ENABLESTATE,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,PK_POST,PK_POST_NAME,CYCLE,ROUTEFLAG,IVERSION,VNOTE
+		)
+		<foreach collection="list" item="item" index="index" separator="union" open="(" close=")">
+		select
+		#{item.pk_dept,jdbcType=VARCHAR},
+		#{item.pk_dept_name,jdbcType=VARCHAR},
+		#{item.code,jdbcType=VARCHAR},
+		#{item.name,jdbcType=VARCHAR},
+		#{item.pk_region,jdbcType=VARCHAR},
+		#{item.pk_region_name,jdbcType=VARCHAR},
+		#{item.enablestate,jdbcType=INTEGER},
+		#{item.id,jdbcType=VARCHAR},
+		#{item.tenantid,jdbcType=VARCHAR},
+		#{item.sysid,jdbcType=VARCHAR},
+		#{item.orgid,jdbcType=VARCHAR},
+		#{item.orgid_name,jdbcType=VARCHAR},
+		#{item.ts,jdbcType=TIMESTAMP},
+		#{item.dr,jdbcType=INTEGER},
+		#{item.creator,jdbcType=VARCHAR},
+		#{item.creationtime,jdbcType=TIMESTAMP},
+		#{item.modifier,jdbcType=VARCHAR},
+		#{item.modifiedtime,jdbcType=TIMESTAMP},
+		#{item.creator_name,jdbcType=VARCHAR},
+		#{item.modifier_name,jdbcType=VARCHAR},
+		#{item.pk_post,jdbcType=VARCHAR},
+		#{item.pk_post_name,jdbcType=VARCHAR},
+		#{item.cycle,jdbcType=DECIMAL},
+		#{item.routeflag,jdbcType=VARCHAR},
+		#{item.iversion,jdbcType=VARCHAR},
+		#{item.vnote,jdbcType=VARCHAR}
+		from dual
+		</foreach>
+	</insert>
+    <insert id="insertSelective" parameterType="com.yonyou.mes.er.core.inspectionplan.entity.InspectionPlanHeadVO">
+		insert into PRM_PLAN
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="pk_dept != null">
+				PK_DEPT,
+			</if>
+			<if test="pk_dept_name != null">
+				PK_DEPT_NAME,
+			</if>
+			<if test="code != null">
+				CODE,
+			</if>
+			<if test="name != null">
+				NAME,
+			</if>
+			<if test="pk_region != null">
+				PK_REGION,
+			</if>
+			<if test="pk_region_name != null">
+				PK_REGION_NAME,
+			</if>
+			<if test="enablestate != null">
+				ENABLESTATE,
+			</if>
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="tenantid != null">
+				TENANTID,
+			</if>
+			<if test="sysid != null">
+				SYSID,
+			</if>
+			<if test="orgid != null">
+				ORGID,
+			</if>
+			<if test="orgid_name != null">
+				ORGID_NAME,
+			</if>
+			<if test="ts != null">
+				TS,
+			</if>
+			<if test="dr != null">
+				DR,
+			</if>
+			<if test="creator != null">
+				CREATOR,
+			</if>
+			<if test="creationtime != null">
+				CREATIONTIME,
+			</if>
+			<if test="modifier != null">
+				MODIFIER,
+			</if>
+			<if test="modifiedtime != null">
+				MODIFIEDTIME,
+			</if>
+			<if test="creator_name != null">
+				CREATOR_NAME,
+			</if>
+			<if test="modifier_name != null">
+				MODIFIER_NAME,
+			</if>
+			<if test="pk_post != null">
+				PK_POST,
+			</if>
+			<if test="pk_post_name != null">
+				PK_POST_NAME,
+			</if>
+			<if test="cycle != null">
+				CYCLE,
+			</if>
+			<if test="routeflag != null">
+				ROUTEFLAG,
+			</if>
+			<if test="iversion != null">
+				IVERSION,
+			</if>
+			<if test="vnote != null">
+				VNOTE,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="pk_dept != null">
+				#{pk_dept,jdbcType=VARCHAR},
+			</if>
+			<if test="pk_dept_name != null">
+				#{pk_dept_name,jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				#{code,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="pk_region != null">
+				#{pk_region,jdbcType=VARCHAR},
+			</if>
+			<if test="pk_region_name != null">
+				#{pk_region_name,jdbcType=VARCHAR},
+			</if>
+			<if test="enablestate != null">
+				#{enablestate,jdbcType=INTEGER},
+			</if>
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="tenantid != null">
+				#{tenantid,jdbcType=VARCHAR},
+			</if>
+			<if test="sysid != null">
+				#{sysid,jdbcType=VARCHAR},
+			</if>
+			<if test="orgid != null">
+				#{orgid,jdbcType=VARCHAR},
+			</if>
+			<if test="orgid_name != null">
+				#{orgid_name,jdbcType=VARCHAR},
+			</if>
+			<if test="ts != null">
+				#{ts,jdbcType=TIMESTAMP},
+			</if>
+			<if test="dr != null">
+				#{dr,jdbcType=INTEGER},
+			</if>
+			<if test="creator != null">
+				#{creator,jdbcType=VARCHAR},
+			</if>
+			<if test="creationtime != null">
+				#{creationtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifier != null">
+				#{modifier,jdbcType=VARCHAR},
+			</if>
+			<if test="modifiedtime != null">
+				#{modifiedtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creator_name != null">
+				#{creator_name,jdbcType=VARCHAR},
+			</if>
+			<if test="modifier_name != null">
+				#{modifier_name,jdbcType=VARCHAR},
+			</if>
+			<if test="pk_post != null">
+				#{pk_post,jdbcType=VARCHAR},
+			</if>
+			<if test="pk_post_name != null">
+				#{pk_post_name,jdbcType=VARCHAR},
+			</if>
+			<if test="cycle != null">
+				#{cycle,jdbcType=DECIMAL},
+			</if>
+			<if test="routeflag != null">
+				#{routeflag,jdbcType=VARCHAR},
+			</if>
+			<if test="iversion != null">
+				#{iversion,jdbcType=VARCHAR},
+			</if>
+			<if test="vnote != null">
+				#{vnote,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yonyou.mes.er.core.inspectionplan.entity.InspectionPlanHeadVO">
+		update PRM_PLAN
+		<set>
+			<if test="pk_dept != null">
+				PK_DEPT = #{pk_dept,jdbcType=VARCHAR},
+			</if>
+			<if test="pk_dept_name != null">
+				PK_DEPT_NAME = #{pk_dept_name,jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				CODE = #{code,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				NAME = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="pk_region != null">
+				PK_REGION = #{pk_region,jdbcType=VARCHAR},
+			</if>
+			<if test="pk_region_name != null">
+				PK_REGION_NAME = #{pk_region_name,jdbcType=VARCHAR},
+			</if>
+			<if test="enablestate != null">
+				ENABLESTATE = #{enablestate,jdbcType=INTEGER},
+			</if>
+			<if test="id != null">
+				ID = #{id,jdbcType=VARCHAR},
+			</if>
+			<if test="tenantid != null">
+				TENANTID = #{tenantid,jdbcType=VARCHAR},
+			</if>
+			<if test="sysid != null">
+				SYSID = #{sysid,jdbcType=VARCHAR},
+			</if>
+			<if test="orgid != null">
+				ORGID = #{orgid,jdbcType=VARCHAR},
+			</if>
+			<if test="orgid_name != null">
+				ORGID_NAME = #{orgid_name,jdbcType=VARCHAR},
+			</if>
+			<if test="ts != null">
+				TS = #{ts,jdbcType=TIMESTAMP},
+			</if>
+			<if test="dr != null">
+				DR = #{dr,jdbcType=INTEGER},
+			</if>
+			<if test="creator != null">
+				CREATOR = #{creator,jdbcType=VARCHAR},
+			</if>
+			<if test="creationtime != null">
+				CREATIONTIME = #{creationtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifier != null">
+				MODIFIER = #{modifier,jdbcType=VARCHAR},
+			</if>
+			<if test="modifiedtime != null">
+				MODIFIEDTIME = #{modifiedtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creator_name != null">
+				CREATOR_NAME = #{creator_name,jdbcType=VARCHAR},
+			</if>
+			<if test="modifier_name != null">
+				MODIFIER_NAME = #{modifier_name,jdbcType=VARCHAR},
+			</if>
+			<if test="pk_post != null">
+				PK_POST = #{pk_post,jdbcType=VARCHAR},
+			</if>
+			<if test="pk_post_name != null">
+				PK_POST_NAME = #{pk_post_name,jdbcType=VARCHAR},
+			</if>
+			<if test="cycle != null">
+				CYCLE = #{cycle,jdbcType=DECIMAL},
+			</if>
+			<if test="routeflag != null">
+				ROUTEFLAG = #{routeflag,jdbcType=VARCHAR},
+			</if>
+			<if test="iversion != null">
+				IVERSION = #{iversion,jdbcType=VARCHAR},
+			</if>
+			<if test="vnote != null">
+				VNOTE = #{vnote,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where ID = #{id} 
+		<!--and ts = #ts-->
+	</update>
+    <update id="updateByPrimaryKey" parameterType="com.yonyou.mes.er.core.inspectionplan.entity.InspectionPlanHeadVO">
+		update PRM_PLAN
+		set
+				PK_DEPT = #{pk_dept,jdbcType=VARCHAR},
+				PK_DEPT_NAME = #{pk_dept_name,jdbcType=VARCHAR},
+				CODE = #{code,jdbcType=VARCHAR},
+				NAME = #{name,jdbcType=VARCHAR},
+				PK_REGION = #{pk_region,jdbcType=VARCHAR},
+				PK_REGION_NAME = #{pk_region_name,jdbcType=VARCHAR},
+				ENABLESTATE = #{enablestate,jdbcType=INTEGER},
+				TENANTID = #{tenantid,jdbcType=VARCHAR},
+				SYSID = #{sysid,jdbcType=VARCHAR},
+				ORGID = #{orgid,jdbcType=VARCHAR},
+				ORGID_NAME = #{orgid_name,jdbcType=VARCHAR},
+				TS = #{ts,jdbcType=TIMESTAMP},
+				MODIFIER = #{modifier,jdbcType=VARCHAR},
+				MODIFIEDTIME = #{modifiedtime,jdbcType=TIMESTAMP},
+				MODIFIER_NAME = #{modifier_name,jdbcType=VARCHAR},
+				PK_POST = #{pk_post,jdbcType=VARCHAR},
+				PK_POST_NAME = #{pk_post_name,jdbcType=VARCHAR},
+				CYCLE = #{cycle,jdbcType=DECIMAL},
+				ROUTEFLAG = #{routeflag,jdbcType=VARCHAR},
+				IVERSION = #{iversion,jdbcType=VARCHAR},
+				VNOTE = #{vnote,jdbcType=VARCHAR}
+		where ID = #{id}
+		<!-- and ts = #ts-->
+	</update>
+
+    <update id="batchUpdate" parameterType="java.util.List">
+    	begin
+		<foreach collection="list" item="item" index="index" open=""
+			close="" separator=";">
+			update PRM_PLAN
+			<set>
+				PK_DEPT = #{item.pk_dept,jdbcType=VARCHAR},
+				PK_DEPT_NAME = #{item.pk_dept_name,jdbcType=VARCHAR},
+				CODE = #{item.code,jdbcType=VARCHAR},
+				NAME = #{item.name,jdbcType=VARCHAR},
+				PK_REGION = #{item.pk_region,jdbcType=VARCHAR},
+				PK_REGION_NAME = #{item.pk_region_name,jdbcType=VARCHAR},
+				ENABLESTATE = #{item.enablestate,jdbcType=INTEGER},
+				TENANTID = #{item.tenantid,jdbcType=VARCHAR},
+				SYSID = #{item.sysid,jdbcType=VARCHAR},
+				ORGID = #{item.orgid,jdbcType=VARCHAR},
+				ORGID_NAME = #{item.orgid_name,jdbcType=VARCHAR},
+				TS = #{item.ts,jdbcType=TIMESTAMP},
+				DR = #{item.dr,jdbcType=INTEGER},
+				CREATOR = #{item.creator,jdbcType=VARCHAR},
+				CREATIONTIME = #{item.creationtime,jdbcType=TIMESTAMP},
+				MODIFIER = #{item.modifier,jdbcType=VARCHAR},
+				MODIFIEDTIME = #{item.modifiedtime,jdbcType=TIMESTAMP},
+				CREATOR_NAME = #{item.creator_name,jdbcType=VARCHAR},
+				MODIFIER_NAME = #{item.modifier_name,jdbcType=VARCHAR},
+				PK_POST = #{item.pk_post,jdbcType=VARCHAR},
+				PK_POST_NAME = #{item.pk_post_name,jdbcType=VARCHAR},
+				CYCLE = #{item.cycle,jdbcType=DECIMAL},
+				ROUTEFLAG = #{item.routeflag,jdbcType=VARCHAR},
+				IVERSION = #{item.iversion,jdbcType=VARCHAR},
+				VNOTE = #{item.vnote,jdbcType=VARCHAR}
+			</set>
+			where ID = #{item.id} 
+		</foreach>
+		;end;
+	</update>
+
+
+	<select id="selectAllByPage" resultMap="BaseResultMap"
+		resultType="java.util.List">
+		SELECT
+		<include refid="Base_Column_List" />
+		from PRM_PLAN where DR=0
+		<if test="search != null">
+        </if>
+    </select>
+
+	<select id="selectByIDs" resultMap="BaseResultMap"
+		parameterType="java.util.List">
+		select
+		<include refid="Base_Column_List" />
+		from PRM_PLAN
+		where ID in
+		<foreach collection="list" item="item" index="index"
+			separator="," open="(" close=")">
+		#{item}
+		</foreach>
+	</select>
+</mapper>

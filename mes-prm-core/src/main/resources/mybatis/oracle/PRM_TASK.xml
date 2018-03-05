@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yonyou.mes.prm.core.inspectiontask.repository.TaskHeadMapper">
+    <resultMap id="BaseResultMap" type="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskHeadVO">
+		<id column="ID" property="id"/>
+		<result column="TASK_NO" property="task_no"/>
+		<result column="POSTID" property="postid"/>
+		<result column="POSTID_NAME" property="postid_name"/>
+		<result column="PLANID" property="planid"/>
+		<result column="PLANID_NAME" property="planid_name"/>
+		<result column="BILLSTATUS" property="billstatus"/>
+		<result column="TENANTID" property="tenantid"/>
+		<result column="SYSID" property="sysid"/>
+		<result column="ORGID" property="orgid"/>
+		<result column="ORGID_NAME" property="orgid_name"/>
+		<result column="TS" property="ts"/>
+		<result column="DR" property="dr"/>
+		<result column="CREATOR" property="creator"/>
+		<result column="CREATIONTIME" property="creationtime"/>
+		<result column="MODIFIER" property="modifier"/>
+		<result column="MODIFIEDTIME" property="modifiedtime"/>
+		<result column="CREATOR_NAME" property="creator_name"/>
+		<result column="MODIFIER_NAME" property="modifier_name"/>
+		<result column="ASSIGN_TIME" property="assign_time"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME
+	</sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from PRM_TASK
+		where ID = #{id}
+	</select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		update  PRM_TASK
+		set DR = 1
+		where ID = #{id}
+	</delete>
+    <delete id="batchDeleteByPrimaryKey" parameterType="java.util.List">
+		update  PRM_TASK
+		set DR = 1
+		where
+		ID in
+		<foreach collection="list" item="item" index="index"
+			separator="," open="(" close=")">
+		#{item.ID}
+		</foreach>
+	</delete>
+
+    <insert id="insert" parameterType="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskHeadVO">
+		insert into PRM_TASK (
+		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME
+		)
+		values (
+		#{task_no,jdbcType=VARCHAR},
+		#{postid,jdbcType=VARCHAR},
+		#{postid_name,jdbcType=VARCHAR},
+		#{planid,jdbcType=VARCHAR},
+		#{planid_name,jdbcType=VARCHAR},
+		#{billstatus,jdbcType=INTEGER},
+		#{id,jdbcType=VARCHAR},
+		#{tenantid,jdbcType=VARCHAR},
+		#{sysid,jdbcType=VARCHAR},
+		#{orgid,jdbcType=VARCHAR},
+		#{orgid_name,jdbcType=VARCHAR},
+		#{ts,jdbcType=TIMESTAMP},
+		#{dr,jdbcType=INTEGER},
+		#{creator,jdbcType=VARCHAR},
+		#{creationtime,jdbcType=TIMESTAMP},
+		#{modifier,jdbcType=VARCHAR},
+		#{modifiedtime,jdbcType=TIMESTAMP},
+		#{creator_name,jdbcType=VARCHAR},
+		#{modifier_name,jdbcType=VARCHAR},
+		#{assign_time,jdbcType=TIMESTAMP}
+		)
+	</insert>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+		insert into PRM_TASK (
+		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME
+		)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(
+		#{item.task_no,jdbcType=VARCHAR},
+		#{item.postid,jdbcType=VARCHAR},
+		#{item.postid_name,jdbcType=VARCHAR},
+		#{item.planid,jdbcType=VARCHAR},
+		#{item.planid_name,jdbcType=VARCHAR},
+		#{item.billstatus,jdbcType=INTEGER},
+		#{item.id,jdbcType=VARCHAR},
+		#{item.tenantid,jdbcType=VARCHAR},
+		#{item.sysid,jdbcType=VARCHAR},
+		#{item.orgid,jdbcType=VARCHAR},
+		#{item.orgid_name,jdbcType=VARCHAR},
+		#{item.ts,jdbcType=TIMESTAMP},
+		#{item.dr,jdbcType=INTEGER},
+		#{item.creator,jdbcType=VARCHAR},
+		#{item.creationtime,jdbcType=TIMESTAMP},
+		#{item.modifier,jdbcType=VARCHAR},
+		#{item.modifiedtime,jdbcType=TIMESTAMP},
+		#{item.creator_name,jdbcType=VARCHAR},
+		#{item.modifier_name,jdbcType=VARCHAR},
+		#{item.assign_time,jdbcType=TIMESTAMP}
+			)
+		</foreach>
+	</insert>
+    <insert id="insertSelective" parameterType="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskHeadVO">
+		insert into PRM_TASK
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="task_no != null">
+				TASK_NO,
+			</if>
+			<if test="postid != null">
+				POSTID,
+			</if>
+			<if test="postid_name != null">
+				POSTID_NAME,
+			</if>
+			<if test="planid != null">
+				PLANID,
+			</if>
+			<if test="planid_name != null">
+				PLANID_NAME,
+			</if>
+			<if test="billstatus != null">
+				BILLSTATUS,
+			</if>
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="tenantid != null">
+				TENANTID,
+			</if>
+			<if test="sysid != null">
+				SYSID,
+			</if>
+			<if test="orgid != null">
+				ORGID,
+			</if>
+			<if test="orgid_name != null">
+				ORGID_NAME,
+			</if>
+			<if test="ts != null">
+				TS,
+			</if>
+			<if test="dr != null">
+				DR,
+			</if>
+			<if test="creator != null">
+				CREATOR,
+			</if>
+			<if test="creationtime != null">
+				CREATIONTIME,
+			</if>
+			<if test="modifier != null">
+				MODIFIER,
+			</if>
+			<if test="modifiedtime != null">
+				MODIFIEDTIME,
+			</if>
+			<if test="creator_name != null">
+				CREATOR_NAME,
+			</if>
+			<if test="modifier_name != null">
+				MODIFIER_NAME,
+			</if>
+			<if test="assign_time != null">
+				ASSIGN_TIME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="task_no != null">
+				#{task_no,jdbcType=VARCHAR},
+			</if>
+			<if test="postid != null">
+				#{postid,jdbcType=VARCHAR},
+			</if>
+			<if test="postid_name != null">
+				#{postid_name,jdbcType=VARCHAR},
+			</if>
+			<if test="planid != null">
+				#{planid,jdbcType=VARCHAR},
+			</if>
+			<if test="planid_name != null">
+				#{planid_name,jdbcType=VARCHAR},
+			</if>
+			<if test="billstatus != null">
+				#{billstatus,jdbcType=INTEGER},
+			</if>
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="tenantid != null">
+				#{tenantid,jdbcType=VARCHAR},
+			</if>
+			<if test="sysid != null">
+				#{sysid,jdbcType=VARCHAR},
+			</if>
+			<if test="orgid != null">
+				#{orgid,jdbcType=VARCHAR},
+			</if>
+			<if test="orgid_name != null">
+				#{orgid_name,jdbcType=VARCHAR},
+			</if>
+			<if test="ts != null">
+				#{ts,jdbcType=TIMESTAMP},
+			</if>
+			<if test="dr != null">
+				#{dr,jdbcType=INTEGER},
+			</if>
+			<if test="creator != null">
+				#{creator,jdbcType=VARCHAR},
+			</if>
+			<if test="creationtime != null">
+				#{creationtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifier != null">
+				#{modifier,jdbcType=VARCHAR},
+			</if>
+			<if test="modifiedtime != null">
+				#{modifiedtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creator_name != null">
+				#{creator_name,jdbcType=VARCHAR},
+			</if>
+			<if test="modifier_name != null">
+				#{modifier_name,jdbcType=VARCHAR},
+			</if>
+			<if test="assign_time != null">
+				#{assign_time,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskHeadVO">
+		update PRM_TASK
+		<set>
+			<if test="task_no != null">
+				TASK_NO = #{task_no,jdbcType=VARCHAR},
+			</if>
+			<if test="postid != null">
+				POSTID = #{postid,jdbcType=VARCHAR},
+			</if>
+			<if test="postid_name != null">
+				POSTID_NAME = #{postid_name,jdbcType=VARCHAR},
+			</if>
+			<if test="planid != null">
+				PLANID = #{planid,jdbcType=VARCHAR},
+			</if>
+			<if test="planid_name != null">
+				PLANID_NAME = #{planid_name,jdbcType=VARCHAR},
+			</if>
+			<if test="billstatus != null">
+				BILLSTATUS = #{billstatus,jdbcType=INTEGER},
+			</if>
+			<if test="id != null">
+				ID = #{id,jdbcType=VARCHAR},
+			</if>
+			<if test="tenantid != null">
+				TENANTID = #{tenantid,jdbcType=VARCHAR},
+			</if>
+			<if test="sysid != null">
+				SYSID = #{sysid,jdbcType=VARCHAR},
+			</if>
+			<if test="orgid != null">
+				ORGID = #{orgid,jdbcType=VARCHAR},
+			</if>
+			<if test="orgid_name != null">
+				ORGID_NAME = #{orgid_name,jdbcType=VARCHAR},
+			</if>
+			<if test="ts != null">
+				TS = #{ts,jdbcType=TIMESTAMP},
+			</if>
+			<if test="dr != null">
+				DR = #{dr,jdbcType=INTEGER},
+			</if>
+			<if test="creator != null">
+				CREATOR = #{creator,jdbcType=VARCHAR},
+			</if>
+			<if test="creationtime != null">
+				CREATIONTIME = #{creationtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifier != null">
+				MODIFIER = #{modifier,jdbcType=VARCHAR},
+			</if>
+			<if test="modifiedtime != null">
+				MODIFIEDTIME = #{modifiedtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creator_name != null">
+				CREATOR_NAME = #{creator_name,jdbcType=VARCHAR},
+			</if>
+			<if test="modifier_name != null">
+				MODIFIER_NAME = #{modifier_name,jdbcType=VARCHAR},
+			</if>
+			<if test="assign_time != null">
+				ASSIGN_TIME = #{assign_time,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where ID = #{id} 
+		<!--and ts = #ts-->
+	</update>
+    <update id="updateByPrimaryKey" parameterType="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskHeadVO">
+		update PRM_TASK
+		set
+				TASK_NO = #{task_no,jdbcType=VARCHAR},
+				POSTID = #{postid,jdbcType=VARCHAR},
+				POSTID_NAME = #{postid_name,jdbcType=VARCHAR},
+				PLANID = #{planid,jdbcType=VARCHAR},
+				PLANID_NAME = #{planid_name,jdbcType=VARCHAR},
+				BILLSTATUS = #{billstatus,jdbcType=INTEGER},
+				TENANTID = #{tenantid,jdbcType=VARCHAR},
+				SYSID = #{sysid,jdbcType=VARCHAR},
+				ORGID = #{orgid,jdbcType=VARCHAR},
+				ORGID_NAME = #{orgid_name,jdbcType=VARCHAR},
+				TS = #{ts,jdbcType=TIMESTAMP},
+				DR = #{dr,jdbcType=INTEGER},
+				CREATOR = #{creator,jdbcType=VARCHAR},
+				CREATIONTIME = #{creationtime,jdbcType=TIMESTAMP},
+				MODIFIER = #{modifier,jdbcType=VARCHAR},
+				MODIFIEDTIME = #{modifiedtime,jdbcType=TIMESTAMP},
+				CREATOR_NAME = #{creator_name,jdbcType=VARCHAR},
+				MODIFIER_NAME = #{modifier_name,jdbcType=VARCHAR},
+				ASSIGN_TIME = #{assign_time,jdbcType=TIMESTAMP}
+		where ID = #{id}
+		<!-- and ts = #ts-->
+	</update>
+
+    <update id="batchUpdate" parameterType="java.util.List">
+    	begin
+		<foreach collection="list" item="item" index="index" open=""
+			close="" separator=";">
+			update PRM_TASK
+			<set>
+				TASK_NO = #{item.task_no,jdbcType=VARCHAR},
+				POSTID = #{item.postid,jdbcType=VARCHAR},
+				POSTID_NAME = #{item.postid_name,jdbcType=VARCHAR},
+				PLANID = #{item.planid,jdbcType=VARCHAR},
+				PLANID_NAME = #{item.planid_name,jdbcType=VARCHAR},
+				BILLSTATUS = #{item.billstatus,jdbcType=INTEGER},
+				TENANTID = #{item.tenantid,jdbcType=VARCHAR},
+				SYSID = #{item.sysid,jdbcType=VARCHAR},
+				ORGID = #{item.orgid,jdbcType=VARCHAR},
+				ORGID_NAME = #{item.orgid_name,jdbcType=VARCHAR},
+				TS = #{item.ts,jdbcType=TIMESTAMP},
+				DR = #{item.dr,jdbcType=INTEGER},
+				CREATOR = #{item.creator,jdbcType=VARCHAR},
+				CREATIONTIME = #{item.creationtime,jdbcType=TIMESTAMP},
+				MODIFIER = #{item.modifier,jdbcType=VARCHAR},
+				MODIFIEDTIME = #{item.modifiedtime,jdbcType=TIMESTAMP},
+				CREATOR_NAME = #{item.creator_name,jdbcType=VARCHAR},
+				MODIFIER_NAME = #{item.modifier_name,jdbcType=VARCHAR},
+				ASSIGN_TIME = #{item.assign_time,jdbcType=TIMESTAMP}
+			</set>
+			where ID = #{item.id} 
+		</foreach>
+		;end;
+	</update>
+
+
+<select id="selectAllByPage" resultMap="BaseResultMap"
+		resultType="java.util.List">
+		SELECT
+		<include refid="Base_Column_List" />
+		from PRM_TASK where 1=1
+		<if test="search != null">
+        </if>
+    </select>
+	<select id="selectByIDs" resultMap="BaseResultMap"
+		parameterType="java.util.List">
+		select
+		<include refid="Base_Column_List" />
+		from PRM_TASK
+		where ID in
+		<foreach collection="list" item="item" index="index"
+			separator="," open="(" close=")">
+		#{item}
+		</foreach>
+	</select>
+</mapper>

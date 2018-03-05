@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yonyou.mes.er.core.temptask.repository.TempTaskHeadMapper">
+    <resultMap id="BaseResultMap" type="com.yonyou.mes.er.core.temptask.entity.TempTaskHeadVO">
+		<id column="ID" property="id"/>
+		<result column="CDEPTID" property="cdeptid"/>
+		<result column="VDEPTNAME" property="vdeptname"/>
+		<result column="CQCPROJECTID" property="cqcprojectid"/>
+		<result column="VQCPROJECTCODE" property="vqcprojectcode"/>
+		<result column="VQCPROJECTNAME" property="vqcprojectname"/>
+		<result column="CSTATIONID" property="cstationid"/>
+		<result column="VSTATIONNAME" property="vstationname"/>
+		<result column="TQCTIME" property="tqctime"/>
+		<result column="TENANTID" property="tenantid"/>
+		<result column="SYSID" property="sysid"/>
+		<result column="ORGID" property="orgid"/>
+		<result column="ORGID_NAME" property="orgid_name"/>
+		<result column="TS" property="ts"/>
+		<result column="DR" property="dr"/>
+		<result column="CREATOR" property="creator"/>
+		<result column="CREATOR_NAME" property="creator_name"/>
+		<result column="CREATIONTIME" property="creationtime"/>
+		<result column="MODIFIER" property="modifier"/>
+		<result column="MODIFIER_NAME" property="modifier_name"/>
+		<result column="MODIFIEDTIME" property="modifiedtime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+		ID,CDEPTID,VDEPTNAME,CQCPROJECTID,VQCPROJECTCODE,VQCPROJECTNAME,CSTATIONID,VSTATIONNAME,TQCTIME,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
+	</sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from PRM_TEMPTASK
+		where ID = #{id}
+	</select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from PRM_TEMPTASK
+		where ID = #{id}
+	</delete>
+    <delete id="batchDeleteByPrimaryKey" parameterType="java.util.List">
+		delete from PRM_TEMPTASK
+		where
+		ID in
+		<foreach collection="list" item="item" index="index"
+			separator="," open="(" close=")">
+		#{item.ID}
+		</foreach>
+	</delete>
+
+    <insert id="insert" parameterType="com.yonyou.mes.er.core.temptask.entity.TempTaskHeadVO">
+		insert into PRM_TEMPTASK (
+		ID,CDEPTID,VDEPTNAME,CQCPROJECTID,VQCPROJECTCODE,VQCPROJECTNAME,CSTATIONID,VSTATIONNAME,TQCTIME,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
+		)
+		values (
+		#{id,jdbcType=VARCHAR},
+		#{cdeptid,jdbcType=VARCHAR},
+		#{vdeptname,jdbcType=VARCHAR},
+		#{cqcprojectid,jdbcType=VARCHAR},
+		#{vqcprojectcode,jdbcType=VARCHAR},
+		#{vqcprojectname,jdbcType=VARCHAR},
+		#{cstationid,jdbcType=VARCHAR},
+		#{vstationname,jdbcType=VARCHAR},
+		#{tqctime,jdbcType=TIMESTAMP},
+		#{tenantid,jdbcType=VARCHAR},
+		#{sysid,jdbcType=VARCHAR},
+		#{orgid,jdbcType=VARCHAR},
+		#{orgid_name,jdbcType=VARCHAR},
+		#{ts,jdbcType=TIMESTAMP},
+		#{dr,jdbcType=INTEGER},
+		#{creator,jdbcType=VARCHAR},
+		#{creator_name,jdbcType=VARCHAR},
+		#{creationtime,jdbcType=TIMESTAMP},
+		#{modifier,jdbcType=VARCHAR},
+		#{modifier_name,jdbcType=VARCHAR},
+		#{modifiedtime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+		insert into PRM_TEMPTASK (
+		ID,CDEPTID,VDEPTNAME,CQCPROJECTID,VQCPROJECTCODE,VQCPROJECTNAME,CSTATIONID,VSTATIONNAME,TQCTIME,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
+		)
+		<foreach collection="list" item="item" index="index" separator="union" open="(" close=")">
+		select
+		#{item.id,jdbcType=VARCHAR},
+		#{item.cdeptid,jdbcType=VARCHAR},
+		#{item.vdeptname,jdbcType=VARCHAR},
+		#{item.cqcprojectid,jdbcType=VARCHAR},
+		#{item.vqcprojectcode,jdbcType=VARCHAR},
+		#{item.vqcprojectname,jdbcType=VARCHAR},
+		#{item.cstationid,jdbcType=VARCHAR},
+		#{item.vstationname,jdbcType=VARCHAR},
+		#{item.tqctime,jdbcType=TIMESTAMP},
+		#{item.tenantid,jdbcType=VARCHAR},
+		#{item.sysid,jdbcType=VARCHAR},
+		#{item.orgid,jdbcType=VARCHAR},
+		#{item.orgid_name,jdbcType=VARCHAR},
+		#{item.ts,jdbcType=TIMESTAMP},
+		#{item.dr,jdbcType=INTEGER},
+		#{item.creator,jdbcType=VARCHAR},
+		#{item.creator_name,jdbcType=VARCHAR},
+		#{item.creationtime,jdbcType=TIMESTAMP},
+		#{item.modifier,jdbcType=VARCHAR},
+		#{item.modifier_name,jdbcType=VARCHAR},
+		#{item.modifiedtime,jdbcType=TIMESTAMP}
+		from dual
+		</foreach>
+	</insert>
+    <insert id="insertSelective" parameterType="com.yonyou.mes.er.core.temptask.entity.TempTaskHeadVO">
+		insert into PRM_TEMPTASK
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="cdeptid != null">
+				CDEPTID,
+			</if>
+			<if test="vdeptname != null">
+				VDEPTNAME,
+			</if>
+			<if test="cqcprojectid != null">
+				CQCPROJECTID,
+			</if>
+			<if test="vqcprojectcode != null">
+				VQCPROJECTCODE,
+			</if>
+			<if test="vqcprojectname != null">
+				VQCPROJECTNAME,
+			</if>
+			<if test="cstationid != null">
+				CSTATIONID,
+			</if>
+			<if test="vstationname != null">
+				VSTATIONNAME,
+			</if>
+			<if test="tqctime != null">
+				TQCTIME,
+			</if>
+			<if test="tenantid != null">
+				TENANTID,
+			</if>
+			<if test="sysid != null">
+				SYSID,
+			</if>
+			<if test="orgid != null">
+				ORGID,
+			</if>
+			<if test="orgid_name != null">
+				ORGID_NAME,
+			</if>
+			<if test="ts != null">
+				TS,
+			</if>
+			<if test="dr != null">
+				DR,
+			</if>
+			<if test="creator != null">
+				CREATOR,
+			</if>
+			<if test="creator_name != null">
+				CREATOR_NAME,
+			</if>
+			<if test="creationtime != null">
+				CREATIONTIME,
+			</if>
+			<if test="modifier != null">
+				MODIFIER,
+			</if>
+			<if test="modifier_name != null">
+				MODIFIER_NAME,
+			</if>
+			<if test="modifiedtime != null">
+				MODIFIEDTIME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="cdeptid != null">
+				#{cdeptid,jdbcType=VARCHAR},
+			</if>
+			<if test="vdeptname != null">
+				#{vdeptname,jdbcType=VARCHAR},
+			</if>
+			<if test="cqcprojectid != null">
+				#{cqcprojectid,jdbcType=VARCHAR},
+			</if>
+			<if test="vqcprojectcode != null">
+				#{vqcprojectcode,jdbcType=VARCHAR},
+			</if>
+			<if test="vqcprojectname != null">
+				#{vqcprojectname,jdbcType=VARCHAR},
+			</if>
+			<if test="cstationid != null">
+				#{cstationid,jdbcType=VARCHAR},
+			</if>
+			<if test="vstationname != null">
+				#{vstationname,jdbcType=VARCHAR},
+			</if>
+			<if test="tqctime != null">
+				#{tqctime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="tenantid != null">
+				#{tenantid,jdbcType=VARCHAR},
+			</if>
+			<if test="sysid != null">
+				#{sysid,jdbcType=VARCHAR},
+			</if>
+			<if test="orgid != null">
+				#{orgid,jdbcType=VARCHAR},
+			</if>
+			<if test="orgid_name != null">
+				#{orgid_name,jdbcType=VARCHAR},
+			</if>
+			<if test="ts != null">
+				#{ts,jdbcType=TIMESTAMP},
+			</if>
+			<if test="dr != null">
+				#{dr,jdbcType=INTEGER},
+			</if>
+			<if test="creator != null">
+				#{creator,jdbcType=VARCHAR},
+			</if>
+			<if test="creator_name != null">
+				#{creator_name,jdbcType=VARCHAR},
+			</if>
+			<if test="creationtime != null">
+				#{creationtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifier != null">
+				#{modifier,jdbcType=VARCHAR},
+			</if>
+			<if test="modifier_name != null">
+				#{modifier_name,jdbcType=VARCHAR},
+			</if>
+			<if test="modifiedtime != null">
+				#{modifiedtime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.yonyou.mes.er.core.temptask.entity.TempTaskHeadVO">
+		update PRM_TEMPTASK
+		<set>
+			<if test="id != null">
+				ID = #{id,jdbcType=VARCHAR},
+			</if>
+			<if test="cdeptid != null">
+				CDEPTID = #{cdeptid,jdbcType=VARCHAR},
+			</if>
+			<if test="vdeptname != null">
+				VDEPTNAME = #{vdeptname,jdbcType=VARCHAR},
+			</if>
+			<if test="cqcprojectid != null">
+				CQCPROJECTID = #{cqcprojectid,jdbcType=VARCHAR},
+			</if>
+			<if test="vqcprojectcode != null">
+				VQCPROJECTCODE = #{vqcprojectcode,jdbcType=VARCHAR},
+			</if>
+			<if test="vqcprojectname != null">
+				VQCPROJECTNAME = #{vqcprojectname,jdbcType=VARCHAR},
+			</if>
+			<if test="cstationid != null">
+				CSTATIONID = #{cstationid,jdbcType=VARCHAR},
+			</if>
+			<if test="vstationname != null">
+				VSTATIONNAME = #{vstationname,jdbcType=VARCHAR},
+			</if>
+			<if test="tqctime != null">
+				TQCTIME = #{tqctime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="tenantid != null">
+				TENANTID = #{tenantid,jdbcType=VARCHAR},
+			</if>
+			<if test="sysid != null">
+				SYSID = #{sysid,jdbcType=VARCHAR},
+			</if>
+			<if test="orgid != null">
+				ORGID = #{orgid,jdbcType=VARCHAR},
+			</if>
+			<if test="orgid_name != null">
+				ORGID_NAME = #{orgid_name,jdbcType=VARCHAR},
+			</if>
+			<if test="ts != null">
+				TS = #{ts,jdbcType=TIMESTAMP},
+			</if>
+			<if test="dr != null">
+				DR = #{dr,jdbcType=INTEGER},
+			</if>
+			<if test="creator != null">
+				CREATOR = #{creator,jdbcType=VARCHAR},
+			</if>
+			<if test="creator_name != null">
+				CREATOR_NAME = #{creator_name,jdbcType=VARCHAR},
+			</if>
+			<if test="creationtime != null">
+				CREATIONTIME = #{creationtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifier != null">
+				MODIFIER = #{modifier,jdbcType=VARCHAR},
+			</if>
+			<if test="modifier_name != null">
+				MODIFIER_NAME = #{modifier_name,jdbcType=VARCHAR},
+			</if>
+			<if test="modifiedtime != null">
+				MODIFIEDTIME = #{modifiedtime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where ID = #{id} 
+		<!--and ts = #ts-->
+	</update>
+    <update id="updateByPrimaryKey" parameterType="com.yonyou.mes.er.core.temptask.entity.TempTaskHeadVO">
+		update PRM_TEMPTASK
+		set
+				CDEPTID = #{cdeptid,jdbcType=VARCHAR},
+				VDEPTNAME = #{vdeptname,jdbcType=VARCHAR},
+				CQCPROJECTID = #{cqcprojectid,jdbcType=VARCHAR},
+				VQCPROJECTCODE = #{vqcprojectcode,jdbcType=VARCHAR},
+				VQCPROJECTNAME = #{vqcprojectname,jdbcType=VARCHAR},
+				CSTATIONID = #{cstationid,jdbcType=VARCHAR},
+				VSTATIONNAME = #{vstationname,jdbcType=VARCHAR},
+				TQCTIME = #{tqctime,jdbcType=TIMESTAMP},
+				TENANTID = #{tenantid,jdbcType=VARCHAR},
+				SYSID = #{sysid,jdbcType=VARCHAR},
+				ORGID = #{orgid,jdbcType=VARCHAR},
+				ORGID_NAME = #{orgid_name,jdbcType=VARCHAR},
+				TS = #{ts,jdbcType=TIMESTAMP},
+				DR = #{dr,jdbcType=INTEGER},
+				CREATOR = #{creator,jdbcType=VARCHAR},
+				CREATOR_NAME = #{creator_name,jdbcType=VARCHAR},
+				CREATIONTIME = #{creationtime,jdbcType=TIMESTAMP},
+				MODIFIER = #{modifier,jdbcType=VARCHAR},
+				MODIFIER_NAME = #{modifier_name,jdbcType=VARCHAR},
+				MODIFIEDTIME = #{modifiedtime,jdbcType=TIMESTAMP}
+		where ID = #{ID}
+		<!-- and ts = #ts-->
+	</update>
+
+    <update id="batchUpdate" parameterType="java.util.List">
+    	begin
+		<foreach collection="list" item="item" index="index" open=""
+			close="" separator=";">
+			update PRM_TEMPTASK
+			<set>
+				CDEPTID = #{item.cdeptid,jdbcType=VARCHAR},
+				VDEPTNAME = #{item.vdeptname,jdbcType=VARCHAR},
+				CQCPROJECTID = #{item.cqcprojectid,jdbcType=VARCHAR},
+				VQCPROJECTCODE = #{item.vqcprojectcode,jdbcType=VARCHAR},
+				VQCPROJECTNAME = #{item.vqcprojectname,jdbcType=VARCHAR},
+				CSTATIONID = #{item.cstationid,jdbcType=VARCHAR},
+				VSTATIONNAME = #{item.vstationname,jdbcType=VARCHAR},
+				TQCTIME = #{item.tqctime,jdbcType=TIMESTAMP},
+				TENANTID = #{item.tenantid,jdbcType=VARCHAR},
+				SYSID = #{item.sysid,jdbcType=VARCHAR},
+				ORGID = #{item.orgid,jdbcType=VARCHAR},
+				ORGID_NAME = #{item.orgid_name,jdbcType=VARCHAR},
+				TS = #{item.ts,jdbcType=TIMESTAMP},
+				DR = #{item.dr,jdbcType=INTEGER},
+				CREATOR = #{item.creator,jdbcType=VARCHAR},
+				CREATOR_NAME = #{item.creator_name,jdbcType=VARCHAR},
+				CREATIONTIME = #{item.creationtime,jdbcType=TIMESTAMP},
+				MODIFIER = #{item.modifier,jdbcType=VARCHAR},
+				MODIFIER_NAME = #{item.modifier_name,jdbcType=VARCHAR},
+				MODIFIEDTIME = #{item.modifiedtime,jdbcType=TIMESTAMP}
+			</set>
+			where ID = #{item.id} 
+		</foreach>
+		;end;
+	</update>
+
+
+<select id="selectAllByPage" resultMap="BaseResultMap"
+		resultType="java.util.List">
+		SELECT
+		<include refid="Base_Column_List" />
+		from PRM_TEMPTASK where 1=1
+		<if test="search != null">
+        </if>
+    </select>
+
+</mapper>

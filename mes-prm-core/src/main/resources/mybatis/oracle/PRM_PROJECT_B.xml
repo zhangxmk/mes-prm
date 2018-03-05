@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yonyou.mes.er.core.inspectionproject.repository.ProjectBodyMapper">
+	<resultMap id="BaseResultMap" type="com.yonyou.mes.er.core.inspectionproject.entity.InspectionProjectBodyVO">
+		<id column="ID" property="id"/>
+		<result column="CPRJCONTENT" property="cprjcontent"/>
+		<result column="CJUDSTD" property="cjudstd"/>
+		<result column="FVALUETYPE" property="fvaluetype"/>
+		<result column="BAUTOCOLLECT" property="bautocollect"/>
+		<result column="CDATALABEL" property="cdatalabel"/>
+		<result column="CDATALABEL_NAME" property="cdatalabel_name"/>
+		<result column="BREQUIRED" property="brequired"/>
+		<result column="CPARENTID" property="cparentid"/>
+		<result column="TENANTID" property="tenantid"/>
+		<result column="SYSID" property="sysid"/>
+		<result column="ORGID" property="orgid"/>
+		<result column="ORGID_NAME" property="orgid_name"/>
+		<result column="TS" property="ts"/>
+		<result column="DR" property="dr"/>
+		<result column="CREATOR" property="creator"/>
+		<result column="CREATIONTIME" property="creationtime"/>
+		<result column="MODIFIER" property="modifier"/>
+		<result column="MODIFIEDTIME" property="modifiedtime"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+		CPRJCONTENT,CJUDSTD,FVALUETYPE,BAUTOCOLLECT,CDATALABEL,CDATALABEL_NAME,BREQUIRED,CPARENTID,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from PRM_PROJECT_B
+		where ID = #{id}
+	</select>
+
+	<select id="selectAllByPage" resultMap="BaseResultMap"
+		resultType="java.util.List">
+		SELECT
+		<include refid="Base_Column_List" />
+		from PRM_PROJECT_B where dr=0
+		<if test="search.searchMap != null">
+			<if
+				test="search.searchMap.id!=null and search.searchMap.id!='' ">
+				and cparentid = #{search.searchMap.id}
+			</if>
+		</if>
+	</select>
+	
+	<select id="selectByParentKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from PRM_PROJECT_B
+		where cparentid = #{id} and DR=0
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		update PRM_PROJECT_B set dr=1
+		where ID = #{id}
+	</delete>
+
+	<delete id="batchDeleteByPrimaryKey" parameterType="java.util.List">
+		update PRM_PROJECT_B set dr=1
+		where
+		ID in
+		<foreach collection="list" item="item" index="index"
+			separator="," open="(" close=")">
+		#{item.id}
+		</foreach>
+	</delete>
+
+	<insert id="insert" parameterType="com.yonyou.mes.er.core.inspectionproject.entity.InspectionProjectBodyVO">
+		insert into PRM_PROJECT_B (
+		CPRJCONTENT,CJUDSTD,FVALUETYPE,BAUTOCOLLECT,CDATALABEL,CDATALABEL_NAME,BREQUIRED,CPARENTID,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME)
+		values (
+		#{cprjcontent,jdbcType=VARCHAR},
+		#{cjudstd,jdbcType=VARCHAR},
+		#{fvaluetype,jdbcType=INTEGER},
+		#{bautocollect,jdbcType=VARCHAR},
+		#{cdatalabel,jdbcType=VARCHAR},
+		#{cdatalabel_name,jdbcType=VARCHAR},
+		#{brequired,jdbcType=VARCHAR},
+		#{cparentid,jdbcType=VARCHAR},
+		#{id,jdbcType=VARCHAR},
+		#{tenantid,jdbcType=VARCHAR},
+		#{sysid,jdbcType=VARCHAR},
+		#{orgid,jdbcType=VARCHAR},
+		#{orgid_name,jdbcType=VARCHAR},
+		#{ts,jdbcType=TIMESTAMP},
+		#{dr,jdbcType=INTEGER},
+		#{creator,jdbcType=VARCHAR},
+		#{creationtime,jdbcType=TIMESTAMP},
+		#{modifier,jdbcType=VARCHAR},
+		#{modifiedtime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+
+	<insert id="batchInsert" parameterType="java.util.List">
+		insert into PRM_PROJECT_B (
+		CPRJCONTENT,CJUDSTD,FVALUETYPE,BAUTOCOLLECT,CDATALABEL,CDATALABEL_NAME,BREQUIRED,CPARENTID,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME
+		)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(
+		#{item.cprjcontent,jdbcType=VARCHAR},
+		#{item.cjudstd,jdbcType=VARCHAR},
+		#{item.fvaluetype,jdbcType=INTEGER},
+		#{item.bautocollect,jdbcType=VARCHAR},
+		#{item.cdatalabel,jdbcType=VARCHAR},
+		#{item.cdatalabel_name,jdbcType=VARCHAR},
+		#{item.brequired,jdbcType=VARCHAR},
+		#{item.cparentid,jdbcType=VARCHAR},
+		#{item.id,jdbcType=VARCHAR},
+		#{item.tenantid,jdbcType=VARCHAR},
+		#{item.sysid,jdbcType=VARCHAR},
+		#{item.orgid,jdbcType=VARCHAR},
+		#{item.orgid_name,jdbcType=VARCHAR},
+		#{item.ts,jdbcType=TIMESTAMP},
+		#{item.dr,jdbcType=INTEGER},
+		#{item.creator,jdbcType=VARCHAR},
+		#{item.creationtime,jdbcType=TIMESTAMP}
+			)
+		</foreach>
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.yonyou.mes.er.core.inspectionproject.entity.InspectionProjectBodyVO">
+		insert into PRM_PROJECT_B
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="cprjcontent != null">
+				CPRJCONTENT,
+			</if>
+			<if test="cjudstd != null">
+				CJUDSTD,
+			</if>
+			<if test="fvaluetype != null">
+				FVALUETYPE,
+			</if>
+			<if test="bautocollect != null">
+				BAUTOCOLLECT,
+			</if>
+			<if test="cdatalabel != null">
+				CDATALABEL,
+			</if>
+			<if test="cdatalabel_name != null">
+				CDATALABEL_NAME,
+			</if>
+			<if test="brequired != null">
+				BREQUIRED,
+			</if>
+			<if test="cparentid != null">
+				CPARENTID,
+			</if>
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="tenantid != null">
+				TENANTID,
+			</if>
+			<if test="sysid != null">
+				SYSID,
+			</if>
+			<if test="orgid != null">
+				ORGID,
+			</if>
+			<if test="orgid_name != null">
+				ORGID_NAME,
+			</if>
+			<if test="ts != null">
+				TS,
+			</if>
+			<if test="dr != null">
+				DR,
+			</if>
+			<if test="creator != null">
+				CREATOR,
+			</if>
+			<if test="creationtime != null">
+				CREATIONTIME,
+			</if>
+			<if test="modifier != null">
+				MODIFIER,
+			</if>
+			<if test="modifiedtime != null">
+				MODIFIEDTIME,
+			</if>
+			<if test="creator_name != null">
+				CREATOR_NAME,
+			</if>
+			<if test="modifier_name != null">
+				MODIFIER_NAME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="cprjcontent != null">
+				#{cprjcontent,jdbcType=VARCHAR},
+			</if>
+			<if test="cjudstd != null">
+				#{cjudstd,jdbcType=VARCHAR},
+			</if>
+			<if test="fvaluetype != null">
+				#{fvaluetype,jdbcType=INTEGER},
+			</if>
+			<if test="bautocollect != null">
+				#{bautocollect,jdbcType=VARCHAR},
+			</if>
+			<if test="cdatalabel != null">
+				#{cdatalabel,jdbcType=VARCHAR},
+			</if>
+			<if test="cdatalabel_name != null">
+				#{cdatalabel_name,jdbcType=VARCHAR},
+			</if>
+			<if test="brequired != null">
+				#{brequired,jdbcType=VARCHAR},
+			</if>
+			<if test="cparentid != null">
+				#{cparentid,jdbcType=VARCHAR},
+			</if>
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="tenantid != null">
+				#{tenantid,jdbcType=VARCHAR},
+			</if>
+			<if test="sysid != null">
+				#{sysid,jdbcType=VARCHAR},
+			</if>
+			<if test="orgid != null">
+				#{orgid,jdbcType=VARCHAR},
+			</if>
+			<if test="orgid_name != null">
+				#{orgid_name,jdbcType=VARCHAR},
+			</if>
+			<if test="ts != null">
+				#{ts,jdbcType=TIMESTAMP},
+			</if>
+			<if test="dr != null">
+				#{dr,jdbcType=INTEGER},
+			</if>
+			<if test="creator != null">
+				#{creator,jdbcType=VARCHAR},
+			</if>
+			<if test="creationtime != null">
+				#{creationtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifier != null">
+				#{modifier,jdbcType=VARCHAR},
+			</if>
+			<if test="modifiedtime != null">
+				#{modifiedtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creator_name != null">
+				#{creator_name,jdbcType=VARCHAR},
+			</if>
+			<if test="modifier_name != null">
+				#{modifier_name,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.yonyou.mes.er.core.inspectionproject.entity.InspectionProjectBodyVO">
+		update PRM_PROJECT_B
+		<set>
+			<if test="cprjcontent != null">
+				CPRJCONTENT = #{cprjcontent,jdbcType=VARCHAR},
+			</if>
+			<if test="cjudstd != null">
+				CJUDSTD = #{cjudstd,jdbcType=VARCHAR},
+			</if>
+			<if test="fvaluetype != null">
+				FVALUETYPE = #{fvaluetype,jdbcType=INTEGER},
+			</if>
+			<if test="bautocollect != null">
+				BAUTOCOLLECT = #{bautocollect,jdbcType=VARCHAR},
+			</if>
+			<if test="cdatalabel != null">
+				CDATALABEL = #{cdatalabel,jdbcType=VARCHAR},
+			</if>
+			<if test="cdatalabel_name != null">
+				CDATALABEL_NAME = #{cdatalabel_name,jdbcType=VARCHAR},
+			</if>
+			<if test="brequired != null">
+				BREQUIRED = #{brequired,jdbcType=VARCHAR},
+			</if>
+			<if test="cparentid != null">
+				CPARENTID = #{cparentid,jdbcType=VARCHAR},
+			</if>
+			<if test="id != null">
+				ID = #{id,jdbcType=VARCHAR},
+			</if>
+			<if test="tenantid != null">
+				TENANTID = #{tenantid,jdbcType=VARCHAR},
+			</if>
+			<if test="sysid != null">
+				SYSID = #{sysid,jdbcType=VARCHAR},
+			</if>
+			<if test="orgid != null">
+				ORGID = #{orgid,jdbcType=VARCHAR},
+			</if>
+			<if test="orgid_name != null">
+				ORGID_NAME = #{orgid_name,jdbcType=VARCHAR},
+			</if>
+			<if test="ts != null">
+				TS = #{ts,jdbcType=TIMESTAMP},
+			</if>
+			<if test="dr != null">
+				DR = #{dr,jdbcType=INTEGER},
+			</if>
+			<if test="creator != null">
+				CREATOR = #{creator,jdbcType=VARCHAR},
+			</if>
+			<if test="creationtime != null">
+				CREATIONTIME = #{creationtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifier != null">
+				MODIFIER = #{modifier,jdbcType=VARCHAR},
+			</if>
+			<if test="modifiedtime != null">
+				MODIFIEDTIME = #{modifiedtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creator_name != null">
+				CREATOR_NAME = #{creator_name,jdbcType=VARCHAR},
+			</if>
+			<if test="modifier_name != null">
+				MODIFIER_NAME = #{modifier_name,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where ID = #{id} 
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.yonyou.mes.er.core.inspectionproject.entity.InspectionProjectBodyVO">
+		update PRM_PROJECT_B
+		set
+				CPRJCONTENT = #{cprjcontent,jdbcType=VARCHAR},
+				CJUDSTD = #{cjudstd,jdbcType=VARCHAR},
+				FVALUETYPE = #{fvaluetype,jdbcType=INTEGER},
+				BAUTOCOLLECT = #{bautocollect,jdbcType=VARCHAR},
+				CDATALABEL = #{cdatalabel,jdbcType=VARCHAR},
+				CDATALABEL_NAME = #{cdatalabel_name,jdbcType=VARCHAR},
+				BREQUIRED = #{brequired,jdbcType=VARCHAR},
+				TS = #{ts,jdbcType=TIMESTAMP},
+				MODIFIER = #{modifier,jdbcType=VARCHAR},
+				MODIFIEDTIME = #{modifiedtime,jdbcType=TIMESTAMP}
+		where ID = #{id}
+	</update>
+
+	<update id="batchUpdate" parameterType="java.util.List">
+	begin 
+		<foreach collection="list" item="item" index="index" open=""
+			close="" separator=";">
+			update PRM_PROJECT_B
+			<set>
+				CPRJCONTENT = #{item.cprjcontent,jdbcType=VARCHAR},
+				CJUDSTD = #{item.cjudstd,jdbcType=VARCHAR},
+				FVALUETYPE = #{item.fvaluetype,jdbcType=INTEGER},
+				BAUTOCOLLECT = #{item.bautocollect,jdbcType=VARCHAR},
+				CDATALABEL = #{item.cdatalabel,jdbcType=VARCHAR},
+				CDATALABEL_NAME = #{item.cdatalabel_name,jdbcType=VARCHAR},
+				BREQUIRED = #{item.brequired,jdbcType=VARCHAR},
+				TS = #{item.ts,jdbcType=TIMESTAMP},
+				MODIFIER = #{item.modifier,jdbcType=VARCHAR},
+				MODIFIEDTIME = #{item.modifiedtime,jdbcType=TIMESTAMP}
+			</set>
+			where ID = #{item.id} 
+		</foreach>
+		;end;
+	</update>
+</mapper>
