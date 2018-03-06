@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.yonyou.mes.er.core.inspectionproject.repository.ProjectBodyMapper">
-	<resultMap id="BaseResultMap" type="com.yonyou.mes.er.core.inspectionproject.entity.InspectionProjectBodyVO">
+<mapper namespace="com.yonyou.mes.prm.core.inspectionproject.repository.ProjectBodyMapper">
+	<resultMap id="BaseResultMap" type="com.yonyou.mes.prm.core.inspectionproject.entity.InspectionProjectBodyVO">
 		<id column="ID" property="id"/>
 		<result column="CPRJCONTENT" property="cprjcontent"/>
 		<result column="CJUDSTD" property="cjudstd"/>
@@ -69,7 +69,7 @@
 		</foreach>
 	</delete>
 
-	<insert id="insert" parameterType="com.yonyou.mes.er.core.inspectionproject.entity.InspectionProjectBodyVO">
+	<insert id="insert" parameterType="com.yonyou.mes.prm.core.inspectionproject.entity.InspectionProjectBodyVO">
 		insert into PRM_PROJECT_B (
 		CPRJCONTENT,CJUDSTD,FVALUETYPE,BAUTOCOLLECT,CDATALABEL,CDATALABEL_NAME,BREQUIRED,CPARENTID,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME)
 		values (
@@ -124,7 +124,7 @@
 		</foreach>
 	</insert>
 
-	<insert id="insertSelective" parameterType="com.yonyou.mes.er.core.inspectionproject.entity.InspectionProjectBodyVO">
+	<insert id="insertSelective" parameterType="com.yonyou.mes.prm.core.inspectionproject.entity.InspectionProjectBodyVO">
 		insert into PRM_PROJECT_B
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="cprjcontent != null">
@@ -257,7 +257,7 @@
 			</if>
 		</trim>
 	</insert>
-	<update id="updateByPrimaryKeySelective" parameterType="com.yonyou.mes.er.core.inspectionproject.entity.InspectionProjectBodyVO">
+	<update id="updateByPrimaryKeySelective" parameterType="com.yonyou.mes.prm.core.inspectionproject.entity.InspectionProjectBodyVO">
 		update PRM_PROJECT_B
 		<set>
 			<if test="cprjcontent != null">
@@ -326,7 +326,7 @@
 		</set>
 		where ID = #{id} 
 	</update>
-	<update id="updateByPrimaryKey" parameterType="com.yonyou.mes.er.core.inspectionproject.entity.InspectionProjectBodyVO">
+	<update id="updateByPrimaryKey" parameterType="com.yonyou.mes.prm.core.inspectionproject.entity.InspectionProjectBodyVO">
 		update PRM_PROJECT_B
 		set
 				CPRJCONTENT = #{cprjcontent,jdbcType=VARCHAR},

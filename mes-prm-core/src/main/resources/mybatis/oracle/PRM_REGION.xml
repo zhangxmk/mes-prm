@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.yonyou.mes.er.core.inspectionregion.repository.InspectionRegionMapper">
-    <resultMap id="BaseResultMap" type="com.yonyou.mes.er.core.inspectionregion.entity.InspectionRegionVO">
+<mapper namespace="com.yonyou.mes.prm.core.inspectionregion.repository.InspectionRegionMapper">
+    <resultMap id="BaseResultMap" type="com.yonyou.mes.prm.core.inspectionregion.entity.InspectionRegionVO">
 		<id column="ID" property="id"/>
 		<result column="FBILLSTATUS" property="fbillstatus"/>
 		<result column="PK_EQUIP" property="pk_equip"/>
@@ -45,7 +45,7 @@
 		</foreach>
 	</delete>
 
-    <insert id="insert" parameterType="com.yonyou.mes.er.core.inspectionregion.entity.InspectionRegionVO">
+    <insert id="insert" parameterType="com.yonyou.mes.prm.core.inspectionregion.entity.InspectionRegionVO">
 		insert into PRM_REGION (
 		ID,FBILLSTATUS,PK_EQUIP,PK_EQUIP_NAME,NAME,CODE,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
 		)
@@ -98,7 +98,7 @@
 		from dual
 		</foreach>
 	</insert>
-    <insert id="insertSelective" parameterType="com.yonyou.mes.er.core.inspectionregion.entity.InspectionRegionVO">
+    <insert id="insertSelective" parameterType="com.yonyou.mes.prm.core.inspectionregion.entity.InspectionRegionVO">
 		insert into PRM_REGION
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -213,7 +213,7 @@
 			</if>
 		</trim>
 	</insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.yonyou.mes.er.core.inspectionregion.entity.InspectionRegionVO">
+    <update id="updateByPrimaryKeySelective" parameterType="com.yonyou.mes.prm.core.inspectionregion.entity.InspectionRegionVO">
 		update PRM_REGION
 		<set>
 			<if test="id != null">
@@ -274,7 +274,7 @@
 		where ID = #{id} 
 		<!--and ts = #ts-->
 	</update>
-    <update id="updateByPrimaryKey" parameterType="com.yonyou.mes.er.core.inspectionregion.entity.InspectionRegionVO">
+    <update id="updateByPrimaryKey" parameterType="com.yonyou.mes.prm.core.inspectionregion.entity.InspectionRegionVO">
 		update PRM_REGION
 		set
 				FBILLSTATUS = #{fbillstatus,jdbcType=INTEGER},

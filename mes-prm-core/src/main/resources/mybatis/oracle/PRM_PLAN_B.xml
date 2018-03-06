@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.yonyou.mes.er.core.inspectionplan.repository.InspectionPlanBodyMapper">
-    <resultMap id="BaseResultMap" type="com.yonyou.mes.er.core.inspectionplan.entity.InspectionPlanBodyVO">
+<mapper namespace="com.yonyou.mes.prm.core.inspectionplan.repository.InspectionPlanBodyMapper">
+    <resultMap id="BaseResultMap" type="com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanBodyVO">
 		<id column="ID" property="id"/>
 		<result column="PK_ER_PROJECT" property="pk_er_project"/>
 		<result column="ER_PROJECT_CODE" property="er_project_code"/>
@@ -53,7 +53,7 @@
 		</foreach>
 	</delete>
 
-    <insert id="insert" parameterType="com.yonyou.mes.er.core.inspectionplan.entity.InspectionPlanBodyVO">
+    <insert id="insert" parameterType="com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanBodyVO">
 		insert into PRM_PLAN_B (
 		PK_ER_PROJECT,ER_PROJECT_CODE,ER_PROJECT_NAME,PK_PLAN,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME
 		)
@@ -104,7 +104,7 @@
 		from dual
 		</foreach>
 	</insert>
-    <insert id="insertSelective" parameterType="com.yonyou.mes.er.core.inspectionplan.entity.InspectionPlanBodyVO">
+    <insert id="insertSelective" parameterType="com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanBodyVO">
 		insert into PRM_PLAN_B
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="pk_er_project != null">
@@ -213,7 +213,7 @@
 			</if>
 		</trim>
 	</insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.yonyou.mes.er.core.inspectionplan.entity.InspectionPlanBodyVO">
+    <update id="updateByPrimaryKeySelective" parameterType="com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanBodyVO">
 		update PRM_PLAN_B
 		<set>
 			<if test="pk_er_project != null">
@@ -271,7 +271,7 @@
 		where ID = #{id} 
 		<!--and ts = #ts-->
 	</update>
-    <update id="updateByPrimaryKey" parameterType="com.yonyou.mes.er.core.inspectionplan.entity.InspectionPlanBodyVO">
+    <update id="updateByPrimaryKey" parameterType="com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanBodyVO">
 		update PRM_PLAN_B
 		set
 				PK_ER_PROJECT = #{pk_er_project,jdbcType=VARCHAR},

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.yonyou.mes.er.core.inspectionproject.repository.ProjectHeadMapper">
-	<resultMap id="BaseResultMap" type="com.yonyou.mes.er.core.inspectionproject.entity.InspectionProjectHeadVO">
+<mapper namespace="com.yonyou.mes.prm.core.inspectionproject.repository.ProjectHeadMapper">
+	<resultMap id="BaseResultMap" type="com.yonyou.mes.prm.core.inspectionproject.entity.InspectionProjectHeadVO">
 		<id column="ID" property="id"/>
 		<result column="CREGION" property="cregion"/>
 		<result column="CREGION_NAME" property="cregion_name"/>
@@ -80,7 +80,7 @@
 		</foreach>
 	</delete>
 
-	<insert id="insert" parameterType="com.yonyou.mes.er.core.inspectionproject.entity.InspectionProjectHeadVO">
+	<insert id="insert" parameterType="com.yonyou.mes.prm.core.inspectionproject.entity.InspectionProjectHeadVO">
 		insert into PRM_PROJECT (
 		CREGION,CREGION_NAME,CODE,NAME,CEQUIP,CEQUIP_NAME,ENABLESTATE,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
 		)
@@ -138,7 +138,7 @@
 		</foreach>
 	</insert>
 
-	<insert id="insertSelective" parameterType="com.yonyou.mes.er.core.inspectionproject.entity.InspectionProjectHeadVO">
+	<insert id="insertSelective" parameterType="com.yonyou.mes.prm.core.inspectionproject.entity.InspectionProjectHeadVO">
 		insert into PRM_PROJECT
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="cregion != null">
@@ -265,7 +265,7 @@
 			</if>
 		</trim>
 	</insert>
-	<update id="updateByPrimaryKeySelective" parameterType="com.yonyou.mes.er.core.inspectionproject.entity.InspectionProjectHeadVO">
+	<update id="updateByPrimaryKeySelective" parameterType="com.yonyou.mes.prm.core.inspectionproject.entity.InspectionProjectHeadVO">
 		update PRM_PROJECT
 		<set>
 			<if test="cregion != null">
@@ -331,7 +331,7 @@
 		</set>
 		where ID = #{id} 
 	</update>
-	<update id="updateByPrimaryKey" parameterType="com.yonyou.mes.er.core.inspectionproject.entity.InspectionProjectHeadVO">
+	<update id="updateByPrimaryKey" parameterType="com.yonyou.mes.prm.core.inspectionproject.entity.InspectionProjectHeadVO">
 		update PRM_PROJECT
 		set
 				CREGION = #{cregion,jdbcType=VARCHAR},
