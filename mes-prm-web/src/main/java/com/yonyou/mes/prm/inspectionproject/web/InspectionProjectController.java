@@ -38,7 +38,7 @@ import java.util.Set;
  * @version V1.0
  */
 @RestController
-@RequestMapping(value = "/er/inspectionproject")
+@RequestMapping(value = "/prm/inspectionproject")
 public class InspectionProjectController extends BaseController {
 	@Autowired
 	private IInspectionProjectService service;
