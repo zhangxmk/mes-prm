@@ -14,6 +14,7 @@ public class InspectionTaskBodyVO extends MeSuperVO{
 	private String pk_task;
 	private Integer plan_order;
 	private String projectid;
+	private String projectid_code;
 	private String projectid_name;
 	private Integer fact_order;
 	private Integer project_status;
@@ -314,6 +315,16 @@ public class InspectionTaskBodyVO extends MeSuperVO{
 	public void setParentid(String parentid) {
 		// TODO 自动生成的方法存根
 		
+	}
+
+
+	public String getProjectid_code() {
+		return projectid_code;
+	}
+
+
+	public void setProjectid_code(String projectid_code) {
+		this.projectid_code = projectid_code;
 	}
 
 

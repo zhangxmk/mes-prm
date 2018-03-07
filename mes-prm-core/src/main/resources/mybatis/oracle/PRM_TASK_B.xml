@@ -6,6 +6,7 @@
 		<result column="PK_TASK" property="pk_task"/>
 		<result column="PLAN_ORDER" property="plan_order"/>
 		<result column="PROJECTID" property="projectid"/>
+		<result column="PROJECTID_CODE" property="projectid_code"/>		
 		<result column="PROJECTID_NAME" property="projectid_name"/>
 		<result column="FACT_ORDER" property="fact_order"/>
 		<result column="PROJECT_STATUS" property="project_status"/>
@@ -25,10 +26,9 @@
 		<result column="MODIFIEDTIME" property="modifiedtime"/>
 		<result column="CREATOR_NAME" property="creator_name"/>
 		<result column="MODIFIER_NAME" property="modifier_name"/>
-		<result column="ASSIGN_TIME" property="assign_time"/>
     </resultMap>
     <sql id="Base_Column_List">
-		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,JUDGE_STANDARD,POLLING_VALUE,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME
+		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,JUDGE_STANDARD,POLLING_VALUE,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME
 	</sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -55,12 +55,13 @@
 
     <insert id="insert" parameterType="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBodyVO">
 		insert into PRM_TASK_B (
-		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,JUDGE_STANDARD,POLLING_VALUE,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME
+		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,JUDGE_STANDARD,POLLING_VALUE,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME
 		)
 		values (
 		#{pk_task,jdbcType=VARCHAR},
 		#{plan_order,jdbcType=INTEGER},
 		#{projectid,jdbcType=VARCHAR},
+		#{projectid_code,jdbcType=VARCHAR},
 		#{projectid_name,jdbcType=VARCHAR},
 		#{fact_order,jdbcType=INTEGER},
 		#{project_status,jdbcType=INTEGER},
@@ -80,22 +81,20 @@
 		#{modifier,jdbcType=VARCHAR},
 		#{modifiedtime,jdbcType=TIMESTAMP},
 		#{creator_name,jdbcType=VARCHAR},
-		#{modifier_name,jdbcType=VARCHAR},
-		#{assign_time,jdbcType=TIMESTAMP}
+		#{modifier_name,jdbcType=VARCHAR}
 		)
 	</insert>
 
     <insert id="batchInsert" parameterType="java.util.List">
 		insert into PRM_TASK_B (
-		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,JUDGE_STANDARD,POLLING_VALUE,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME
+		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,JUDGE_STANDARD,POLLING_VALUE,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME
 		)
-		values
-		<foreach collection="list" item="item" index="index"
-			separator=",">
-			(
+		<foreach collection="list" item="item" index="index" separator="union" open="(" close=")">
+		select
 		#{item.pk_task,jdbcType=VARCHAR},
 		#{item.plan_order,jdbcType=INTEGER},
 		#{item.projectid,jdbcType=VARCHAR},
+		#{item.projectid_code,jdbcType=VARCHAR},
 		#{item.projectid_name,jdbcType=VARCHAR},
 		#{item.fact_order,jdbcType=INTEGER},
 		#{item.project_status,jdbcType=INTEGER},
@@ -115,9 +114,8 @@
 		#{item.modifier,jdbcType=VARCHAR},
 		#{item.modifiedtime,jdbcType=TIMESTAMP},
 		#{item.creator_name,jdbcType=VARCHAR},
-		#{item.modifier_name,jdbcType=VARCHAR},
-		#{item.assign_time,jdbcType=TIMESTAMP}
-			)
+		#{item.modifier_name,jdbcType=VARCHAR}
+		from dual
 		</foreach>
 	</insert>
     <insert id="insertSelective" parameterType="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBodyVO">
@@ -131,6 +129,9 @@
 			</if>
 			<if test="projectid != null">
 				PROJECTID,
+			</if>
+			<if test="projectid_code != null">
+				PROJECTID_CODE,
 			</if>
 			<if test="projectid_name != null">
 				PROJECTID_NAME,
@@ -192,9 +193,6 @@
 			<if test="modifier_name != null">
 				MODIFIER_NAME,
 			</if>
-			<if test="assign_time != null">
-				ASSIGN_TIME,
-			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="pk_task != null">
@@ -205,6 +203,9 @@
 			</if>
 			<if test="projectid != null">
 				#{projectid,jdbcType=VARCHAR},
+			</if>
+			<if test="projectid_code != null">
+				#{projectid_code,jdbcType=VARCHAR},
 			</if>
 			<if test="projectid_name != null">
 				#{projectid_name,jdbcType=VARCHAR},
@@ -266,9 +267,6 @@
 			<if test="modifier_name != null">
 				#{modifier_name,jdbcType=VARCHAR},
 			</if>
-			<if test="assign_time != null">
-				#{assign_time,jdbcType=TIMESTAMP},
-			</if>
 		</trim>
 	</insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBodyVO">
@@ -282,6 +280,9 @@
 			</if>
 			<if test="projectid != null">
 				PROJECTID = #{projectid,jdbcType=VARCHAR},
+			</if>
+			<if test="projectid_code != null">
+				PROJECTID_CODE = #{projectid_code,jdbcType=VARCHAR},
 			</if>
 			<if test="projectid_name != null">
 				PROJECTID_NAME = #{projectid_name,jdbcType=VARCHAR},
@@ -343,9 +344,6 @@
 			<if test="modifier_name != null">
 				MODIFIER_NAME = #{modifier_name,jdbcType=VARCHAR},
 			</if>
-			<if test="assign_time != null">
-				ASSIGN_TIME = #{assign_time,jdbcType=TIMESTAMP},
-			</if>
 		</set>
 		where ID = #{id} 
 		<!--and ts = #ts-->
@@ -356,6 +354,7 @@
 				PK_TASK = #{pk_task,jdbcType=VARCHAR},
 				PLAN_ORDER = #{plan_order,jdbcType=INTEGER},
 				PROJECTID = #{projectid,jdbcType=VARCHAR},
+				PROJECTID_CODE = #{projectid_code,jdbcType=VARCHAR},
 				PROJECTID_NAME = #{projectid_name,jdbcType=VARCHAR},
 				FACT_ORDER = #{fact_order,jdbcType=INTEGER},
 				PROJECT_STATUS = #{project_status,jdbcType=INTEGER},
@@ -374,8 +373,7 @@
 				MODIFIER = #{modifier,jdbcType=VARCHAR},
 				MODIFIEDTIME = #{modifiedtime,jdbcType=TIMESTAMP},
 				CREATOR_NAME = #{creator_name,jdbcType=VARCHAR},
-				MODIFIER_NAME = #{modifier_name,jdbcType=VARCHAR},
-				ASSIGN_TIME = #{assign_time,jdbcType=TIMESTAMP}
+				MODIFIER_NAME = #{modifier_name,jdbcType=VARCHAR}
 		where ID = #{id}
 		<!-- and ts = #ts-->
 	</update>
@@ -389,6 +387,7 @@
 				PK_TASK = #{item.pk_task,jdbcType=VARCHAR},
 				PLAN_ORDER = #{item.plan_order,jdbcType=INTEGER},
 				PROJECTID = #{item.projectid,jdbcType=VARCHAR},
+				PROJECTID_CODE = #{item.projectid_code,jdbcType=VARCHAR},
 				PROJECTID_NAME = #{item.projectid_name,jdbcType=VARCHAR},
 				FACT_ORDER = #{item.fact_order,jdbcType=INTEGER},
 				PROJECT_STATUS = #{item.project_status,jdbcType=INTEGER},
@@ -407,8 +406,7 @@
 				MODIFIER = #{item.modifier,jdbcType=VARCHAR},
 				MODIFIEDTIME = #{item.modifiedtime,jdbcType=TIMESTAMP},
 				CREATOR_NAME = #{item.creator_name,jdbcType=VARCHAR},
-				MODIFIER_NAME = #{item.modifier_name,jdbcType=VARCHAR},
-				ASSIGN_TIME = #{item.assign_time,jdbcType=TIMESTAMP}
+				MODIFIER_NAME = #{item.modifier_name,jdbcType=VARCHAR}
 			</set>
 			where ID = #{item.id} 
 		</foreach>
@@ -435,13 +433,18 @@
 	
 	<select id="queryProjectAndContent" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
-		SELECT H.ID          PROJECTID,
-		       H.NAME        PROJECTID_NAME,
-		       B.CPRJCONTENT PROJECT_CONTENT,
-		       B.CJUDSTD     JUDGE_STANDARD
-		  FROM PRM_PROJECT H
-		 INNER JOIN PRM_PROJECT_B B ON H.ID = B.CPARENTID
-		 WHERE H.DR=0 AND B.DR=0
+		  SELECT PLANB.PK_ER_PROJECT   PROJECTID,
+		         PLANB.ER_PROJECT_CODE PROJECTID_CODE,
+		         PLANB.ER_PROJECT_NAME PROJECTID_NAME,
+		         PROJECTB.CPRJCONTENT  PROJECT_CONTENT,
+		         PROJECTB.CJUDSTD      JUDGE_STANDARD
+		    FROM PRM_PLAN PLAN
+		   INNER JOIN PRM_PLAN_B PLANB ON PLAN.ID = PLANB.PK_PLAN
+		   INNER JOIN PRM_PROJECT_B PROJECTB ON PLANB.PK_ER_PROJECT =
+		                                        PROJECTB.CPARENTID
+		   WHERE PLANB.DR = 0
+		     AND PROJECTB.DR = 0
+		     AND PLAN.ID = #{planid}
 	</select>
 	
 </mapper>

@@ -63,7 +63,7 @@ public class InspectionTaskController extends BaseController {
 	 */
 	private static Map<String, String> bodyDisplayID2Name = new HashMap<String, String>() {
 		{
-			put("projectid", "projectid_name");// 项目编码
+			put("projectid", "projectid_code");// 项目编码
 
 		}
 	};
