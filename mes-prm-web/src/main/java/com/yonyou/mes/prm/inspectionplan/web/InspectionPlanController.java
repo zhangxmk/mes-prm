@@ -42,7 +42,7 @@ import com.yonyou.mes.prm.core.inspectionplan.service.IInspectionPlanService;
  */
 
 @RestController
-@RequestMapping(value = "/er/inspectionplan")
+@RequestMapping(value = "/prm/inspectionplan")
 public class InspectionPlanController extends BaseController {
 
 	@Autowired

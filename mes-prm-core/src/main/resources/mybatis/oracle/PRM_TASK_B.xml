@@ -418,8 +418,12 @@
 		resultType="java.util.List">
 		SELECT
 		<include refid="Base_Column_List" />
-		from PRM_TASK_B where 1=1
-		<if test="search != null">
+		from PRM_TASK_B where DR=0
+		<if test="search.searchMap != null">
+			<if
+				test="search.searchMap.id!=null and search.searchMap.id!='' ">
+				and PK_TASK = #{search.searchMap.id}
+			</if>
         </if>
     </select>
     

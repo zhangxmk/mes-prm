@@ -40,7 +40,7 @@ import com.yonyou.mes.prm.core.inspectionregion.service.IInspectionRegionService
  * 2018年2月7日
  */
 @RestController
-@RequestMapping(value = "/er/inspectionregion")
+@RequestMapping(value = "/prm/inspectionregion")
 public class InspectionRegionController extends BaseController {
 
 	@Autowired
