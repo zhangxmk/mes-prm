@@ -65,7 +65,7 @@
 		ID in
 		<foreach collection="list" item="item" index="index"
 			separator="," open="(" close=")">
-		#{item.id}
+		#{item}
 		</foreach>
 	</delete>
 

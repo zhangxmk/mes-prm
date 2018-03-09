@@ -31,17 +31,24 @@
 		from PRM_TEMPTASK_B
 		where ID = #{id}
 	</select>
+	<select id="selectByParentKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from PRM_TEMPTASK_B
+		where pk_temptask = #{id} and DR=0
+	</select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-		delete from PRM_TEMPTASK_B
+		update PRM_TEMPTASK_B set dr=1
 		where ID = #{id}
 	</delete>
     <delete id="batchDeleteByPrimaryKey" parameterType="java.util.List">
-		delete from PRM_TEMPTASK_B
+		update PRM_TEMPTASK_B set dr=1
 		where
 		ID in
 		<foreach collection="list" item="item" index="index"
 			separator="," open="(" close=")">
-		#{item.ID}
+		#{item}
 		</foreach>
 	</delete>
 
@@ -281,20 +288,11 @@
 				VPRJCONTENT = #{vprjcontent,jdbcType=VARCHAR},
 				VPRJCRITERION = #{vprjcriterion,jdbcType=VARCHAR},
 				VQCVALUE = #{vqcvalue,jdbcType=VARCHAR},
-				PK_TEMPTASK = #{pk_temptask,jdbcType=VARCHAR},
-				TENANTID = #{tenantid,jdbcType=VARCHAR},
-				SYSID = #{sysid,jdbcType=VARCHAR},
-				ORGID = #{orgid,jdbcType=VARCHAR},
-				ORGID_NAME = #{orgid_name,jdbcType=VARCHAR},
 				TS = #{ts,jdbcType=TIMESTAMP},
-				DR = #{dr,jdbcType=INTEGER},
-				CREATOR = #{creator,jdbcType=VARCHAR},
-				CREATOR_NAME = #{creator_name,jdbcType=VARCHAR},
-				CREATIONTIME = #{creationtime,jdbcType=TIMESTAMP},
 				MODIFIER = #{modifier,jdbcType=VARCHAR},
 				MODIFIER_NAME = #{modifier_name,jdbcType=VARCHAR},
 				MODIFIEDTIME = #{modifiedtime,jdbcType=TIMESTAMP}
-		where ID = #{ID}
+		where ID = #{id}
 		<!-- and ts = #ts-->
 	</update>
 

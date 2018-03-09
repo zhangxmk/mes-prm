@@ -277,7 +277,7 @@ public class TempTaskHeadVO extends MeSuperVO{
 	@Override
 	public String getTableName() {
 		// TODO 自动生成的方法存根
-		return null;
+		return "prm_temptask";
 	}
 
 

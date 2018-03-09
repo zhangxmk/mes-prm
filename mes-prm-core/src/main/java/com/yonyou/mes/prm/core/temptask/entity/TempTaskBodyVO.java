@@ -4,13 +4,11 @@ import java.sql.Timestamp;
 
 import com.yonyou.me.entity.MeSuperVO;
 
-
-
 /**
  * mybatis方式
  */
-public class TempTaskBodyVO extends MeSuperVO{
-	
+public class TempTaskBodyVO extends MeSuperVO {
+
 	public static final String PARENTID = "pk_temptask";
 
 	private String id;
@@ -24,13 +22,14 @@ public class TempTaskBodyVO extends MeSuperVO{
 	private String orgid;
 	private String orgid_name;
 	private Integer dr;
+	private Timestamp ts;
 	private String creator;
 	private String creator_name;
 	private String modifier;
 	private String modifier_name;
+
 	public TempTaskBodyVO() {
 	}
-    
 
 	public String getId() {
 		return this.id;
@@ -40,7 +39,6 @@ public class TempTaskBodyVO extends MeSuperVO{
 		this.id = id;
 	}
 
-
 	public String getVrowno() {
 		return this.vrowno;
 	}
@@ -48,7 +46,6 @@ public class TempTaskBodyVO extends MeSuperVO{
 	public void setVrowno(String vrowno) {
 		this.vrowno = vrowno;
 	}
-
 
 	public String getVprjcontent() {
 		return this.vprjcontent;
@@ -58,7 +55,6 @@ public class TempTaskBodyVO extends MeSuperVO{
 		this.vprjcontent = vprjcontent;
 	}
 
-
 	public String getVprjcriterion() {
 		return this.vprjcriterion;
 	}
@@ -66,7 +62,6 @@ public class TempTaskBodyVO extends MeSuperVO{
 	public void setVprjcriterion(String vprjcriterion) {
 		this.vprjcriterion = vprjcriterion;
 	}
-
 
 	public String getVqcvalue() {
 		return this.vqcvalue;
@@ -76,7 +71,6 @@ public class TempTaskBodyVO extends MeSuperVO{
 		this.vqcvalue = vqcvalue;
 	}
 
-
 	public String getPk_temptask() {
 		return this.pk_temptask;
 	}
@@ -84,7 +78,6 @@ public class TempTaskBodyVO extends MeSuperVO{
 	public void setPk_temptask(String pk_temptask) {
 		this.pk_temptask = pk_temptask;
 	}
-
 
 	public String getTenantid() {
 		return this.tenantid;
@@ -94,7 +87,6 @@ public class TempTaskBodyVO extends MeSuperVO{
 		this.tenantid = tenantid;
 	}
 
-
 	public String getSysid() {
 		return this.sysid;
 	}
@@ -102,7 +94,6 @@ public class TempTaskBodyVO extends MeSuperVO{
 	public void setSysid(String sysid) {
 		this.sysid = sysid;
 	}
-
 
 	public String getOrgid() {
 		return this.orgid;
@@ -112,7 +103,6 @@ public class TempTaskBodyVO extends MeSuperVO{
 		this.orgid = orgid;
 	}
 
-
 	public String getOrgid_name() {
 		return this.orgid_name;
 	}
@@ -120,7 +110,6 @@ public class TempTaskBodyVO extends MeSuperVO{
 	public void setOrgid_name(String orgid_name) {
 		this.orgid_name = orgid_name;
 	}
-
 
 	public Integer getDr() {
 		return this.dr;
@@ -130,7 +119,6 @@ public class TempTaskBodyVO extends MeSuperVO{
 		this.dr = dr;
 	}
 
-
 	public String getCreator() {
 		return this.creator;
 	}
@@ -138,7 +126,6 @@ public class TempTaskBodyVO extends MeSuperVO{
 	public void setCreator(String creator) {
 		this.creator = creator;
 	}
-
 
 	public String getCreator_name() {
 		return this.creator_name;
@@ -148,7 +135,6 @@ public class TempTaskBodyVO extends MeSuperVO{
 		this.creator_name = creator_name;
 	}
 
-
 	public String getModifier() {
 		return this.modifier;
 	}
@@ -156,7 +142,6 @@ public class TempTaskBodyVO extends MeSuperVO{
 	public void setModifier(String modifier) {
 		this.modifier = modifier;
 	}
-
 
 	public String getModifier_name() {
 		return this.modifier_name;
@@ -166,20 +151,17 @@ public class TempTaskBodyVO extends MeSuperVO{
 		this.modifier_name = modifier_name;
 	}
 
-
 	@Override
 	public String getName() {
 		// TODO 自动生成的方法存根
 		return null;
 	}
 
-
 	@Override
 	public void setName(String name) {
 		// TODO 自动生成的方法存根
-		
-	}
 
+	}
 
 	@Override
 	public String getCode() {
@@ -187,13 +169,11 @@ public class TempTaskBodyVO extends MeSuperVO{
 		return null;
 	}
 
-
 	@Override
 	public Timestamp getCreationtime() {
 		// TODO 自动生成的方法存根
 		return null;
 	}
-
 
 	@Override
 	public Timestamp getModifiedtime() {
@@ -201,13 +181,11 @@ public class TempTaskBodyVO extends MeSuperVO{
 		return null;
 	}
 
-
 	@Override
 	public String getOriginalid() {
 		// TODO 自动生成的方法存根
 		return null;
 	}
-
 
 	@Override
 	public String getParentid() {
@@ -215,60 +193,47 @@ public class TempTaskBodyVO extends MeSuperVO{
 		return null;
 	}
 
-
 	@Override
 	public String getTableName() {
-		// TODO 自动生成的方法存根
-		return null;
+		return "prm_temptask_b";
 	}
-
 
 	@Override
 	public Timestamp getTs() {
-		// TODO 自动生成的方法存根
-		return null;
+		return ts;
 	}
-
 
 	@Override
 	public void setCode(String code) {
 		// TODO 自动生成的方法存根
-		
-	}
 
+	}
 
 	@Override
 	public void setCreationtime(Timestamp creationtime) {
 		// TODO 自动生成的方法存根
-		
 	}
-
 
 	@Override
 	public void setModifiedtime(Timestamp modifiedtime) {
 		// TODO 自动生成的方法存根
-		
-	}
 
+	}
 
 	@Override
 	public void setOriginalid(String originalid) {
 		// TODO 自动生成的方法存根
-		
-	}
 
+	}
 
 	@Override
 	public void setParentid(String parentid) {
-		// TODO 自动生成的方法存根
-		
-	}
 
+	}
 
 	@Override
 	public void setTs(Timestamp ts) {
-		// TODO 自动生成的方法存根
-		
+		this.ts = ts;
 	}
 
 }

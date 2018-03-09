@@ -38,7 +38,7 @@ import com.yonyou.mes.prm.core.temptask.service.ITempTaskService;
  * controller层
  */
 @RestController
-@RequestMapping(value = "/er/temptask")
+@RequestMapping(value = "/prm/temptask")
 public class TempTaskController extends BaseController {
 
 	@Autowired
@@ -48,6 +48,8 @@ public class TempTaskController extends BaseController {
 	 * classMap和nameMap分别保存Json子段名到VO类、类中所有字段的映射
 	 */
 	private final Map<String, Class<?>> classMap = new HashMap<String, Class<?>>() {
+		private static final long serialVersionUID = -3271452168552746156L;
+
 		{
 			put(EntityConst.HEAD, TempTaskHeadVO.class);
 			put(EntityConst.BODY, TempTaskBodyVO.class);
@@ -55,6 +57,8 @@ public class TempTaskController extends BaseController {
 	};
 
 	private final Map<String, String[]> nameMap = new HashMap<String, String[]>() {
+		private static final long serialVersionUID = -6363109995756930106L;
+
 		{
 			put(EntityConst.HEAD,
 					VOUtil.AllClassFields(TempTaskHeadVO.class));
@@ -85,7 +89,7 @@ public class TempTaskController extends BaseController {
 			Map<String, ViewArea> data = this.convertPageVO2DTO(classMap,
 					voMap, nameMap);
 
-			Map<String, MeSuperVO[]> voIndex = this.convertToVOMap(voMap);
+			//Map<String, MeSuperVO[]> voIndex = this.convertToVOMap(voMap);
 			// 补充名称和精度
 			// this.afterProcess(data, voIndex);
 			result.setData(data);
@@ -119,7 +123,7 @@ public class TempTaskController extends BaseController {
 
 	      Map<String, ViewArea> data = this.convertPageVO2DTO(classMap, voMap, nameMap);
 
-	      Map<String, MeSuperVO[]> voIndex = this.convertToVOMap(voMap);
+	     // Map<String, MeSuperVO[]> voIndex = this.convertToVOMap(voMap);
 //	      this.afterProcess(data, voIndex);
 	      result.setData(data);
 	    } catch (Exception ex) {
@@ -246,8 +250,9 @@ public class TempTaskController extends BaseController {
 	 * @param prefix
 	 * @return
 	 */
+	@SuppressWarnings("unused")
 	private Map<String, Object> createSearchParamsStartingWith(
-			DataTable dataTable, String prefix) {
+			DataTable<?> dataTable, String prefix) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		Map<String, Object> dtParam = dataTable.getParams();
 		Set<Map.Entry<String, Object>> set = dtParam.entrySet();
@@ -288,6 +293,8 @@ public class TempTaskController extends BaseController {
 		}
 
 		return new ArrayList<TempTaskBillVO>() {
+			private static final long serialVersionUID = 7964779130752746968L;
+
 			{
 				add(vos);
 			}
