@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.alibaba.fastjson.JSON;
 import com.yonyou.iuap.mvc.type.SearchParams;
+import com.yonyou.iuap.ref.info.RefClientPageInfo;
+import com.yonyou.iuap.ref.model.RefViewModelVO;
+import com.yonyou.iuap.ref.sdk.refmodel.model.AbstractGridRefModel;
 import com.yonyou.me.utils.context.MeInvocationInfoProxy;
 import com.yonyou.me.utils.exception.ExceptionUtils;
 import com.yonyou.mes.prm.core.inspectionproject.entity.InspectionProjectHeadVO;
 import com.yonyou.mes.prm.core.inspectionproject.service.IInspectionProjectService;
 
-import iuap.ref.ref.RefClientPageInfo;
-import iuap.ref.sdk.refmodel.model.AbstractGridRefModel;
-import iuap.ref.sdk.refmodel.vo.RefViewModelVO;
 
 /**
  * 巡检项目参照

@@ -364,7 +364,7 @@
 		resultType="java.util.List">
 		SELECT
 		<include refid="Base_Column_List" />
-		from PRM_TASK where 1=1
+		from PRM_TASK where DR=0
 		<if test="search != null">
         </if>
     </select>
@@ -372,8 +372,8 @@
 		parameterType="java.util.List">
 		select
 		<include refid="Base_Column_List" />
-		from PRM_TASK
-		where ID in
+		from PRM_TASK where DR=0
+		and ID in
 		<foreach collection="list" item="item" index="index"
 			separator="," open="(" close=")">
 		#{item}
