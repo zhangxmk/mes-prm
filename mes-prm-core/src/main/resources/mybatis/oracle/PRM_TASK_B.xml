@@ -457,6 +457,7 @@
 			from prm_task_b b 
 		inner join prm_task h on b.pk_task = h.id
 		where b.dr=0 and h.dr=0 
+			and (billstatus = 1 or billstatus = 2)
 			and h.postid = #{postid} 
 	</select>
 </mapper>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.gson.Gson;
 import com.yonyou.me.entity.MeSuperVO;
+import com.yonyou.me.http.HttpClientUtil;
 import com.yonyou.me.utils.dto.ExceptionResult;
 import com.yonyou.me.utils.dto.Result;
 import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBodyVO;
@@ -28,7 +29,7 @@ public class InspectionTask4AppController {
 	private IInspectionTaskService service;
 
 	/**
-	 * 查询已下达和执行中的巡检任务
+	 * 根据岗位查询已下达和执行中的巡检任务明细
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	public void getTaskDatas(HttpServletRequest request, HttpServletResponse response) {
@@ -43,7 +44,7 @@ public class InspectionTask4AppController {
 			
 			Gson gson = new Gson();
 			String rst = gson.toJson(result);
-			this.writeJSON(response, rst);
+			HttpClientUtil.writeJSON(response, rst);
 
 
 		} catch (Exception ex) {
@@ -51,12 +52,5 @@ public class InspectionTask4AppController {
 		}
 		
 	}
-	
-	private void writeJSON(HttpServletResponse response, String json) throws Exception{
-			response.setContentType("text/html");
-			response.setCharacterEncoding("UTF-8");
-			response.getWriter().write(json);
-			response.flushBuffer();
-		
-	}
+
 }
