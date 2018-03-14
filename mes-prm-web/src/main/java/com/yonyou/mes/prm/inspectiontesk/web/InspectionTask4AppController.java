@@ -31,7 +31,7 @@ public class InspectionTask4AppController {
 	 * 查询已下达和执行中的巡检任务
 	 */
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
-	public String getTaskDatas(HttpServletRequest request, HttpServletResponse response) {
+	public void getTaskDatas(HttpServletRequest request, HttpServletResponse response) {
 		Result result = new Result();
 		String postid = request.getParameter("postid");
 
@@ -41,14 +41,22 @@ public class InspectionTask4AppController {
 			data.put("list", list);
 			result.setData(data);
 			
+			Gson gson = new Gson();
+			String rst = gson.toJson(result);
+			this.writeJSON(response, rst);
+
 
 		} catch (Exception ex) {
 			result = ExceptionResult.process(ex);
 		}
-		Gson gson = new Gson();
-		String rst = gson.toJson(result);
-
-		return rst;
-
+		
+	}
+	
+	private void writeJSON(HttpServletResponse response, String json) throws Exception{
+			response.setContentType("text/html");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(json);
+			response.flushBuffer();
+		
 	}
 }
