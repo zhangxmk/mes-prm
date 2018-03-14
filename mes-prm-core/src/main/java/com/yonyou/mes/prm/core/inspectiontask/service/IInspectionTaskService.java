@@ -76,4 +76,13 @@ public interface IInspectionTaskService {
 	 * @return
 	 */
 	public InspectionTaskBillVO[] query(List<String> ids);
+	
+	
+	/**
+	 * 根据岗位Id查询任务中的项目明细
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public InspectionTaskBodyVO[] queryTaskDetails(String postid);
 }

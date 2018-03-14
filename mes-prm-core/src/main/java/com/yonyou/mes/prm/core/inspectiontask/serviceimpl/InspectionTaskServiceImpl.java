@@ -145,6 +145,11 @@ public class InspectionTaskServiceImpl implements IInspectionTaskService {
 		return billdao;
 	}
 
+	@Override
+	public InspectionTaskBodyVO[] queryTaskDetails(String postid) {
+		return this.bodyMapper.queryTaskDetail4App(postid);
+	}
+
 
 	
 }

@@ -38,6 +38,6 @@ public interface TaskBodyMapper {
 
     void batchDeleteByPrimaryKey(List<String> list);
     
-    
+    InspectionTaskBodyVO[] queryTaskDetail4App(String postid);
 
 }
