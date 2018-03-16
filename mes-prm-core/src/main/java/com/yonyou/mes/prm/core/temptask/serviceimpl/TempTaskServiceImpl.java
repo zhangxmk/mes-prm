@@ -56,7 +56,6 @@ public class TempTaskServiceImpl implements ITempTaskService {
 	   */
 	  @Override
 	  public Page<TempTaskBodyVO> queryBodyByPage(PageRequest pageRequest, SearchParams searchParams) {
-
 	    return bodyMapper.selectAllByPage(pageRequest, searchParams).getPage(); 
 	  }
 	/**

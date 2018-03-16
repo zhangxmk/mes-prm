@@ -330,9 +330,13 @@
 		resultType="java.util.List">
 		SELECT
 		<include refid="Base_Column_List" />
-		from PRM_TEMPTASK_B where 1=1
-		<if test="search != null">
-        </if>
+		from PRM_TEMPTASK_B where dr=0
+		<if test="search.searchMap != null">
+			<if
+				test="search.searchMap.pk_temptask!=null and search.searchMap.pk_temptask!='' ">
+				and pk_temptask = #{search.searchMap.pk_temptask}
+			</if>
+		</if>
     </select>
 
 </mapper>

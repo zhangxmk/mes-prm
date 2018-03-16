@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -27,7 +29,6 @@ import com.yonyou.me.utils.exception.ExceptionUtils;
 import com.yonyou.mes.prm.core.inspectionproject.entity.InspectionProjectHeadVO;
 import com.yonyou.mes.prm.core.inspectionproject.service.IInspectionProjectService;
 
-
 /**
  * 巡检项目参照
  * 
@@ -50,6 +51,20 @@ public class InspectProjectRefController extends AbstractGridRefModel {
 		return null;
 	}
 
+	@Override
+	public RefViewModelVO getRefModelInfo(RefViewModelVO refViewModel) {
+		RefViewModelVO refModel = super.getRefModelInfo(refViewModel);
+		//
+		refModel.setStrFieldCode(new String[] { "code", "name", "pk_orgname" });
+
+		refModel.setStrHiddenFieldCode(new String[] { "id", "refpk", "pk_org" });
+
+		refModel.setStrFieldName(new String[] { "项目编码", "项目名称", "组织名称" });
+
+		refModel.setRootName("巡检项目");
+		return refModel;
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public Map<String, Object> getCommonRefData(
@@ -59,7 +74,7 @@ public class InspectProjectRefController extends AbstractGridRefModel {
 			int pageNum = refModel.getRefClientPageInfo().getCurrPageIndex() == 0 ? 1
 					: refModel.getRefClientPageInfo().getCurrPageIndex();
 
-			int pageSize = refModel.getRefClientPageInfo().getPageSize();
+			int pageSize = 10; // refModel.getRefClientPageInfo().getPageSize();
 
 			PageRequest request = buildPageRequest(pageNum, pageSize, null);
 			// 获取过滤条件
@@ -78,7 +93,7 @@ public class InspectProjectRefController extends AbstractGridRefModel {
 						.getRefClientPageInfo();
 				refClientPageInfo.setPageCount(headpage.getTotalPages());
 				refClientPageInfo.setPageSize(pageSize);
-				refClientPageInfo.setCurrPageIndex(pageNum);
+				refClientPageInfo.setCurrPageIndex(pageNum - 1);
 				refModel.setRefClientPageInfo(refClientPageInfo);
 
 				results.put("dataList", list);
@@ -127,7 +142,7 @@ public class InspectProjectRefController extends AbstractGridRefModel {
 			results.put("tenantid", tenantid);
 			results.put("sysid", sysid);
 		}
-		if (json.containsKey("status")) {
+		if (json != null && json.containsKey("status")) {
 			results.put("status", json.get("status"));
 		}
 		param.setSearchMap(results);
@@ -164,42 +179,43 @@ public class InspectProjectRefController extends AbstractGridRefModel {
 	@Override
 	public List<Map<String, String>> matchBlurRefJSON(
 			@RequestBody RefViewModelVO refModel) {
-		// List<Map<String, String>> results = new ArrayList<Map<String,
-		// String>>();
-		// try {
-		// String tenantId = MeInvocationInfoProxy.getTenantid();
-		// String sysId = MeInvocationInfoProxy.getSysid();
-		// Map<String, Object> condition = new HashMap<String, Object>();
-		// condition.put("tenantId", tenantId);// 租户id
-		// condition.put("sysId", sysId);// 系统id
-		// String content = refModel.getContent();
-		// @SuppressWarnings("unchecked")
-		// Map<String, String> json = JSON.parseObject(content, Map.class);
-		// Map<String, String> params = new HashMap<String, String>();
-		// Set<Entry<String, String>> set = json.entrySet();
-		// for (Entry<String, String> param : set) {
-		// Object value = param.getValue();
-		// if (value != null && value != "") {
-		// if (param.getKey().equals("code")) {
-		// params.put("code", "%" + value + "%");
-		// } else if (param.getKey().equals("name")) {
-		// continue;
-		// } else {
-		// params.put(param.getKey(), "%" + value + "%");
-		// }
-		// }
-		// }
-		// condition.put("params", params);
-		// List<InspectionProjectHeadVO> rtnVal = inspectProjectService
-		// .getByNameOrCode(condition);
-		// results = buildRtnValsOfRef(rtnVal);
-		// } catch (Exception e) {
-		// log.error("获取数据异常：", e);
-		// ExceptionUtils.wrapBusinessException("获取数据异常");
-		// }
-		// return results;
+		List<Map<String, String>> results = new ArrayList<Map<String, String>>();
+		try {
+			String tenantId = MeInvocationInfoProxy.getTenantid();
+			String sysId = MeInvocationInfoProxy.getSysid();
+			Map<String, Object> condition = new HashMap<String, Object>();
+			condition.put("tenantId", tenantId);// 租户id
+			condition.put("sysId", sysId);// 系统id
+			String content = refModel.getContent();
+			@SuppressWarnings("unchecked")
+			Map<String, String> json = JSON.parseObject(content, Map.class);
+			Map<String, String> params = new HashMap<String, String>();
+			Set<Entry<String, String>> set = json.entrySet();
+			for (Entry<String, String> param : set) {
+				Object value = param.getValue();
+				if (value != null && value != "") {
+					if (param.getKey().equals("code")) {
+						params.put("code", "%" + value + "%");
+					} else if (param.getKey().equals("name")) {
+						continue;
+					} else {
+						params.put(param.getKey(), "%" + value + "%");
+					}
+				}
+			}
+			condition.put("params", params);
+			// List<InspectionProjectHeadVO> rtnVal = inspectProjectService
+			// .getByNameOrCode(condition);
+//			Page<InspectionProjectHeadVO> headpage = inspectProjectService
+//					.selectAllByPage(request, param);
+//			List<InspectionProjectHeadVO> headVOs = headpage.getContent();
+//			results = buildRtnValsOfRef(headVOs);
+		} catch (Exception e) {
+			log.error("获取数据异常：", e);
+			ExceptionUtils.wrapBusinessException("获取数据异常");
+		}
+		return results;
 
-		return null;
 	}
 
 	@Override

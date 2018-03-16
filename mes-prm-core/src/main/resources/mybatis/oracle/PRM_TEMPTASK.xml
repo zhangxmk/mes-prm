@@ -379,7 +379,7 @@
 		resultType="java.util.List">
 		SELECT
 		<include refid="Base_Column_List" />
-		from PRM_TEMPTASK where 1=1
+		from PRM_TEMPTASK where dr=0
 		<if test="search != null">
         </if>
     </select>

@@ -99,10 +99,8 @@
 		insert into PRM_PROJECT_B (
 		CPRJCONTENT,CJUDSTD,FVALUETYPE,BAUTOCOLLECT,CDATALABEL,CDATALABEL_NAME,BREQUIRED,CPARENTID,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME
 		)
-		values
-		<foreach collection="list" item="item" index="index"
-			separator=",">
-			(
+		<foreach collection="list" item="item" separator="union" open="(" close=")">
+		select
 		#{item.cprjcontent,jdbcType=VARCHAR},
 		#{item.cjudstd,jdbcType=VARCHAR},
 		#{item.fvaluetype,jdbcType=INTEGER},
@@ -120,7 +118,7 @@
 		#{item.dr,jdbcType=INTEGER},
 		#{item.creator,jdbcType=VARCHAR},
 		#{item.creationtime,jdbcType=TIMESTAMP}
-			)
+		from dual
 		</foreach>
 	</insert>
 
