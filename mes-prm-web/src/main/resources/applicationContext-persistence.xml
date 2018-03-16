@@ -109,7 +109,7 @@
         <property name="dataSource" ref="dataSource"/>
         <!-- 自动扫描entity目录, 省掉Configuration.xml里的手工配置 -->
         <property name="typeAliasesPackage"
-                  value="com.yonyou.me.utils.concurrency,com.yonyou.me.*.core.*.entity,com.yonyou.metadata.spi,com.yonyou.metadata.mybatis.util.publish.model"/>
+                  value="com.yonyou.me.utils.concurrency,com.yonyou.me.**.core.**.entity,com.yonyou.metadata.spi,com.yonyou.metadata.mybatis.util.publish.model"/>
         <!-- 显式指定Mapper文件位置 -->
         <property name="mapperLocations">
         	<!--切换数据库类型后，需要修改此处的配置文件，使用对应的数据库类型下的mapper文件-->
@@ -139,7 +139,7 @@
     
     <!-- 扫描basePackage下所有以@MyBatisRepository标识的 接口-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.yonyou.me.utils.concurrency,com.yonyou.mes.*.core.*.*repository"/>
+        <property name="basePackage" value="com.yonyou.me.utils.concurrency,com.yonyou.mes.**.core.**.*repository"/>
        <!-- <property name="annotationClass" value="com.yonyou.iuap.persistence.mybatis.anotation.MyBatisRepository"/>-->
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
