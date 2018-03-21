@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,7 +27,9 @@ import com.yonyou.me.http.RestUtils;
 @RestController
 @RequestMapping(value = "/prm/timingtask")
 public class InspectionTimingTask {
-
+	@Value("${base.url}")  
+	private String baseurl;
+	
 	@RequestMapping(value = "/createtask", method = RequestMethod.POST)
 	public @ResponseBody Object pageString(HttpServletRequest request, HttpServletResponse response, @RequestBody JSONObject data) {
 		JSONObject postData = JSONObject.fromObject(data);
@@ -59,7 +62,7 @@ public class InspectionTimingTask {
 	}
 	
 	private void executeTask() throws Exception {
-	    Thread.sleep(10000);
+	    Thread.sleep(1000);
 	}
 
 	/**
@@ -73,13 +76,13 @@ public class InspectionTimingTask {
 	 *            具体消息内容
 	 */
 	private void callBackResult(String tasklogid, String success, String msg) {
-	    String url = PropertyUtil.getPropertyByKey("base.url")
+	    String url = baseurl
 	            + "/iuap-saas-dispatch-service/taskcallback/updateTaskLog";
 	    Map<String, String> map = new HashMap<String, String>();
 	    map.put("id", tasklogid);
 	    map.put("success", success);
 	    map.put("resultValue", msg);
-	    Map<String, String> result = RestUtils.getInstance().doPostWithSign(url, map, Map.class);
+	    Map<String, String> result = RestUtils.getInstance().doPost(url, map, Map.class);
 	    System.out.println(result);
 	}
 

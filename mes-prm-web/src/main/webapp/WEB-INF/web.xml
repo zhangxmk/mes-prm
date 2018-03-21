@@ -11,7 +11,8 @@ version="2.5" metadata-complete="true">
             classpath*:/applicationContext-persistence.xml,
             classpath*:/applicationContext-shiro.xml,
             classpath*:/applicationContext-metadata.xml,
-            classpath*:/applicationContext-lock.xml
+            classpath*:/applicationContext-lock.xml,
+            classpath*:/applicationContext-http.xml
         </param-value>
     </context-param>
     <context-param>
