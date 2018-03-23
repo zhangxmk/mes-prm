@@ -104,7 +104,6 @@ public class InspectionTaskController extends BaseController {
 					pageVO.getPageRequest(), pageVO.getSearchParams());
 			Map<String, Page<?>> voMap = new HashMap<String, Page<?>>();
 			voMap.put(EntityConst.HEAD, pageVOs);
-
 			Map<String, ViewArea> data = this.convertPageVO2DTO(classMap,
 					voMap, nameMap);
 
