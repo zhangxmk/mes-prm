@@ -29,7 +29,7 @@ import com.yonyou.mes.prm.core.inspectiontask.service.IInspectionTaskService;
  * 2018年3月12日
  */
 @RestController
-@RequestMapping(value = "/prm/timingtask")
+@RequestMapping(value = "/prm/timingtask/restWithSign")
 public class InspectionTimingTask {
 	private Logger logger = LoggerFactory.getLogger(InspectionTimingTask.class);
 	
@@ -88,7 +88,7 @@ public class InspectionTimingTask {
 	    map.put("id", tasklogid);
 	    map.put("success", success);
 	    map.put("resultValue", msg);
-	    Map<String, String> result = RestUtils.getInstance().doPost(url, map, Map.class);
+	    Map<String, String> result = RestUtils.getInstance().doPostWithSign(url, map, Map.class);
 //	    System.out.println(result);
 	    logger.error(result.toString());
 	    logger.error("任务执行结束");
