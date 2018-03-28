@@ -11,7 +11,7 @@ import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,7 +32,8 @@ import com.yonyou.mes.prm.core.inspectiontask.service.IInspectionTaskService;
 @RequestMapping(value = "/prm/timingtask/restWithSign")
 public class InspectionTimingTask {
 	private Logger logger = LoggerFactory.getLogger(InspectionTimingTask.class);
-	
+	@Autowired
+	private ThreadPoolTaskExecutor threadPoolTaskExecutor;
 	@Autowired
 	private IInspectionTaskService service;
 	
@@ -47,6 +48,7 @@ public class InspectionTimingTask {
 	        	planid = dataBody.getString("planid");
 	        }
 	    }
+	    String id = planid;
 	    String tasklogid = postData.getString("tasklogid");
 	    
 	    response.setCharacterEncoding("utf-8");
@@ -56,13 +58,19 @@ public class InspectionTimingTask {
 	    map.put("sendMsgContent", "任务执行中！");
 	    map.put("asynchronized", "true");// 是否异步。如果异步的话，则显示任务执行中
 
-	
-        try {
-            executeTask(planid);
-            callBackResult(tasklogid, "true", "任务执行成功！");
-        } catch (Exception e) {
-            callBackResult(tasklogid, "false", e.getMessage());
-        }
+	    threadPoolTaskExecutor.execute(new Runnable() {
+			@Override
+			public void run() {
+				try {
+		            executeTask(id);
+		            callBackResult(tasklogid, "true", "任务执行成功！");
+		        } catch (Exception e) {
+		            callBackResult(tasklogid, "false", e.getMessage());
+		        }
+			}
+	    }
+	    );
+        
 	    return map;		
 	}
 	

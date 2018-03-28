@@ -4,6 +4,7 @@ import com.yonyou.me.constance.EntityConst;
 import com.yonyou.me.entity.AbstractMeBillVO;
 import com.yonyou.me.entity.ApproveMeta;
 import com.yonyou.me.entity.BillCodeMeta;
+import com.yonyou.me.utils.busitype.MesBusitypeConst;
 
 /**
  * 巡检任务aggvo
@@ -12,6 +13,10 @@ import com.yonyou.me.entity.BillCodeMeta;
  * 2018年3月1日
  */
 public class InspectionTaskBillVO  extends AbstractMeBillVO{
+	/**
+	 * 单据编码定义
+	 */
+	private static final BillCodeMeta BillCodeMeta = new BillCodeMeta(MesBusitypeConst.BUSITYPECODE_PRM_TASK, "task_no");
 
 	@Override
 	public ApproveMeta getApproveMeta() {
@@ -21,8 +26,7 @@ public class InspectionTaskBillVO  extends AbstractMeBillVO{
 
 	@Override
 	public BillCodeMeta getBillCodeMeta() {
-		// TODO 自动生成的方法存根
-		return null;
+		return BillCodeMeta;
 	}
 
 	@Override
