@@ -85,4 +85,11 @@ public interface IInspectionTaskService {
 	 * @return
 	 */
 	public InspectionTaskBodyVO[] queryTaskDetails(String postid);
+	
+	/**
+	 * 
+	 * @param planid
+	 * @return
+	 */
+	public InspectionTaskBillVO createTaskBill(String planid);
 }

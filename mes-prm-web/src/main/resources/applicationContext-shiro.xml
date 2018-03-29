@@ -10,6 +10,7 @@
 	<bean id="statelessRealm" class="com.yonyou.iuap.auth.shiro.StatelessRealm">
 		<property name="cachingEnabled" value="false" />
 	</bean>
+	<bean id="defineShiroDbRealm" class="com.yonyou.uap.ieop.security.realm.DefineShiroDbRealm"/>
 
 	<!-- Subject工厂 -->
 	<bean id="subjectFactory"
@@ -24,11 +25,9 @@
 		<property name="exacts">
 			<list>
 				<value type="java.lang.String">tenantid</value>
-				<!-- 新增授权部分部分字段  -->
-		         <value type="java.lang.String">userId</value>
-		         <value type="java.lang.String">userType</value>
-		         <value type="java.lang.String">typeAlias</value>
-		         <!-- 新增授权部分部分字段 end -->
+				<value type="java.lang.String">userId</value>
+				<value type="java.lang.String">userType</value>
+				<value type="java.lang.String">typeAlias</value>
 			</list>
 		</property>
 	</bean>
@@ -42,11 +41,9 @@
 		<property name="exacts">
 			<list>
 				<value type="java.lang.String">tenantid</value>
-								<!-- 新增授权部分部分字段  -->
-		         <value type="java.lang.String">userId</value>
-		         <value type="java.lang.String">userType</value>
-		         <value type="java.lang.String">typeAlias</value>
-		         <!-- 新增授权部分部分字段 end -->
+				<value type="java.lang.String">userId</value>
+				<value type="java.lang.String">userType</value>
+				<value type="java.lang.String">typeAlias</value>
 			</list>
 		</property>
 	</bean>
@@ -71,6 +68,7 @@
 		<property name="realms">
 			<list>
 				<ref bean="statelessRealm" />
+				<ref bean="defineShiroDbRealm" />
 			</list>
 		</property>
 		<property name="subjectDAO.sessionStorageEvaluator.sessionStorageEnabled"
@@ -90,6 +88,12 @@
 	<bean id="statelessAuthcFilter" class="com.yonyou.iuap.auth.shiro.StatelessAuthcFilter">
 		<property name="sysid" value="${sysid}" />
 		<property name="tokenFactory" ref="tokenFactory" />
+		<property name="loginUrl" value="${loginUrl}" />
+	</bean>
+	
+	<bean id="signAuthFilter" class="com.yonyou.iuap.generic.filter.SignAuthFilter">
+		<property name="prefix" value="${context.name}" />
+		<property name="authFilePath" value="${authfile.path}"/>
 	</bean>
 
 	<bean id="logout" class="com.yonyou.iuap.auth.shiro.LogoutFilter"></bean>
@@ -102,19 +106,21 @@
 		<property name="filters">
 			<util:map>
 				<entry key="statelessAuthc" value-ref="statelessAuthcFilter" />
+				<entry key="signAuth" value-ref="signAuthFilter" />
 			</util:map>
 		</property>
 		<property name="filterChainDefinitions">
 			<value>
 				/logout = logout
-				/static/** = anon
-				/css/** = anon
-				/images/** = anon
-				/trd/** = anon
-				/js/** = anon
-				/api/** = anon
-				/cxf/** = anon
-				/jaxrs/** = anon
+				/**/static/** = anon
+				/**/css/** = anon
+				/**/images/** = anon
+				/**/trd/** = anon
+				/**/js/** = anon
+				/**/api/** = anon
+				/**/cxf/** = anon
+				/**/jaxrs/** = anon
+				/**/restWithSign/** = signAuth
 				/** = statelessAuthc
 			</value>
 		</property>

@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.yonyou.iuap.mvc.type.SearchParams;
 import com.yonyou.me.entity.AbstractMeBillVO;
 import com.yonyou.me.utils.exception.ExceptionUtils;
+import com.yonyou.me.utils.oid.MeIDGenerator;
 import com.yonyou.me.utils.repository.BillPersistent;
 import com.yonyou.me.utils.service.bill.BillDeleteService;
 import com.yonyou.me.utils.service.bill.BillSaveService;
@@ -148,6 +149,19 @@ public class InspectionTaskServiceImpl implements IInspectionTaskService {
 	@Override
 	public InspectionTaskBodyVO[] queryTaskDetails(String postid) {
 		return this.bodyMapper.queryTaskDetail4App(postid);
+	}
+
+	@Override
+	public InspectionTaskBillVO createTaskBill(String planid) {
+		
+		InspectionTaskHeadVO head = new InspectionTaskHeadVO();
+		String id = MeIDGenerator.generateObjectID();
+		head.setId(id);
+		head.setCode("123");
+		head.setName("任务test");
+		this.headMapper.insert(head);
+		// TODO 自动生成的方法存根
+		return null;
 	}
 
 

@@ -8,6 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yonyou.iuap.utils.PropertyUtil;
 import com.yonyou.me.http.RestUtils;
+import com.yonyou.mes.prm.core.inspectiontask.service.IInspectionTaskService;
 
 /**
  * 巡检任务后台任务处理
@@ -24,21 +29,27 @@ import com.yonyou.me.http.RestUtils;
  * 2018年3月12日
  */
 @RestController
-@RequestMapping(value = "/prm/timingtask")
+@RequestMapping(value = "/prm/timingtask/restWithSign")
 public class InspectionTimingTask {
-
+	private Logger logger = LoggerFactory.getLogger(InspectionTimingTask.class);
+	@Autowired
+	private ThreadPoolTaskExecutor threadPoolTaskExecutor;
+	@Autowired
+	private IInspectionTaskService service;
+	
 	@RequestMapping(value = "/createtask", method = RequestMethod.POST)
 	public @ResponseBody Object pageString(HttpServletRequest request, HttpServletResponse response, @RequestBody JSONObject data) {
 		JSONObject postData = JSONObject.fromObject(data);
 	    JSONObject dataBody = postData.getJSONObject("data");
 
-	    final String param1;
+	    String planid = "";
 	    if (dataBody != null && !dataBody.isNullObject()) {
 	        if (dataBody.has("planid")) {
-	            param1 = dataBody.getString("planid");
+	        	planid = dataBody.getString("planid");
 	        }
 	    }
-	    final String tasklogid = postData.getString("tasklogid");
+	    String id = planid;
+	    String tasklogid = postData.getString("tasklogid");
 	    
 	    response.setCharacterEncoding("utf-8");
 	    Map<String, String> map = new HashMap<String, String>();
@@ -47,19 +58,25 @@ public class InspectionTimingTask {
 	    map.put("sendMsgContent", "任务执行中！");
 	    map.put("asynchronized", "true");// 是否异步。如果异步的话，则显示任务执行中
 
-	
-	            try {
-	                executeTask();
-	                callBackResult(tasklogid, "true", "任务执行成功！");
-	            } catch (Exception e) {
-	                callBackResult(tasklogid, "false", e.getMessage());
-	            }
-
+	    threadPoolTaskExecutor.execute(new Runnable() {
+			@Override
+			public void run() {
+				try {
+		            executeTask(id);
+		            callBackResult(tasklogid, "true", "任务执行成功！");
+		        } catch (Exception e) {
+		            callBackResult(tasklogid, "false", e.getMessage());
+		        }
+			}
+	    }
+	    );
+        
 	    return map;		
 	}
 	
-	private void executeTask() throws Exception {
-	    Thread.sleep(10000);
+	private void executeTask(String planid) throws Exception {
+		logger.error("任务执行开始");
+		service.createTaskBill(planid);
 	}
 
 	/**
@@ -80,7 +97,9 @@ public class InspectionTimingTask {
 	    map.put("success", success);
 	    map.put("resultValue", msg);
 	    Map<String, String> result = RestUtils.getInstance().doPostWithSign(url, map, Map.class);
-	    System.out.println(result);
+//	    System.out.println(result);
+	    logger.error(result.toString());
+	    logger.error("任务执行结束");
 	}
 
 }

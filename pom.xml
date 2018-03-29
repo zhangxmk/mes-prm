@@ -4,7 +4,7 @@
   <artifactId>mes-prm</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>com.yonyou.mes.er</name>
+  <name>com.yonyou.mes.prm</name>
   
      <dependencies>
 		<dependency>

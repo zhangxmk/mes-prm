@@ -69,6 +69,7 @@ under the License.
    | Default: false
   <offline>false</offline>
   -->
+  <offline>true</offline>
 
   <!-- pluginGroups
    | This is a list of additional group identifiers that will be searched when resolving plugins by their prefix, i.e.
