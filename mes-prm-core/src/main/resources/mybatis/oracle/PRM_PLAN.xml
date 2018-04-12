@@ -471,15 +471,15 @@
         <if test="search != null and search.searchMap != null">
 			<choose>
                 <when test="search.searchMap.seeDisable == null">
-                    and enablestate in (0,1)
+                    and enablestate in (1)
                 </when>
                 <otherwise>
                 	<choose>
                 		<when test="search.searchMap.seeDisable != null and search.searchMap.seeDisable == true">
-                    		and enablestate in (0,1,2)
+                    		and enablestate in (0,1)
                 		</when>
                 		<otherwise>
-                    		and enablestate in (0,1)
+                    		and enablestate in (1)
                 		</otherwise>
             		</choose>
                 </otherwise>
