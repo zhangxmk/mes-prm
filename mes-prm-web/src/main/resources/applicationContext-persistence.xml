@@ -110,6 +110,7 @@
         <!-- 自动扫描entity目录, 省掉Configuration.xml里的手工配置 -->
         <property name="typeAliasesPackage"
                   value="com.yonyou.me.utils.concurrency,com.yonyou.me.**.core.**.entity,com.yonyou.metadata.spi,com.yonyou.metadata.mybatis.util.publish.model"/>
+        <property name="configLocation" value="classpath:/mbconf/mybatis-config.xml"></property>
         <!-- 显式指定Mapper文件位置 -->
         <property name="mapperLocations">
         	<!--切换数据库类型后，需要修改此处的配置文件，使用对应的数据库类型下的mapper文件-->
