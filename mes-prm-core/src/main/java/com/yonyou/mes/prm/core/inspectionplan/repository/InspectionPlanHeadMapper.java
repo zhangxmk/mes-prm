@@ -16,7 +16,7 @@ public interface InspectionPlanHeadMapper {
     int deleteByPrimaryKey(String id);
 
     int insert(InspectionPlanHeadVO record);
-
+    
     int insertSelective(InspectionPlanHeadVO record);
 
     InspectionPlanHeadVO selectByPrimaryKey(String id);

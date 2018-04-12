@@ -51,6 +51,14 @@ public interface IInspectionPlanService {
 	 */
 	@Transactional
 	public InspectionPlanBillVO update(InspectionPlanBillVO vo);
+	
+	/**
+	 * 版本变更
+	 * 
+	 * @param vo
+	 */
+	@Transactional
+	public InspectionPlanBillVO vchange(InspectionPlanBillVO vo);
 
 	/**
 	 * 批量删除

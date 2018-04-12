@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.yonyou.iuap.mvc.type.SearchParams;
 import com.yonyou.me.entity.AbstractMeBillVO;
 import com.yonyou.me.entity.EnableStateVO;
+import com.yonyou.me.entity.MeSuperVO;
 import com.yonyou.me.utils.exception.ExceptionUtils;
 import com.yonyou.me.utils.repository.BillPersistent;
 import com.yonyou.me.utils.service.EnableStateServiceImpl;
@@ -171,6 +172,41 @@ public class InspectionPlanServiceImpl implements IInspectionPlanService {
 		}
 		IEnableStateService serv = new EnableStateServiceImpl();
 		serv.enableState(statelist);
+	}
+
+	@Override
+	public InspectionPlanBillVO vchange(InspectionPlanBillVO vo) {
+		// TODO 自动生成的方法存根
+		if (vo == null) {
+			ExceptionUtils.wrapBusinessException("传入数据为空");
+		}
+		BillPersistent dao = this.createBillDao();
+		BillSaveService service = new BillSaveService(dao);
+
+		// 保存前后规则
+		// service.addBeforeRule(rule);
+		// service.addAfterRule(rule);
+		// 设置填充字段
+		// TODO
+		
+		InspectionPlanHeadVO headVO = (InspectionPlanHeadVO)vo.getHead();
+		headVO.setId(null);
+		Double d = Double.valueOf(headVO.getIversion());
+		d = d + 0.1;
+		headVO.setIversion(d.toString().substring(0,3));
+		vo.setHead(headVO);
+		List<MeSuperVO> bodyList = vo.getChildren(InspectionPlanBodyVO.class);
+		List<InspectionPlanBodyVO> bList = new ArrayList<InspectionPlanBodyVO>();
+		for(MeSuperVO bodyvo:bodyList){
+			InspectionPlanBodyVO bvo = (InspectionPlanBodyVO)bodyvo;
+			bvo.setId(null);
+			bList.add(bvo);
+		}
+		vo.setChildren(InspectionPlanBodyVO.class,bList);
+		List<?> list = service.save(new AbstractMeBillVO[] { vo });
+		InspectionPlanBillVO retVo = (InspectionPlanBillVO) list.get(0);
+
+		return retVo;
 	}
 	
 }
