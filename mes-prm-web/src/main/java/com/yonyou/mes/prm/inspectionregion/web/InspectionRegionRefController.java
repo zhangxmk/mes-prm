@@ -144,9 +144,9 @@ public class InspectionRegionRefController extends AbstractGridRefModel{
         Sort sort = null;
         if (("auto".equalsIgnoreCase(sortColumn))
                 || (StringUtils.isEmpty(sortColumn))) {
-            sort = new Sort(Sort.Direction.ASC, new String[] { "ts" });
+            sort = new Sort(Sort.Direction.ASC, "ts");
         } else {
-            sort = new Sort(Sort.Direction.DESC, new String[] { sortColumn });
+            sort = new Sort(Sort.Direction.DESC, sortColumn);
         }
         return new PageRequest(pageNum - 1, pageSize, sort);
     }
