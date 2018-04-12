@@ -12,8 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.yonyou.iuap.mvc.type.SearchParams;
 import com.yonyou.me.entity.AbstractMeBillVO;
+import com.yonyou.me.entity.EnableStateVO;
 import com.yonyou.me.utils.exception.ExceptionUtils;
 import com.yonyou.me.utils.repository.BillPersistent;
+import com.yonyou.me.utils.service.EnableStateServiceImpl;
+import com.yonyou.me.utils.service.IEnableStateService;
 import com.yonyou.me.utils.service.bill.BillDeleteService;
 import com.yonyou.me.utils.service.bill.BillSaveService;
 import com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanBillVO;
@@ -138,6 +141,36 @@ public class InspectionPlanServiceImpl implements IInspectionPlanService {
 
 		
 		return billdao;
+	}
+
+	@Override
+	public void batchDisableByPrimaryKey(InspectionPlanHeadVO[] vos) {
+		// TODO 自动生成的方法存根
+		List<EnableStateVO> statelist = new ArrayList<>();
+		for (InspectionPlanHeadVO planVos:vos){
+			EnableStateVO vo = new EnableStateVO();
+			vo.setId(planVos.getId());
+			vo.setTs(planVos.getTs());
+			vo.setTableName(planVos.getTableName());
+			statelist.add(vo);
+		}
+		IEnableStateService serv = new EnableStateServiceImpl();
+		serv.unableState(statelist);
+	}
+
+	@Override
+	public void batchEnableByPrimaryKey(InspectionPlanHeadVO[] vos) {
+		// TODO 自动生成的方法存根
+		List<EnableStateVO> statelist = new ArrayList<>();
+		for (InspectionPlanHeadVO planVos:vos){
+			EnableStateVO vo = new EnableStateVO();
+			vo.setId(planVos.getId());
+			vo.setTs(planVos.getTs());
+			vo.setTableName(planVos.getTableName());
+			statelist.add(vo);
+		}
+		IEnableStateService serv = new EnableStateServiceImpl();
+		serv.enableState(statelist);
 	}
 	
 }

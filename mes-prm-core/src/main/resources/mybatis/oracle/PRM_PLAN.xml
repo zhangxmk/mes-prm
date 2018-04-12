@@ -10,6 +10,8 @@
 		<result column="PK_REGION" property="pk_region"/>
 		<result column="PK_REGION_NAME" property="pk_region_name"/>
 		<result column="ENABLESTATE" property="enablestate"/>
+		<result column="DEFPLAN" property="defplan"/>
+		<result column="INVALIDATE" property="invalidate"/>
 		<result column="TENANTID" property="tenantid"/>
 		<result column="SYSID" property="sysid"/>
 		<result column="ORGID" property="orgid"/>
@@ -30,7 +32,7 @@
 		<result column="VNOTE" property="vnote"/>
     </resultMap>
     <sql id="Base_Column_List">
-		PK_DEPT,PK_DEPT_NAME,CODE,NAME,PK_REGION,PK_REGION_NAME,ENABLESTATE,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,PK_POST,PK_POST_NAME,CYCLE,ROUTEFLAG,IVERSION,VNOTE
+		PK_DEPT,PK_DEPT_NAME,CODE,NAME,PK_REGION,PK_REGION_NAME,ENABLESTATE,DEFPLAN,INVALIDATE,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,PK_POST,PK_POST_NAME,CYCLE,ROUTEFLAG,IVERSION,VNOTE
 	</sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -57,7 +59,7 @@
 
     <insert id="insert" parameterType="com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanHeadVO">
 		insert into PRM_PLAN (
-		PK_DEPT,PK_DEPT_NAME,CODE,NAME,PK_REGION,PK_REGION_NAME,ENABLESTATE,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,PK_POST,PK_POST_NAME,CYCLE,ROUTEFLAG,IVERSION,VNOTE
+		PK_DEPT,PK_DEPT_NAME,CODE,NAME,PK_REGION,PK_REGION_NAME,ENABLESTATE,DEFPLAN,INVALIDATE,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,PK_POST,PK_POST_NAME,CYCLE,ROUTEFLAG,IVERSION,VNOTE
 		)
 		values (
 		#{pk_dept,jdbcType=VARCHAR},
@@ -67,6 +69,8 @@
 		#{pk_region,jdbcType=VARCHAR},
 		#{pk_region_name,jdbcType=VARCHAR},
 		#{enablestate,jdbcType=INTEGER},
+		#{defplan,jdbcType=INTEGER},
+		#{invalidate,jdbcType=TIMESTAMP},
 		#{id,jdbcType=VARCHAR},
 		#{tenantid,jdbcType=VARCHAR},
 		#{sysid,jdbcType=VARCHAR},
@@ -91,7 +95,7 @@
 
     <insert id="batchInsert" parameterType="java.util.List">
 		insert into PRM_PLAN (
-		PK_DEPT,PK_DEPT_NAME,CODE,NAME,PK_REGION,PK_REGION_NAME,ENABLESTATE,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,PK_POST,PK_POST_NAME,CYCLE,ROUTEFLAG,IVERSION,VNOTE
+		PK_DEPT,PK_DEPT_NAME,CODE,NAME,PK_REGION,PK_REGION_NAME,ENABLESTATE,DEFPLAN,INVALIDATE,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,PK_POST,PK_POST_NAME,CYCLE,ROUTEFLAG,IVERSION,VNOTE
 		)
 		<foreach collection="list" item="item" index="index" separator="union" open="(" close=")">
 		select
@@ -102,6 +106,8 @@
 		#{item.pk_region,jdbcType=VARCHAR},
 		#{item.pk_region_name,jdbcType=VARCHAR},
 		#{item.enablestate,jdbcType=INTEGER},
+		#{defplan,jdbcType=INTEGER},
+		#{invalidate,jdbcType=TIMESTAMP},
 		#{item.id,jdbcType=VARCHAR},
 		#{item.tenantid,jdbcType=VARCHAR},
 		#{item.sysid,jdbcType=VARCHAR},
@@ -147,6 +153,12 @@
 			</if>
 			<if test="enablestate != null">
 				ENABLESTATE,
+			</if>
+			<if test="defplan != null">
+				DEFPLAN,
+			</if>
+			<if test="invalidate != null">
+				INVALIDATE,
 			</if>
 			<if test="id != null">
 				ID,
@@ -227,6 +239,12 @@
 			</if>
 			<if test="enablestate != null">
 				#{enablestate,jdbcType=INTEGER},
+			</if>
+			<if test="defplan != null">
+				#{defplan,jdbcType=INTEGER},
+			</if>
+			<if test="invalidate != null">
+				#{invalidate,jdbcType=TIMESTAMP},
 			</if>
 			<if test="id != null">
 				#{id,jdbcType=VARCHAR},
@@ -311,6 +329,9 @@
 			<if test="enablestate != null">
 				ENABLESTATE = #{enablestate,jdbcType=INTEGER},
 			</if>
+			<if test="defplan != null">
+				DEFPLAN = #{defplan,jdbcType=INTEGER},
+			</if>
 			<if test="id != null">
 				ID = #{id,jdbcType=VARCHAR},
 			</if>
@@ -382,6 +403,7 @@
 				PK_REGION = #{pk_region,jdbcType=VARCHAR},
 				PK_REGION_NAME = #{pk_region_name,jdbcType=VARCHAR},
 				ENABLESTATE = #{enablestate,jdbcType=INTEGER},
+				DEFPLAN = #{defplan,jdbcType=INTEGER},
 				TENANTID = #{tenantid,jdbcType=VARCHAR},
 				SYSID = #{sysid,jdbcType=VARCHAR},
 				ORGID = #{orgid,jdbcType=VARCHAR},
@@ -413,6 +435,7 @@
 				PK_REGION = #{item.pk_region,jdbcType=VARCHAR},
 				PK_REGION_NAME = #{item.pk_region_name,jdbcType=VARCHAR},
 				ENABLESTATE = #{item.enablestate,jdbcType=INTEGER},
+				DEFPLAN = #{defplan,jdbcType=INTEGER},
 				TENANTID = #{item.tenantid,jdbcType=VARCHAR},
 				SYSID = #{item.sysid,jdbcType=VARCHAR},
 				ORGID = #{item.orgid,jdbcType=VARCHAR},
@@ -442,9 +465,38 @@
 		resultType="java.util.List">
 		SELECT
 		<include refid="Base_Column_List" />
-		from PRM_PLAN where DR=0
-		<if test="search != null">
-        </if>
+		from PRM_PLAN where DR = 0
+		<!-- <if test="search != null">
+        </if> -->
+        <if test="search != null and search.searchMap != null">
+			<choose>
+                <when test="search.searchMap.seeDisable == null">
+                    and enablestate in (0,1)
+                </when>
+                <otherwise>
+                	<choose>
+                		<when test="search.searchMap.seeDisable != null and search.searchMap.seeDisable == true">
+                    		and enablestate in (0,1,2)
+                		</when>
+                		<otherwise>
+                    		and enablestate in (0,1)
+                		</otherwise>
+            		</choose>
+                </otherwise>
+            </choose>
+			<if
+				test="search.searchMap.code!=null and search.searchMap.code!='' ">
+				and code like CONCAT(CONCAT('%', #{search.searchMap.code}), '%')
+			</if>
+			<if
+				test="search.searchMap.name!=null and search.searchMap.name!='' ">
+				and name like CONCAT(CONCAT('%', #{search.searchMap.name}), '%')
+			</if>
+			<if
+				test="search.searchMap.creator_name!=null and search.searchMap.creator_name!='' ">
+				and creator_name like CONCAT(CONCAT('%', #{search.searchMap.creator_name}), '%')
+			</if>
+		</if>
     </select>
 
 	<select id="selectByIDs" resultMap="BaseResultMap"

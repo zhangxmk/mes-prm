@@ -264,6 +264,74 @@ public class InspectionPlanController extends BaseController {
 		}
 		return result;
 	}
+	
+	/**
+	 * 多行停用
+	 * 
+	 * @param sysDictTypeDataTable
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/disable", method = RequestMethod.POST)
+	@ResponseBody
+	public Object disable(@RequestBody BaseDTO dto) {
+		Result result = new Result();
+		try {
+			// 获取表头
+			Map<String, Class<?>> classMap = new HashMap<String, Class<?>>();
+			classMap.put(EntityConst.HEAD, InspectionPlanHeadVO.class);
+
+			Map<String, MeSuperVO[]> voMap = this.convertDTO2VO(classMap, dto);
+			if (MapUtils.isEmpty(voMap)) {
+				ExceptionUtils.wrapBusinessException("没有数据！");
+			}
+			InspectionPlanHeadVO[] headvos = (InspectionPlanHeadVO[]) voMap
+				.get(EntityConst.HEAD);
+			if (headvos == null || headvos.length == 0) {
+				ExceptionUtils.wrapBusinessException("表头数据为空，无法停用！");
+			}
+
+			// 2.调用批量停用接口
+			this.service.batchDisableByPrimaryKey(headvos);
+		} catch (Exception e) {
+			result = ExceptionResult.process(e);
+		}
+		return result;
+	}
+	
+	/**
+	 * 多行启用
+	 * 
+	 * @param sysDictTypeDataTable
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/enable", method = RequestMethod.POST)
+	@ResponseBody
+	public Object enable(@RequestBody BaseDTO dto) {
+		Result result = new Result();
+		try {
+			// 获取表头
+			Map<String, Class<?>> classMap = new HashMap<String, Class<?>>();
+			classMap.put(EntityConst.HEAD, InspectionPlanHeadVO.class);
+
+			Map<String, MeSuperVO[]> voMap = this.convertDTO2VO(classMap, dto);
+			if (MapUtils.isEmpty(voMap)) {
+				ExceptionUtils.wrapBusinessException("没有数据！");
+			}
+			InspectionPlanHeadVO[] headvos = (InspectionPlanHeadVO[]) voMap
+				.get(EntityConst.HEAD);
+			if (headvos == null || headvos.length == 0) {
+				ExceptionUtils.wrapBusinessException("表头数据为空，无法启用！");
+			}
+
+			// 2.调用批量启用接口
+			this.service.batchEnableByPrimaryKey(headvos);
+		} catch (Exception e) {
+			result = ExceptionResult.process(e);
+		}
+		return result;
+	}
 
 	private void copyDisplayName(BaseDTO dto, Map<String, MeSuperVO[]> voMap) {
 		Map<String, ViewArea> data = dto.getData();

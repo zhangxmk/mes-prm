@@ -59,6 +59,22 @@ public interface IInspectionPlanService {
 	 */
 	@Transactional
 	public void batchDeleteByPrimaryKey(InspectionPlanBillVO[] vos);
+	
+	/**
+	 * 批量停用
+	 * 
+	 * @param list
+	 */
+	@Transactional
+	public void batchDisableByPrimaryKey(InspectionPlanHeadVO[] vos);
+	
+	/**
+	 * 批量启用
+	 * 
+	 * @param list
+	 */
+	@Transactional
+	public void batchEnableByPrimaryKey(InspectionPlanHeadVO[] vos);
 
 	/**
 	 * 根据主表主键查询主子数据
