@@ -21,6 +21,7 @@ public class InspectionTaskBodyVO extends MeSuperVO{
 	private String project_content;
 	private String judge_standard;
 	private String polling_value;
+	private String polling_result;
 	private String pic_url;
 	private String id;
 	private String tenantid;
@@ -325,6 +326,16 @@ public class InspectionTaskBodyVO extends MeSuperVO{
 
 	public void setProjectid_code(String projectid_code) {
 		this.projectid_code = projectid_code;
+	}
+
+
+	public String getPolling_result() {
+		return polling_result;
+	}
+
+
+	public void setPolling_result(String polling_result) {
+		this.polling_result = polling_result;
 	}
 
 
