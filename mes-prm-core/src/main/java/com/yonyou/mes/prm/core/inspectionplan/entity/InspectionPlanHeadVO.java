@@ -20,6 +20,7 @@ public class InspectionPlanHeadVO extends MeSuperVO{
 	private String pk_region;
 	private String pk_region_name;
 	private Integer enablestate;
+	private Integer defplan;
 	private String id;
 	private String tenantid;
 	private String sysid;
@@ -29,6 +30,7 @@ public class InspectionPlanHeadVO extends MeSuperVO{
 	private Integer dr;
 	private String creator;
 	private Timestamp creationtime;
+	private Timestamp invalidate;
 	private String modifier;
 	private Timestamp modifiedtime;
 	private String creator_name;
@@ -105,6 +107,14 @@ public class InspectionPlanHeadVO extends MeSuperVO{
 		this.enablestate = enablestate;
 	}
 
+	
+	public Integer getDefplan() {
+		return this.defplan;
+	}
+
+	public void setDefplan(Integer defplan) {
+		this.defplan = defplan;
+	}
 
 	public String getId() {
 		return this.id;
@@ -186,6 +196,13 @@ public class InspectionPlanHeadVO extends MeSuperVO{
 		this.creationtime = creationtime;
 	}
 
+	public Timestamp getInvalidate() {
+		return this.invalidate;
+	}
+
+	public void setInvalidate(Timestamp invalidate) {
+		this.invalidate = invalidate;
+	}
 
 	public String getModifier() {
 		return this.modifier;
