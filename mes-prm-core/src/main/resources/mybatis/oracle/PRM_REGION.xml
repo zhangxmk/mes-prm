@@ -3,7 +3,7 @@
 <mapper namespace="com.yonyou.mes.prm.core.inspectionregion.repository.InspectionRegionMapper">
     <resultMap id="BaseResultMap" type="com.yonyou.mes.prm.core.inspectionregion.entity.InspectionRegionVO">
 		<id column="ID" property="id"/>
-		<result column="FBILLSTATUS" property="fbillstatus"/>
+		<result column="ENABLESTATE" property="enablestate"/>
 		<result column="PK_EQUIP" property="pk_equip"/>
 		<result column="PK_EQUIP_NAME" property="pk_equip_name"/>
 		<result column="NAME" property="name"/>
@@ -22,7 +22,7 @@
 		<result column="MODIFIEDTIME" property="modifiedtime"/>
     </resultMap>
     <sql id="Base_Column_List">
-		ID,FBILLSTATUS,PK_EQUIP,PK_EQUIP_NAME,NAME,CODE,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
+		ID,ENABLESTATE,PK_EQUIP,PK_EQUIP_NAME,NAME,CODE,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
 	</sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -47,11 +47,11 @@
 
     <insert id="insert" parameterType="com.yonyou.mes.prm.core.inspectionregion.entity.InspectionRegionVO">
 		insert into PRM_REGION (
-		ID,FBILLSTATUS,PK_EQUIP,PK_EQUIP_NAME,NAME,CODE,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
+		ID,ENABLESTATE,PK_EQUIP,PK_EQUIP_NAME,NAME,CODE,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
 		)
 		values (
 		#{id,jdbcType=VARCHAR},
-		#{fbillstatus,jdbcType=INTEGER},
+		#{enablestate,jdbcType=INTEGER},
 		#{pk_equip,jdbcType=VARCHAR},
 		#{pk_equip_name,jdbcType=VARCHAR},
 		#{name,jdbcType=VARCHAR},
@@ -73,12 +73,12 @@
 
     <insert id="batchInsert" parameterType="java.util.List">
 		insert into PRM_REGION (
-		ID,FBILLSTATUS,PK_EQUIP,PK_EQUIP_NAME,NAME,CODE,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
+		ID,ENABLESTATE,PK_EQUIP,PK_EQUIP_NAME,NAME,CODE,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
 		)
 		<foreach collection="list" item="item" index="index" separator="union" open="(" close=")">
 		select
 		#{item.id,jdbcType=VARCHAR},
-		#{item.fbillstatus,jdbcType=INTEGER},
+		#{item.enablestate,jdbcType=INTEGER},
 		#{item.pk_equip,jdbcType=VARCHAR},
 		#{item.pk_equip_name,jdbcType=VARCHAR},
 		#{item.name,jdbcType=VARCHAR},
@@ -104,8 +104,8 @@
 			<if test="id != null">
 				ID,
 			</if>
-			<if test="fbillstatus != null">
-				FBILLSTATUS,
+			<if test="enablestate != null">
+				ENABLESTATE,
 			</if>
 			<if test="pk_equip != null">
 				PK_EQUIP,
@@ -160,8 +160,8 @@
 			<if test="id != null">
 				#{id,jdbcType=VARCHAR},
 			</if>
-			<if test="fbillstatus != null">
-				#{fbillstatus,jdbcType=INTEGER},
+			<if test="enablestate != null">
+				#{enablestate,jdbcType=INTEGER},
 			</if>
 			<if test="pk_equip != null">
 				#{pk_equip,jdbcType=VARCHAR},
@@ -219,8 +219,8 @@
 			<if test="id != null">
 				ID = #{id,jdbcType=VARCHAR},
 			</if>
-			<if test="fbillstatus != null">
-				FBILLSTATUS = #{fbillstatus,jdbcType=INTEGER},
+			<if test="enablestate != null">
+				ENABLESTATE = #{enablestate,jdbcType=INTEGER},
 			</if>
 			<if test="pk_equip != null">
 				PK_EQUIP = #{pk_equip,jdbcType=VARCHAR},
@@ -277,7 +277,7 @@
     <update id="updateByPrimaryKey" parameterType="com.yonyou.mes.prm.core.inspectionregion.entity.InspectionRegionVO">
 		update PRM_REGION
 		set
-				FBILLSTATUS = #{fbillstatus,jdbcType=INTEGER},
+				ENABLESTATE = #{enablestate,jdbcType=INTEGER},
 				PK_EQUIP = #{pk_equip,jdbcType=VARCHAR},
 				PK_EQUIP_NAME = #{pk_equip_name,jdbcType=VARCHAR},
 				NAME = #{name,jdbcType=VARCHAR},
@@ -304,7 +304,7 @@
 			close="" separator=";">
 			update PRM_REGION
 			<set>
-				FBILLSTATUS = #{item.fbillstatus,jdbcType=INTEGER},
+				ENABLESTATE = #{item.enablestate,jdbcType=INTEGER},
 				PK_EQUIP = #{item.pk_equip,jdbcType=VARCHAR},
 				PK_EQUIP_NAME = #{item.pk_equip_name,jdbcType=VARCHAR},
 				NAME = #{item.name,jdbcType=VARCHAR},
@@ -333,8 +333,12 @@
 		SELECT
 		<include refid="Base_Column_List" />
 		from PRM_REGION where DR=0
-		<if test="search != null">
-        </if>
+		<if test="search.searchMap != null">
+			<if
+				test="search.searchMap.searchParam!=null ">
+				 ${search.searchMap.searchParam}
+			</if>
+		</if>
     </select>
 
 </mapper>

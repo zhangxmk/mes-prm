@@ -12,7 +12,7 @@ import com.yonyou.me.entity.MeSuperVO;
 public class InspectionRegionVO extends MeSuperVO {
 	
 	private String id;
-	private Integer fbillstatus;
+	private Integer enablestate;
 	private String pk_equip;
 	private String pk_equip_name;
 	private String name;
@@ -40,15 +40,16 @@ public class InspectionRegionVO extends MeSuperVO {
 	public void setId(String id) {
 		this.id = id;
 	}
-
-
-	public Integer getFbillstatus() {
-		return this.fbillstatus;
+	
+	public Integer getEnablestate() {
+		return enablestate;
 	}
 
-	public void setFbillstatus(Integer fbillstatus) {
-		this.fbillstatus = fbillstatus;
+
+	public void setEnablestate(Integer enablestate) {
+		this.enablestate = enablestate;
 	}
+
 
 
 	public String getPk_equip() {

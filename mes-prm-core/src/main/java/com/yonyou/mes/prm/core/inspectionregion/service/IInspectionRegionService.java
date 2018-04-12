@@ -69,4 +69,24 @@ public interface IInspectionRegionService {
 	 * @return
 	 */
 	public InspectionRegionBillVO[] query(List<String> ids);
+	
+	
+	
+	/**
+	 * 批量停用
+	 * 
+	 * @param list
+	 */
+	@Transactional
+	public void batchDisableByPrimaryKey(InspectionRegionVO[] vos);
+	
+	/**
+	 * 批量启用
+	 * 
+	 * @param list
+	 */
+	@Transactional
+	public void batchEnableByPrimaryKey(InspectionRegionVO[] vos);
+
+	
 }

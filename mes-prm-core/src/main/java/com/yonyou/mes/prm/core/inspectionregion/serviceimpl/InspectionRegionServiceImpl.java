@@ -1,5 +1,6 @@
 package com.yonyou.mes.prm.core.inspectionregion.serviceimpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.yonyou.iuap.mvc.type.SearchParams;
 import com.yonyou.me.entity.AbstractMeBillVO;
+import com.yonyou.me.entity.EnableStateVO;
 import com.yonyou.me.utils.exception.ExceptionUtils;
 import com.yonyou.me.utils.repository.BillPersistent;
 import com.yonyou.me.utils.repository.IVOPersistent;
 import com.yonyou.me.utils.repository.VOPersistent;
+import com.yonyou.me.utils.service.EnableStateServiceImpl;
+import com.yonyou.me.utils.service.IEnableStateService;
 import com.yonyou.me.utils.service.bill.BillSaveService;
 import com.yonyou.me.utils.service.vo.VODeleteService;
 import com.yonyou.mes.prm.core.inspectionregion.entity.InspectionRegionBillVO;
@@ -176,6 +180,38 @@ public class InspectionRegionServiceImpl implements IInspectionRegionService {
 		public InspectionRegionBillVO[] query(List<String> ids) {
 			// TODO 自动生成的方法存根
 			return null;
+		}
+
+
+		@Override
+		public void batchDisableByPrimaryKey(InspectionRegionVO[] vos) {
+			List<EnableStateVO> statelist = new ArrayList<>();
+			for (InspectionRegionVO def:vos){
+				EnableStateVO vo = new EnableStateVO();
+				vo.setId(def.getId());
+				vo.setTs(def.getTs());
+				vo.setTableName(def.getTableName());
+				statelist.add(vo);
+			}
+			IEnableStateService serv = new EnableStateServiceImpl();
+			serv.unableState(statelist);
+			
+		}
+
+
+		@Override
+		public void batchEnableByPrimaryKey(InspectionRegionVO[] vos) {
+				List<EnableStateVO> statelist = new ArrayList<>();
+				for (InspectionRegionVO def:vos){
+					EnableStateVO vo = new EnableStateVO();
+					vo.setId(def.getId());
+					vo.setTs(def.getTs());
+					vo.setTableName(def.getTableName());
+					statelist.add(vo);
+				}
+				IEnableStateService serv = new EnableStateServiceImpl();
+				serv.enableState(statelist);
+			
 		}
 
 }
