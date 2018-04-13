@@ -465,7 +465,7 @@
 		resultType="java.util.List">
 		SELECT
 		<include refid="Base_Column_List" />
-		from PRM_PLAN where DR = 0
+		from PRM_PLAN where DR = 0 and DEFPLAN = 1
 		<!-- <if test="search != null">
         </if> -->
         <if test="search != null and search.searchMap != null">
@@ -510,4 +510,5 @@
 		#{item}
 		</foreach>
 	</select>
+	
 </mapper>

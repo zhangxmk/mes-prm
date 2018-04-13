@@ -13,6 +13,7 @@
 		<result column="PROJECT_CONTENT" property="project_content"/>
 		<result column="JUDGE_STANDARD" property="judge_standard"/>
 		<result column="POLLING_VALUE" property="polling_value"/>
+		<result column="POLLING_RESULT" property="polling_result"/>
 		<result column="PIC_URL" property="pic_url"/>
 		<result column="TENANTID" property="tenantid"/>
 		<result column="SYSID" property="sysid"/>
@@ -28,7 +29,7 @@
 		<result column="MODIFIER_NAME" property="modifier_name"/>
     </resultMap>
     <sql id="Base_Column_List">
-		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,JUDGE_STANDARD,POLLING_VALUE,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME
+		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME
 	</sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -55,7 +56,7 @@
 
     <insert id="insert" parameterType="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBodyVO">
 		insert into PRM_TASK_B (
-		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,JUDGE_STANDARD,POLLING_VALUE,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME
+		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME
 		)
 		values (
 		#{pk_task,jdbcType=VARCHAR},
@@ -68,6 +69,7 @@
 		#{project_content,jdbcType=VARCHAR},
 		#{judge_standard,jdbcType=VARCHAR},
 		#{polling_value,jdbcType=VARCHAR},
+		#{polling_result,jdbcType=INTEGER},		
 		#{pic_url,jdbcType=VARCHAR},
 		#{id,jdbcType=VARCHAR},
 		#{tenantid,jdbcType=VARCHAR},
@@ -87,7 +89,7 @@
 
     <insert id="batchInsert" parameterType="java.util.List">
 		insert into PRM_TASK_B (
-		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,JUDGE_STANDARD,POLLING_VALUE,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME
+		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME
 		)
 		<foreach collection="list" item="item" index="index" separator="union" open="(" close=")">
 		select
@@ -101,6 +103,8 @@
 		#{item.project_content,jdbcType=VARCHAR},
 		#{item.judge_standard,jdbcType=VARCHAR},
 		#{item.polling_value,jdbcType=VARCHAR},
+		#{item.polling_result,jdbcType=INTEGER},
+		
 		#{item.pic_url,jdbcType=VARCHAR},
 		#{item.id,jdbcType=VARCHAR},
 		#{item.tenantid,jdbcType=VARCHAR},
@@ -150,6 +154,9 @@
 			</if>
 			<if test="polling_value != null">
 				POLLING_VALUE,
+			</if>
+			<if test="polling_result != null">
+				POLLING_RESULT,
 			</if>
 			<if test="pic_url != null">
 				PIC_URL,
@@ -224,6 +231,9 @@
 			</if>
 			<if test="polling_value != null">
 				#{polling_value,jdbcType=VARCHAR},
+			</if>
+			<if test="polling_result != null">
+				#{polling_result,jdbcType=INTEGER},
 			</if>
 			<if test="pic_url != null">
 				#{pic_url,jdbcType=VARCHAR},
@@ -302,6 +312,9 @@
 			<if test="polling_value != null">
 				POLLING_VALUE = #{polling_value,jdbcType=VARCHAR},
 			</if>
+			<if test="polling_result != null">
+				POLLING_RESULT = #{polling_value,jdbcType=INTEGER},
+			</if>
 			<if test="pic_url != null">
 				PIC_URL = #{pic_url,jdbcType=VARCHAR},
 			</if>
@@ -361,6 +374,7 @@
 				PROJECT_CONTENT = #{project_content,jdbcType=VARCHAR},
 				JUDGE_STANDARD = #{judge_standard,jdbcType=VARCHAR},
 				POLLING_VALUE = #{polling_value,jdbcType=VARCHAR},
+				POLLING_RESULT = #{polling_result,jdbcType=INTEGER},				
 				PIC_URL = #{pic_url,jdbcType=VARCHAR},
 				TENANTID = #{tenantid,jdbcType=VARCHAR},
 				SYSID = #{sysid,jdbcType=VARCHAR},
@@ -394,6 +408,8 @@
 				PROJECT_CONTENT = #{item.project_content,jdbcType=VARCHAR},
 				JUDGE_STANDARD = #{item.judge_standard,jdbcType=VARCHAR},
 				POLLING_VALUE = #{item.polling_value,jdbcType=VARCHAR},
+				POLLING_RESULT = #{item.polling_result,jdbcType=INTEGER},
+				
 				PIC_URL = #{item.pic_url,jdbcType=VARCHAR},
 				TENANTID = #{item.tenantid,jdbcType=VARCHAR},
 				SYSID = #{item.sysid,jdbcType=VARCHAR},

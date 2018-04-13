@@ -211,6 +211,35 @@ public class InspectionPlanController extends BaseController {
 
 		return result;
 	}
+	
+	/**
+	 * 变更版本
+	 * 
+	 * @param sysDictTypeDataTable
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/vchange", method = RequestMethod.POST)
+	@ResponseBody
+	public Object vchange(@RequestBody BaseDTO dto) {
+		Result result = new Result();
+		try {
+			// 1.前台数据转化成实体vo
+			List<InspectionPlanBillVO> list = this.dtoToVO(dto);
+			if (list == null || list.size() == 0) {
+				throw new Exception("传入数据为空");
+			}
+			InspectionPlanBillVO vo = list.get(0);
+			// 2.调用保存接口
+			InspectionPlanBillVO resultData = this.service.vchange(vo);
+			// 3.保存结果转化成返回值结构
+			result = this.voToDTO(resultData);
+		} catch (Exception e) {
+			result = ExceptionResult.process(e);
+		}
+
+		return result;
+	}
 
 	/**
 	 * datatable 多行删除实现。
