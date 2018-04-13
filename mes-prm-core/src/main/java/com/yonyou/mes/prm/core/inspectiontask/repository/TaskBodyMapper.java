@@ -40,4 +40,7 @@ public interface TaskBodyMapper {
     
     InspectionTaskBodyVO[] queryTaskDetail4App(String postid);
 
-}
+    InspectionTaskBodyVO[] queryTaskDetailsByID(List<String> ids);
+    
+    void batchUpdateByPrimaryKeySelective(List<InspectionTaskBodyVO> updateList);
+ }

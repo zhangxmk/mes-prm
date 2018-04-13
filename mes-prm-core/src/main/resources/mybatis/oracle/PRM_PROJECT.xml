@@ -368,4 +368,13 @@
 		</foreach>
 		;end;
 	</update>
+	
+	<select id="selectByCode" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select *
+		from PRM_PROJECT
+		where dr =0 and
+		code = #{id}
+	</select>
+	
 </mapper>

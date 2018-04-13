@@ -159,4 +159,14 @@ public class TempTaskServiceImpl implements ITempTaskService {
 
 		return billdao;
 	}
+	
+	public void batchInsertHead(List<TempTaskHeadVO> addList)
+	{
+		headMapper.batchInsert(addList);
+	}
+	
+	public void batchInsertBody(List<TempTaskBodyVO> addList)
+	{
+		bodyMapper.batchInsert(addList);
+	}
 }

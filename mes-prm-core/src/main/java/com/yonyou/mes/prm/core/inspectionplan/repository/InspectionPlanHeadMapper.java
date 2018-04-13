@@ -35,5 +35,6 @@ public interface InspectionPlanHeadMapper {
     void batchUpdate(List<InspectionPlanHeadVO> updateList);
 
     void batchDeleteByPrimaryKey(List<InspectionPlanHeadVO> list);
-
+    
+    InspectionPlanHeadVO[] selectByCodes(List<String> codes);
 }

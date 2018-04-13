@@ -336,4 +336,25 @@
 		</if>
     </select>
 
+
+	<select id="selectByParentKeys" resultMap="BaseResultMap"
+		parameterType="java.util.List">
+		select
+		<include refid="Base_Column_List" />
+		from PRM_PLAN_B
+		where PK_PLAN in
+		<foreach collection="list" item="item" index="index"
+			separator="," open="(" close=")">
+		#{item}
+		</foreach>
+	</select>
+
+	<select id="selectByBodyCode" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select *
+		from PRM_PLAN_B
+		where dr=0 and
+		er_project_code = #{id}
+	</select>
+
 </mapper>

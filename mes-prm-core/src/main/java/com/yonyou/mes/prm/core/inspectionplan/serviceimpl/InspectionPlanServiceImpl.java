@@ -28,6 +28,7 @@ import com.yonyou.mes.prm.core.inspectionplan.repository.InspectionPlanBodyPersi
 import com.yonyou.mes.prm.core.inspectionplan.repository.InspectionPlanHeadMapper;
 import com.yonyou.mes.prm.core.inspectionplan.repository.InspectionPlanHeadPersistent;
 import com.yonyou.mes.prm.core.inspectionplan.service.IInspectionPlanService;
+import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskHeadVO;
 
 @Service
 public class InspectionPlanServiceImpl implements IInspectionPlanService {
@@ -209,4 +210,28 @@ public class InspectionPlanServiceImpl implements IInspectionPlanService {
 		return retVo;
 	}
 	
+	@Override
+	public InspectionPlanHeadVO[] selectByCodes(List<String> codes) {
+		return this.headMapper.selectByCodes(codes);
+	}
+	
+	@Override
+	public InspectionPlanBodyVO[] selectByParentKeys(List<String> codes) {
+		return this.bodyMapper.selectByParentKeys(codes);
+	}
+	
+	@Override
+	public InspectionPlanBodyVO[] selectByBodyCode(String code) {
+		return this.bodyMapper.selectByBodyCode(code);
+	}
+	
+	@Override
+	public InspectionPlanHeadVO[] selectByIDs(List<String> ids){
+		return this.headMapper.selectByIDs(ids);
+	}
+	
+	@Override
+	public InspectionPlanHeadVO selectByPrimaryKey(String id){
+		return this.headMapper.selectByPrimaryKey(id);
+	}
 }

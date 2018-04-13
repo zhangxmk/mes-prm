@@ -39,4 +39,5 @@ public interface ProjectBodyMapper {
 
 	void batchDeleteByPrimaryKey(List<String> list);
 
+	InspectionProjectBodyVO[] selectByParentKeys(List<String> ids);
 }

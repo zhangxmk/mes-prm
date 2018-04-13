@@ -77,7 +77,6 @@ public interface IInspectionTaskService {
 	 */
 	public InspectionTaskBillVO[] query(List<String> ids);
 	
-	
 	/**
 	 * 根据岗位Id查询任务中的项目明细
 	 * 
@@ -87,9 +86,42 @@ public interface IInspectionTaskService {
 	public InspectionTaskBodyVO[] queryTaskDetails(String postid);
 	
 	/**
+
 	 * 
 	 * @param planid
 	 * @return
 	 */
 	public InspectionTaskBillVO createTaskBill(String planid);
+	/*
+	 * 根据岗位Id查询任务中的表头
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public Page<InspectionTaskHeadVO> queryTask(String postid);
+	
+	/**
+	 * 根据主表主键查询任务中的项目明细
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public InspectionTaskBodyVO[] queryTaskDetailsByID(List<String> ids);
+	
+	/**
+	 * 更新标头
+	 * 
+	 * @param vo
+	 * @return
+	 */
+	public void updateHead(InspectionTaskHeadVO vo);
+	
+	/**
+	 * 批量选择更新
+	 * 
+	 * @param List<VO>
+	 * @return
+	 */
+	public void batchUpdateByPrimaryKeySelective(List<InspectionTaskBodyVO> updateList);
+
 }

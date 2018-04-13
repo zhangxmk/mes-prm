@@ -68,6 +68,7 @@ public interface IInspectionProjectService {
 	 */
 	public InspectionProjectBillVO[] query(List<String> ids);
 
+
 	/**
 	 * 根据主键启用
 	 *
@@ -81,5 +82,22 @@ public interface IInspectionProjectService {
 	 * @param list
 	 */
 	public void batchDisableByPrimaryKey(InspectionProjectHeadVO[] vos);
+
+
+	/**
+	 * 根据项目编码查询表头
+	 * 
+	 * @param code
+	 * @return
+	 */
+	public InspectionProjectHeadVO[] selectByCode(String code);
+	
+	/**
+	 * 根据父id查询表体
+	 * 
+	 * @param List<ParentKey>
+	 * @return
+	 */
+	public InspectionProjectBodyVO[] selectByParentKeys(List<String> ids);
 
 }

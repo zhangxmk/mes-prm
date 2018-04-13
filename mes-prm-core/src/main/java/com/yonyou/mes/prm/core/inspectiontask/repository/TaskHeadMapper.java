@@ -36,4 +36,5 @@ public interface TaskHeadMapper {
 
     void batchDeleteByPrimaryKey(List<String> list);
 
+    PageResult<InspectionTaskHeadVO> queryTask(String postid);
 }

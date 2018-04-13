@@ -504,7 +504,20 @@
 		select
 		<include refid="Base_Column_List" />
 		from PRM_PLAN
-		where ID in
+		where dr = 0 and
+		ID in
+		<foreach collection="list" item="item" index="index"
+			separator="," open="(" close=")">
+		#{item}
+		</foreach>
+	</select>
+	
+	<select id="selectByCodes" resultMap="BaseResultMap"
+		parameterType="java.util.List">
+		select
+		<include refid="Base_Column_List" />
+		from PRM_PLAN
+		where CODE in
 		<foreach collection="list" item="item" index="index"
 			separator="," open="(" close=")">
 		#{item}

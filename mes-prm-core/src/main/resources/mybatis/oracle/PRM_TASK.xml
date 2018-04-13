@@ -379,4 +379,38 @@
 		#{item}
 		</foreach>
 	</select>
+	
+	<select id="queryTask" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select 
+			   h.id					id,
+			   h.task_no			task_no,
+			   h.postid				postid,
+			   h.postid_name		postid_name,
+			   h.planid				planid,
+			   h.planid_name		planid_name,
+			   h.assign_time		assign_time,
+			   h.billstatus			billstatus,
+			   h.tenantid			tenantid,
+			   h.sysid				sysid,
+			   h.orgid				orgid,
+			   h.orgid_name			orgid_name,
+			   h.dr					dr,
+			   h.ts					ts,
+			   
+			   p.pk_region 			creator, 
+			   p.pk_region_name 	creator_name, 
+			   
+			   h.creationtime		creationtime,
+			   
+			   p.vnote 				modifier,
+			   
+			   h.modifier_name		modifier_name,
+			   h.modifiedtime		modifiedtime
+			   
+		from prm_task h left join prm_plan p on h.planid = p.id
+		where h.dr=0 
+			and (billstatus = 1 or billstatus = 2)
+			and h.postid = #{postid} 
+	</select>
 </mapper>

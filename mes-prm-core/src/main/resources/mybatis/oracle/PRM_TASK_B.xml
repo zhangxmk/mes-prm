@@ -476,4 +476,103 @@
 			and (billstatus = 1 or billstatus = 2)
 			and h.postid = #{postid} 
 	</select>
+	
+	<select id="queryTaskDetailsByID" resultMap="BaseResultMap"
+		parameterType="java.util.List">
+		select b.* 
+			from prm_task_b b 
+		inner join prm_task h on b.pk_task = h.id
+		where b.dr=0 and h.dr=0 
+			and (billstatus = 1 or billstatus = 2)
+			and h.id in
+		<foreach collection="list" item="item" index="index"
+			separator="," open="(" close=")">
+		#{item}
+		</foreach>
+	</select>
+	
+	<update id="batchUpdateByPrimaryKeySelective" parameterType="java.util.List">
+    	begin
+		<foreach collection="list" item="item" index="index" open=""
+			close="" separator=";">
+			update PRM_TASK_B
+			<set>
+				<if test="item.pk_task != null">
+				PK_TASK = #{item.pk_task,jdbcType=VARCHAR},
+			</if>
+			<if test="item.plan_order != null">
+				PLAN_ORDER = #{item.plan_order,jdbcType=INTEGER},
+			</if>
+			<if test="item.projectid != null">
+				PROJECTID = #{item.projectid,jdbcType=VARCHAR},
+			</if>
+			<if test="item.projectid_code != null">
+				PROJECTID_CODE = #{item.projectid_code,jdbcType=VARCHAR},
+			</if>
+			<if test="item.projectid_name != null">
+				PROJECTID_NAME = #{item.projectid_name,jdbcType=VARCHAR},
+			</if>
+			<if test="item.fact_order != null">
+				FACT_ORDER = #{item.fact_order,jdbcType=INTEGER},
+			</if>
+			<if test="item.project_status != null">
+				PROJECT_STATUS = #{item.project_status,jdbcType=INTEGER},
+			</if>
+			<if test="item.project_content != null">
+				PROJECT_CONTENT = #{item.project_content,jdbcType=VARCHAR},
+			</if>
+			<if test="item.judge_standard != null">
+				JUDGE_STANDARD = #{item.judge_standard,jdbcType=VARCHAR},
+			</if>
+			<if test="item.polling_value != null">
+				POLLING_VALUE = #{item.polling_value,jdbcType=VARCHAR},
+			</if>
+			<if test="item.pic_url != null">
+				PIC_URL = #{item.pic_url,jdbcType=VARCHAR},
+			</if>
+			<if test="item.id != null">
+				ID = #{item.id,jdbcType=VARCHAR},
+			</if>
+			<if test="item.tenantid != null">
+				TENANTID = #{item.tenantid,jdbcType=VARCHAR},
+			</if>
+			<if test="item.sysid != null">
+				SYSID = #{item.sysid,jdbcType=VARCHAR},
+			</if>
+			<if test="item.orgid != null">
+				ORGID = #{item.orgid,jdbcType=VARCHAR},
+			</if>
+			<if test="item.orgid_name != null">
+				ORGID_NAME = #{item.orgid_name,jdbcType=VARCHAR},
+			</if>
+			<if test="item.ts != null">
+				TS = #{item.ts,jdbcType=TIMESTAMP},
+			</if>
+			<if test="item.dr != null">
+				DR = #{item.dr,jdbcType=INTEGER},
+			</if>
+			<if test="item.creator != null">
+				CREATOR = #{item.creator,jdbcType=VARCHAR},
+			</if>
+			<if test="item.creationtime != null">
+				CREATIONTIME = #{item.creationtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="item.modifier != null">
+				MODIFIER = #{item.modifier,jdbcType=VARCHAR},
+			</if>
+			<if test="item.modifiedtime != null">
+				MODIFIEDTIME = #{item.modifiedtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="item.creator_name != null">
+				CREATOR_NAME = #{item.creator_name,jdbcType=VARCHAR},
+			</if>
+			<if test="item.modifier_name != null">
+				MODIFIER_NAME = #{item.modifier_name,jdbcType=VARCHAR},
+			</if>
+			</set>
+			where ID = #{item.id} 
+		</foreach>
+		;end;
+	</update>
+	
 </mapper>

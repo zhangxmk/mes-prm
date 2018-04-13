@@ -61,4 +61,20 @@ public interface ITempTaskService {
 	 * @return
 	 */
 	public TempTaskBillVO[] query(List<String> ids);
+	
+	/**
+	 * 批量插入表头
+	 * 
+	 * @param List<TempTaskHeadVO>
+	 * @return
+	 */
+	public void batchInsertHead(List<TempTaskHeadVO> addList);
+	
+	/**
+	 * 批量插入表体
+	 * 
+	 * @param List<TempTaskBodyVO>
+	 * @return
+	 */
+	public void batchInsertBody(List<TempTaskBodyVO> addList);
 }

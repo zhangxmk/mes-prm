@@ -91,4 +91,44 @@ public interface IInspectionPlanService {
 	 * @return
 	 */
 	public InspectionPlanBillVO[] query(List<String> ids);
+	
+	/**
+	 * 根据巡检方案编码查询表头数据
+	 * 
+	 * @param code
+	 * @return
+	 */
+	public InspectionPlanHeadVO[] selectByCodes(List<String> codes);
+	
+	/**
+	 * 根据表头ids查询表体数据
+	 * 
+	 * @param ids
+	 * @return
+	 */
+	public InspectionPlanBodyVO[] selectByParentKeys(List<String> ids);
+	
+	/**
+	 * 根据项目编码查询表体数据
+	 * 
+	 * @param code
+	 * @return
+	 */
+	public InspectionPlanBodyVO[] selectByBodyCode(String code);
+	
+	/**
+	 * 根据主表ids查询表头数据
+	 * 
+	 * @param List<id>
+	 * @return
+	 */
+	public InspectionPlanHeadVO[] selectByIDs(List<String> ids);
+	
+	/**
+	 * 根据主表id查询表头数据
+	 * 
+	 * @param List<id>
+	 * @return
+	 */
+	public InspectionPlanHeadVO selectByPrimaryKey(String id);
 }

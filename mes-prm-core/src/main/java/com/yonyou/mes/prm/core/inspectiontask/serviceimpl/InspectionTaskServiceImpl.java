@@ -142,7 +142,6 @@ public class InspectionTaskServiceImpl implements IInspectionTaskService {
 				this.bodyMapper);
 		billdao.regiter(InspectionTaskBodyVO.class, bodyPersistent);
 
-		
 		return billdao;
 	}
 
@@ -165,5 +164,24 @@ public class InspectionTaskServiceImpl implements IInspectionTaskService {
 	}
 
 
+
+	@Override
+	public Page<InspectionTaskHeadVO> queryTask(String postid) {
+		return this.headMapper.queryTask(postid).getPage();
+	}
 	
+	@Override
+	public InspectionTaskBodyVO[] queryTaskDetailsByID(List<String> id) {
+		return this.bodyMapper.queryTaskDetailsByID(id);
+	}
+	
+	@Override
+	public void batchUpdateByPrimaryKeySelective(List<InspectionTaskBodyVO> updateList) {
+		this.bodyMapper.batchUpdateByPrimaryKeySelective(updateList);
+	}
+	
+	@Override
+	public void updateHead(InspectionTaskHeadVO vo)  {
+		this.headMapper.updateByPrimaryKeySelective(vo);
+	}
 }

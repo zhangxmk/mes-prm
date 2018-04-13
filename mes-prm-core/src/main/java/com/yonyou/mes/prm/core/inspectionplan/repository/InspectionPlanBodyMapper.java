@@ -35,5 +35,8 @@ public interface InspectionPlanBodyMapper {
     void batchUpdate(List<InspectionPlanBodyVO> updateList);
 
     void batchDeleteByPrimaryKey(List<String> list);
-
+    
+    InspectionPlanBodyVO[] selectByParentKeys(List<String> ids);
+    
+    InspectionPlanBodyVO[] selectByBodyCode(String code);
 }

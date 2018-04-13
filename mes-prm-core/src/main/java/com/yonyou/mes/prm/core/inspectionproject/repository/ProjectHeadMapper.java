@@ -39,4 +39,5 @@ public interface ProjectHeadMapper {
 
     void batchDeleteByPrimaryKey(List<InspectionProjectHeadVO> list);
     
+    InspectionProjectHeadVO[] selectByCode(String code);
 }

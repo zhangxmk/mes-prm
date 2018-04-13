@@ -361,4 +361,17 @@
 		</foreach>
 		;end;
 	</update>
+	
+	<select id="selectByParentKeys" resultMap="BaseResultMap"
+		parameterType="java.util.List">
+		select *
+		from PRM_PROJECT_B
+		where dr=0 and
+		cparentid in
+		<foreach collection="list" item="item" index="index"
+			separator="," open="(" close=")">
+		#{item}
+		</foreach>
+	</select>
+	
 </mapper>

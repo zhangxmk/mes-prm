@@ -202,4 +202,13 @@ public class InspectionProjectServiceImpl implements IInspectionProjectService {
 		return billdao;
 	}
 
+	public InspectionProjectHeadVO[] selectByCode(String code)
+	{
+		return headMapper.selectByCode(code);
+	}
+	
+	public InspectionProjectBodyVO[] selectByParentKeys(List<String> ids)
+	{
+		return bodyMapper.selectByParentKeys(ids);
+	}
 }
