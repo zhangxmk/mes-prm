@@ -67,4 +67,19 @@ public interface IInspectionProjectService {
 	 * @return
 	 */
 	public InspectionProjectBillVO[] query(List<String> ids);
+
+	/**
+	 * 根据主键启用
+	 *
+	 * @param list
+	 */
+	public void batchEnableByPrimaryKey(InspectionProjectHeadVO[] vos);
+
+	/**
+	 * 根据主键停用
+	 *
+	 * @param list
+	 */
+	public void batchDisableByPrimaryKey(InspectionProjectHeadVO[] vos);
+
 }

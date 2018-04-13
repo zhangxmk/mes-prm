@@ -137,8 +137,8 @@ public class InspectionProjectController extends BaseController {
 	/**
 	 * 新增保存
 	 * 
-	 * @param sysDictTypeDataTable
-	 * @param response
+	 * @param
+	 * @param
 	 * @return
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -166,8 +166,8 @@ public class InspectionProjectController extends BaseController {
 	/**
 	 * 修改保存
 	 * 
-	 * @param sysDictTypeDataTable
-	 * @param response
+	 * @param
+	 * @param
 	 * @return
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
@@ -195,8 +195,8 @@ public class InspectionProjectController extends BaseController {
 	/**
 	 * datatable 多行删除实现。
 	 *
-	 * @param sysDictTypeDataTable
-	 * @param response
+	 * @param
+	 * @param
 	 * @return
 	 */
 	@RequestMapping(value = "/del", method = RequestMethod.POST)
@@ -245,10 +245,65 @@ public class InspectionProjectController extends BaseController {
 		return result;
 	}
 
+
+	@RequestMapping(value = "/enable", method = RequestMethod.POST)
+	public @ResponseBody Result enable(@RequestBody BaseDTO dto) {
+
+
+		Result result = new Result();
+		try {
+			// 获取表头
+			Map<String, Class<?>> classMap = new HashMap<String, Class<?>>();
+			classMap.put(EntityConst.HEAD, InspectionProjectHeadVO.class);
+
+			Map<String, MeSuperVO[]> voMap = this.convertDTO2VO(classMap, dto);
+			if (MapUtils.isEmpty(voMap)) {
+				ExceptionUtils.wrapBusinessException("没有数据！");
+			}
+			InspectionProjectHeadVO[] headvos = (InspectionProjectHeadVO[]) voMap
+					.get(EntityConst.HEAD);
+			if (headvos == null || headvos.length == 0) {
+				ExceptionUtils.wrapBusinessException("表头数据为空，无法启用！");
+			}
+
+			service.batchEnableByPrimaryKey(headvos);
+		} catch (Exception ex) {
+			// 将异常转换为返回信息，并且记入后台日志
+			result = ExceptionResult.process(ex);
+		}
+		return result;
+	}
+
+	@RequestMapping(value = "/disable", method = RequestMethod.POST)
+	public @ResponseBody Result disable(@RequestBody BaseDTO dto) {
+		Result result = new Result();
+		try {
+			// 获取表头
+			Map<String, Class<?>> classMap = new HashMap<String, Class<?>>();
+			classMap.put(EntityConst.HEAD, InspectionProjectHeadVO.class);
+
+			Map<String, MeSuperVO[]> voMap = this.convertDTO2VO(classMap, dto);
+			if (MapUtils.isEmpty(voMap)) {
+				ExceptionUtils.wrapBusinessException("没有数据！");
+			}
+			InspectionProjectHeadVO[] headvos = (InspectionProjectHeadVO[]) voMap
+					.get(EntityConst.HEAD);
+			if (headvos == null || headvos.length == 0) {
+				ExceptionUtils.wrapBusinessException("表头数据为空，无法启用！");
+			}
+
+			service.batchDisableByPrimaryKey(headvos);
+		} catch (Exception ex) {
+			// 将异常转换为返回信息，并且记入后台日志
+			result = ExceptionResult.process(ex);
+		}
+		return result;
+	}
+
 	/**
 	 * 获取datatable的查询过滤条件
 	 * 
-	 * @param sysDictTypeDataTable
+	 * @param
 	 * @param prefix
 	 * @return
 	 */

@@ -16,7 +16,8 @@ public class InspectionTaskBillVO  extends AbstractMeBillVO{
 	/**
 	 * 单据编码定义
 	 */
-	private static final BillCodeMeta BillCodeMeta = new BillCodeMeta(MesBusitypeConst.BUSITYPECODE_PRM_TASK, "task_no");
+	//private static final BillCodeMeta BillCodeMeta = new BillCodeMeta(MesBusitypeConst.BUSITYPECODE_PRM_TASK, "task_no");
+	private static final BillCodeMeta BillCodeMeta = null;
 
 	@Override
 	public ApproveMeta getApproveMeta() {

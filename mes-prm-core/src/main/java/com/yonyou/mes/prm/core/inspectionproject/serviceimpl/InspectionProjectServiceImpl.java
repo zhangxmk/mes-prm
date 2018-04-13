@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.yonyou.me.entity.EnableStateVO;
+import com.yonyou.me.utils.service.EnableStateServiceImpl;
+import com.yonyou.me.utils.service.IEnableStateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -120,7 +123,7 @@ public class InspectionProjectServiceImpl implements IInspectionProjectService {
 	/**
 	 * 批量删除
 	 * 
-	 * @param list
+	 * @param vos
 	 */
 	public void batchDeleteByPrimaryKey(InspectionProjectBillVO[] vos) {
 		BillPersistent dao = this.createBillDao();
@@ -154,6 +157,34 @@ public class InspectionProjectServiceImpl implements IInspectionProjectService {
 		}
 
 		return list.toArray(new InspectionProjectBillVO[0]);
+	}
+
+	@Override
+	public void batchEnableByPrimaryKey(InspectionProjectHeadVO[] vos) {
+		List<EnableStateVO> statelist = new ArrayList<>();
+		for (InspectionProjectHeadVO def:vos){
+			EnableStateVO vo = new EnableStateVO();
+			vo.setId(def.getId());
+			vo.setTs(def.getTs());
+			vo.setTableName(def.getTableName());
+			statelist.add(vo);
+		}
+		IEnableStateService serv = new EnableStateServiceImpl();
+		serv.enableState(statelist);
+	}
+
+	@Override
+	public void batchDisableByPrimaryKey(InspectionProjectHeadVO[] vos) {
+		List<EnableStateVO> statelist = new ArrayList<>();
+		for (InspectionProjectHeadVO def:vos){
+			EnableStateVO vo = new EnableStateVO();
+			vo.setId(def.getId());
+			vo.setTs(def.getTs());
+			vo.setTableName(def.getTableName());
+			statelist.add(vo);
+		}
+		IEnableStateService serv = new EnableStateServiceImpl();
+		serv.unableState(statelist);
 	}
 
 	private BillPersistent createBillDao() {

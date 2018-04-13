@@ -292,7 +292,7 @@ public class InspectionPlanController extends BaseController {
 			}
 
 			// 2.调用批量停用接口
-			this.service.batchDisableByPrimaryKey(headvos);
+			//this.service.batchDisableByPrimaryKey(headvos);
 		} catch (Exception e) {
 			result = ExceptionResult.process(e);
 		}
@@ -326,7 +326,7 @@ public class InspectionPlanController extends BaseController {
 			}
 
 			// 2.调用批量启用接口
-			this.service.batchEnableByPrimaryKey(headvos);
+			//this.service.batchEnableByPrimaryKey(headvos);
 		} catch (Exception e) {
 			result = ExceptionResult.process(e);
 		}
