@@ -54,7 +54,7 @@ public class InspectionRegionRefController extends AbstractGridRefModel{
 
         refModel.setStrHiddenFieldCode(new String[] { "id", "refpk"});
 
-        refModel.setStrFieldName(new String[] { "项目编码", "项目名称"});
+        refModel.setStrFieldName(new String[] { "区域编码", "区域名称"});
 
         refModel.setRootName("巡检区域");
         return refModel;
@@ -170,6 +170,7 @@ public class InspectionRegionRefController extends AbstractGridRefModel{
         if (json != null && json.containsKey("status")) {
             results.put("status", json.get("status"));
         }
+        results.put("enablestate","('1')");
         param.setSearchMap(results);
         return param;
     }

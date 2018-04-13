@@ -334,11 +334,29 @@
 		<include refid="Base_Column_List" />
 		from PRM_REGION where DR=0
 		<if test="search.searchMap != null">
-			<if
-				test="search.searchMap.searchParam!=null ">
-				 ${search.searchMap.searchParam}
+			<if test="search.searchMap.code!=null ">
+				 and code like '%${search.searchMap.code}%'
+			</if>
+			<if test="search.searchMap.name!=null ">
+				 and name like '%${search.searchMap.name}%'
+			</if>
+			<if test="search.searchMap.creator_name!=null ">
+				 and creator_name like '%${search.searchMap.creator_name}%'
+			</if>
+			<if test="search.searchMap.enablestate!=null ">
+				 and enablestate in ${search.searchMap.enablestate}
+			</if>
+			<if test="search.searchMap.tenantid!=null ">
+				 and tenantid like '%${search.searchMap.tenantid}%'
+			</if>
+			<if test="search.searchMap.sysid!=null ">
+				 and sysid like '%${search.searchMap.sysid}%'
+			</if>
+			<if test="search.searchMap.pk_equip_name!=null ">
+				 and pk_equip_name like '%${search.searchMap.pk_equip_name}%'
 			</if>
 		</if>
+		order by code
     </select>
 
 </mapper>
