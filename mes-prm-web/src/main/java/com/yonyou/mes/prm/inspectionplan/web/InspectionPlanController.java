@@ -2,6 +2,7 @@ package com.yonyou.mes.prm.inspectionplan.web;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mysql.fabric.xmlrpc.base.Data;
 import com.yonyou.iuap.mvc.type.SearchParams;
 import com.yonyou.me.base.BaseController;
 import com.yonyou.me.constance.EntityConst;
@@ -118,6 +120,38 @@ public class InspectionPlanController extends BaseController {
 		return result;
 	}
 
+	/**
+	 * 历史版本查询表头
+	 */
+	@RequestMapping(value = "/getmodaldata", method = RequestMethod.POST)
+	public @ResponseBody Object getmodaldata(@RequestBody PageVO pageVO) {
+
+		Result result = new Result();
+		try {
+			PageRequest pageRequest = pageVO.getPageRequest();
+			SearchParams searchParams = pageVO.getSearchParams();
+			if (pageRequest == null || searchParams == null) {
+				ExceptionUtils.wrapBusinessException("当前参数数据有误");
+			}
+
+			Page<InspectionPlanHeadVO> pageVOs = service.getModalDataByPage(
+					pageVO.getPageRequest(), pageVO.getSearchParams());
+			Map<String, Page<?>> voMap = new HashMap<String, Page<?>>();
+			voMap.put(EntityConst.HEAD, pageVOs);
+
+			Map<String, ViewArea> data = this.convertPageVO2DTO(classMap,
+					voMap, nameMap);
+
+			Map<String, MeSuperVO[]> voIndex = this.convertToVOMap(voMap);
+			// 补充名称和精度
+			this.afterProcess(data, voIndex);
+			result.setData(data);
+		} catch (Exception ex) {
+			result = ExceptionResult.process(ex);
+		}
+		return result;
+	}
+	
 	/**
 	 * 根据表头查询表体数据
 	 * 
@@ -230,10 +264,37 @@ public class InspectionPlanController extends BaseController {
 				throw new Exception("传入数据为空");
 			}
 			InspectionPlanBillVO vo = list.get(0);
-			// 2.调用保存接口
+			// 2.调用版本变更接口
 			InspectionPlanBillVO resultData = this.service.vchange(vo);
 			// 3.保存结果转化成返回值结构
 			result = this.voToDTO(resultData);
+		} catch (Exception e) {
+			result = ExceptionResult.process(e);
+		}
+
+		return result;
+	}
+	
+	/**
+	 * 废除旧版本
+	 * 
+	 * @param sysDictTypeDataTable
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/disableoldplan", method = RequestMethod.POST)
+	@ResponseBody
+	public Object disableoldplan(@RequestBody BaseDTO dto) {
+		Result result = new Result();
+		try {
+			// 1.前台数据转化成实体vo
+			List<InspectionPlanBillVO> list = this.dtoToVO(dto);
+			if (list == null || list.size() == 0) {
+				throw new Exception("传入数据为空");
+			}
+			InspectionPlanBillVO vo = list.get(0);
+			// 2.调用废除旧版本接口
+			this.service.disableoldplan((InspectionPlanHeadVO)vo.getHead());
 		} catch (Exception e) {
 			result = ExceptionResult.process(e);
 		}
@@ -319,9 +380,28 @@ public class InspectionPlanController extends BaseController {
 			if (headvos == null || headvos.length == 0) {
 				ExceptionUtils.wrapBusinessException("表头数据为空，无法停用！");
 			}
+			
+			List<String> ids = new ArrayList<String>();
 
+			for (InspectionPlanHeadVO headvo : headvos) {
+				ids.add(headvo.getId());
+			}
+			// 根据表头id查询主子表
+			InspectionPlanBillVO[] vos = this.service.query(ids);
+
+			List <InspectionPlanHeadVO> list = new ArrayList<InspectionPlanHeadVO>();
+			
+			for(InspectionPlanBillVO vo: vos){
+				InspectionPlanHeadVO headVO = (InspectionPlanHeadVO)vo.getHead();
+				headVO.setEnablestate(0);
+				headVO.setInvalidate(new Timestamp(new Date().getTime()));
+				headVO.setModifiedtime(new Timestamp(new Date().getTime()));
+				list.add(headVO);
+			}
+			
 			// 2.调用批量停用接口
-			//this.service.batchDisableByPrimaryKey(headvos);
+			this.service.batchDisableByPrimaryKey(list);
+
 		} catch (Exception e) {
 			result = ExceptionResult.process(e);
 		}
@@ -353,9 +433,27 @@ public class InspectionPlanController extends BaseController {
 			if (headvos == null || headvos.length == 0) {
 				ExceptionUtils.wrapBusinessException("表头数据为空，无法启用！");
 			}
+			
+			List<String> ids = new ArrayList<String>();
 
+			for (InspectionPlanHeadVO headvo : headvos) {
+				ids.add(headvo.getId());
+			}
+			// 根据表头id查询主子表
+			InspectionPlanBillVO[] vos = this.service.query(ids);
+
+			List <InspectionPlanHeadVO> list = new ArrayList<InspectionPlanHeadVO>();
+			
+			for(InspectionPlanBillVO vo: vos){
+				InspectionPlanHeadVO headVO = (InspectionPlanHeadVO)vo.getHead();
+				headVO.setEnablestate(1);
+				headVO.setInvalidate(null);
+				headVO.setModifiedtime(new Timestamp(new Date().getTime()));
+				list.add(headVO);
+			}
+			
 			// 2.调用批量启用接口
-			//this.service.batchEnableByPrimaryKey(headvos);
+			this.service.batchEnableByPrimaryKey(list);
 		} catch (Exception e) {
 			result = ExceptionResult.process(e);
 		}

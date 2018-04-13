@@ -27,6 +27,16 @@ public interface IInspectionPlanService {
 	 */
 	public Page<InspectionPlanHeadVO> selectAllByPage(PageRequest pageRequest,
 			SearchParams searchParams);
+	
+	/**
+	 * 历史版本分页查询方法
+	 * 
+	 * @param pageRequest
+	 * @param searchParams
+	 * @return
+	 */
+	public Page<InspectionPlanHeadVO> getModalDataByPage(PageRequest pageRequest,
+			SearchParams searchParams);
 
 	/**
 	 * 查询表体信息
@@ -53,6 +63,14 @@ public interface IInspectionPlanService {
 	public InspectionPlanBillVO update(InspectionPlanBillVO vo);
 	
 	/**
+	 * 废除旧版本
+	 * 
+	 * @param vo
+	 */
+	@Transactional
+	public void disableoldplan(InspectionPlanHeadVO vo);
+	
+	/**
 	 * 版本变更
 	 * 
 	 * @param vo
@@ -74,7 +92,7 @@ public interface IInspectionPlanService {
 	 * @param list
 	 */
 	@Transactional
-	public void batchDisableByPrimaryKey(InspectionPlanHeadVO[] vos);
+	public void batchDisableByPrimaryKey(List<InspectionPlanHeadVO> list);
 	
 	/**
 	 * 批量启用
@@ -82,7 +100,7 @@ public interface IInspectionPlanService {
 	 * @param list
 	 */
 	@Transactional
-	public void batchEnableByPrimaryKey(InspectionPlanHeadVO[] vos);
+	public void batchEnableByPrimaryKey(List<InspectionPlanHeadVO> list);
 
 	/**
 	 * 根据主表主键查询主子数据

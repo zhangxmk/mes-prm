@@ -1,7 +1,9 @@
 package com.yonyou.mes.prm.core.inspectionplan.serviceimpl;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -146,33 +148,15 @@ public class InspectionPlanServiceImpl implements IInspectionPlanService {
 	}
 
 	@Override
-	public void batchDisableByPrimaryKey(InspectionPlanHeadVO[] vos) {
+	public void batchDisableByPrimaryKey(List<InspectionPlanHeadVO> list) {
 		// TODO 自动生成的方法存根
-		List<EnableStateVO> statelist = new ArrayList<>();
-		for (InspectionPlanHeadVO planVos:vos){
-			EnableStateVO vo = new EnableStateVO();
-			vo.setId(planVos.getId());
-			vo.setTs(planVos.getTs());
-			vo.setTableName(planVos.getTableName());
-			statelist.add(vo);
-		}
-		IEnableStateService serv = new EnableStateServiceImpl();
-		serv.unableState(statelist);
+		headMapper.batchUpdate(list);
 	}
 
 	@Override
-	public void batchEnableByPrimaryKey(InspectionPlanHeadVO[] vos) {
+	public void batchEnableByPrimaryKey(List<InspectionPlanHeadVO> list) {
 		// TODO 自动生成的方法存根
-		List<EnableStateVO> statelist = new ArrayList<>();
-		for (InspectionPlanHeadVO planVos:vos){
-			EnableStateVO vo = new EnableStateVO();
-			vo.setId(planVos.getId());
-			vo.setTs(planVos.getTs());
-			vo.setTableName(planVos.getTableName());
-			statelist.add(vo);
-		}
-		IEnableStateService serv = new EnableStateServiceImpl();
-		serv.enableState(statelist);
+		headMapper.batchUpdate(list);
 	}
 
 	@Override
@@ -208,6 +192,21 @@ public class InspectionPlanServiceImpl implements IInspectionPlanService {
 		InspectionPlanBillVO retVo = (InspectionPlanBillVO) list.get(0);
 
 		return retVo;
+	}
+
+	@Override
+	public void disableoldplan(InspectionPlanHeadVO vo) {
+		// TODO 自动生成的方法存根
+		vo.setDefplan(0);
+		vo.setModifiedtime(new Timestamp(new Date().getTime()));
+		headMapper.updateByPrimaryKey(vo);
+	}
+
+	@Override
+	public Page<InspectionPlanHeadVO> getModalDataByPage(
+			PageRequest pageRequest, SearchParams searchParams) {
+		// TODO 自动生成的方法存根
+		return headMapper.getModalDataByPage(pageRequest, searchParams).getPage();
 	}
 	
 	@Override

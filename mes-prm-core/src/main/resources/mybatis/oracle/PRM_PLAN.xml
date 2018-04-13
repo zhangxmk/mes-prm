@@ -435,8 +435,9 @@
 				PK_REGION = #{item.pk_region,jdbcType=VARCHAR},
 				PK_REGION_NAME = #{item.pk_region_name,jdbcType=VARCHAR},
 				ENABLESTATE = #{item.enablestate,jdbcType=INTEGER},
-				DEFPLAN = #{defplan,jdbcType=INTEGER},
+				DEFPLAN = #{item.defplan,jdbcType=INTEGER},
 				TENANTID = #{item.tenantid,jdbcType=VARCHAR},
+				INVALIDATE = #{item.invalidate,jdbcType=TIMESTAMP},
 				SYSID = #{item.sysid,jdbcType=VARCHAR},
 				ORGID = #{item.orgid,jdbcType=VARCHAR},
 				ORGID_NAME = #{item.orgid_name,jdbcType=VARCHAR},
@@ -495,6 +496,25 @@
 			<if
 				test="search.searchMap.creator_name!=null and search.searchMap.creator_name!='' ">
 				and creator_name like CONCAT(CONCAT('%', #{search.searchMap.creator_name}), '%')
+			</if>
+		</if>
+    </select>
+    
+    <select id="getModalDataByPage" resultMap="BaseResultMap"
+		resultType="java.util.List">
+		SELECT
+		<include refid="Base_Column_List" />
+		from PRM_PLAN where DR = 0
+		<!-- <if test="search != null">
+        </if> -->
+        <if test="search != null and search.searchMap != null">
+			<if
+				test="search.searchMap.code!=null and search.searchMap.code!='' ">
+				and code = #{search.searchMap.code}
+			</if>
+			<if
+				test="search.searchMap.name!=null and search.searchMap.name!='' ">
+				and name = #{search.searchMap.name}
 			</if>
 		</if>
     </select>
