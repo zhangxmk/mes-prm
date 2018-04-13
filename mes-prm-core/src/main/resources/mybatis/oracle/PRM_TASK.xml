@@ -366,6 +366,18 @@
 		<include refid="Base_Column_List" />
 		from PRM_TASK where DR=0
 		<if test="search != null">
+			<if test="search!=null and search.searchMap!=null">
+				<if test="search.searchMap.orgid!=null">
+					and orgid_name like '%'||#{search.searchMap.orgid,jdbcType=VARCHAR}||'%'
+				</if>
+				<if test="search.searchMap.task_no!=null">
+					and task_no	like '%'||#{search.searchMap.task_no,jdbcType=VARCHAR}||'%'
+				</if>
+				<if test="search.searchMap.postid!=null">
+					and postid_name	like '%'||#{search.searchMap.postid,jdbcType=VARCHAR}||'%'
+				</if>
+
+			</if>
         </if>
     </select>
 	<select id="selectByIDs" resultMap="BaseResultMap"

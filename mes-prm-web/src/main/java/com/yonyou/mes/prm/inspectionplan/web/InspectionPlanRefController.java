@@ -54,7 +54,7 @@ public class InspectionPlanRefController  extends AbstractGridRefModel {
         //
         refModel.setStrFieldCode(new String[] { "code", "name"});
 
-        refModel.setStrHiddenFieldCode(new String[] { "id", "refpk"});
+        refModel.setStrHiddenFieldCode(new String[] { "id", "refpk","postid","postid_name"});
 
         refModel.setStrFieldName(new String[] { "方案编码", "方案名称"});
 
@@ -194,6 +194,8 @@ public class InspectionPlanRefController  extends AbstractGridRefModel {
                 refDataMap.put("refpk", entity.getId());
                 refDataMap.put("code", entity.getCode());
                 refDataMap.put("name", entity.getName());
+                refDataMap.put("pk_post", entity.getPk_post());
+                refDataMap.put("pk_post_name", entity.getPk_post_name());
 
 
                 results.add(refDataMap);
