@@ -119,38 +119,6 @@ public class InspectionPlanController extends BaseController {
 		}
 		return result;
 	}
-
-	/**
-	 * 历史版本查询表头
-	 */
-	@RequestMapping(value = "/getmodaldata", method = RequestMethod.POST)
-	public @ResponseBody Object getmodaldata(@RequestBody PageVO pageVO) {
-
-		Result result = new Result();
-		try {
-			PageRequest pageRequest = pageVO.getPageRequest();
-			SearchParams searchParams = pageVO.getSearchParams();
-			if (pageRequest == null || searchParams == null) {
-				ExceptionUtils.wrapBusinessException("当前参数数据有误");
-			}
-
-			Page<InspectionPlanHeadVO> pageVOs = service.getModalDataByPage(
-					pageVO.getPageRequest(), pageVO.getSearchParams());
-			Map<String, Page<?>> voMap = new HashMap<String, Page<?>>();
-			voMap.put(EntityConst.HEAD, pageVOs);
-
-			Map<String, ViewArea> data = this.convertPageVO2DTO(classMap,
-					voMap, nameMap);
-
-			Map<String, MeSuperVO[]> voIndex = this.convertToVOMap(voMap);
-			// 补充名称和精度
-			this.afterProcess(data, voIndex);
-			result.setData(data);
-		} catch (Exception ex) {
-			result = ExceptionResult.process(ex);
-		}
-		return result;
-	}
 	
 	/**
 	 * 根据表头查询表体数据
@@ -293,8 +261,14 @@ public class InspectionPlanController extends BaseController {
 				throw new Exception("传入数据为空");
 			}
 			InspectionPlanBillVO vo = list.get(0);
+			
+			List<String> ids = new ArrayList<String>();
+			ids.add(((InspectionPlanHeadVO)vo.getHead()).getId());
+			// 根据表头id查询主子表
+			InspectionPlanBillVO[] billvos = this.service.query(ids);
+			
 			// 2.调用废除旧版本接口
-			this.service.disableoldplan((InspectionPlanHeadVO)vo.getHead());
+			this.service.disableoldplan((InspectionPlanHeadVO)billvos[0].getHead());
 		} catch (Exception e) {
 			result = ExceptionResult.process(e);
 		}

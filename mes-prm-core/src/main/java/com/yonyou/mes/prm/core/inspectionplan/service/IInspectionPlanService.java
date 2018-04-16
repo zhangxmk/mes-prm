@@ -27,16 +27,6 @@ public interface IInspectionPlanService {
 	 */
 	public Page<InspectionPlanHeadVO> selectAllByPage(PageRequest pageRequest,
 			SearchParams searchParams);
-	
-	/**
-	 * 历史版本分页查询方法
-	 * 
-	 * @param pageRequest
-	 * @param searchParams
-	 * @return
-	 */
-	public Page<InspectionPlanHeadVO> getModalDataByPage(PageRequest pageRequest,
-			SearchParams searchParams);
 
 	/**
 	 * 查询表体信息

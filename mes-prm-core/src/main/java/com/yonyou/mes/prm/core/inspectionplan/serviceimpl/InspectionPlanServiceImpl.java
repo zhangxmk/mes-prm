@@ -201,13 +201,6 @@ public class InspectionPlanServiceImpl implements IInspectionPlanService {
 		vo.setModifiedtime(new Timestamp(new Date().getTime()));
 		headMapper.updateByPrimaryKey(vo);
 	}
-
-	@Override
-	public Page<InspectionPlanHeadVO> getModalDataByPage(
-			PageRequest pageRequest, SearchParams searchParams) {
-		// TODO 自动生成的方法存根
-		return headMapper.getModalDataByPage(pageRequest, searchParams).getPage();
-	}
 	
 	@Override
 	public InspectionPlanHeadVO[] selectByCodes(List<String> codes) {

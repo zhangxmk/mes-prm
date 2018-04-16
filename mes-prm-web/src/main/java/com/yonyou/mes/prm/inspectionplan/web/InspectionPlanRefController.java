@@ -10,6 +10,7 @@ import com.yonyou.me.utils.context.MeInvocationInfoProxy;
 import com.yonyou.me.utils.exception.ExceptionUtils;
 import com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanHeadVO;
 import com.yonyou.mes.prm.core.inspectionplan.service.IInspectionPlanService;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -19,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.*;
@@ -42,12 +44,12 @@ public class InspectionPlanRefController  extends AbstractGridRefModel {
             .getLogger(InspectionPlanController.class);
 
     @Override
-    public List<Map<String, String>> filterRefJSON(RefViewModelVO refViewModelVO) {
+    public List<Map<String, String>> filterRefJSON(@RequestBody RefViewModelVO refViewModelVO) {
         return null;
     }
 
     @Override
-    public RefViewModelVO getRefModelInfo(RefViewModelVO refViewModel) {
+    public RefViewModelVO getRefModelInfo(@RequestBody RefViewModelVO refViewModel) {
         RefViewModelVO refModel = super.getRefModelInfo(refViewModel);
         //
         refModel.setStrFieldCode(new String[] { "code", "name"});
@@ -61,12 +63,12 @@ public class InspectionPlanRefController  extends AbstractGridRefModel {
     }
 
     @Override
-    public List<Map<String, String>> matchPKRefJSON(RefViewModelVO refViewModelVO) {
+    public List<Map<String, String>> matchPKRefJSON(@RequestBody RefViewModelVO refViewModelVO) {
         return null;
     }
 
     @Override
-    public List<Map<String, String>> matchBlurRefJSON(RefViewModelVO refModel) {
+    public List<Map<String, String>> matchBlurRefJSON(@RequestBody RefViewModelVO refModel) {
         List<Map<String, String>> results = new ArrayList<Map<String, String>>();
         try {
             String tenantId = MeInvocationInfoProxy.getTenantid();
@@ -101,7 +103,7 @@ public class InspectionPlanRefController  extends AbstractGridRefModel {
     }
 
     @Override
-    public Map<String, Object> getCommonRefData(RefViewModelVO refModel) {
+    public Map<String, Object> getCommonRefData(@RequestBody RefViewModelVO refModel) {
         Map<String, Object> results = new HashMap<String, Object>();
         try {
             int pageNum = refModel.getRefClientPageInfo().getCurrPageIndex() == 0 ? 1

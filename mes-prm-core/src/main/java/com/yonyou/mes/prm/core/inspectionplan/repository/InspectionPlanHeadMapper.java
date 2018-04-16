@@ -29,9 +29,6 @@ public interface InspectionPlanHeadMapper {
 
     PageResult<InspectionPlanHeadVO> selectAllByPage(@Param("page") PageRequest pageRequest,
             @Param("search") SearchParams searchParams);
-    
-    PageResult<InspectionPlanHeadVO> getModalDataByPage(@Param("page") PageRequest pageRequest,
-            @Param("search") SearchParams searchParams);
 
     void batchInsert(List<InspectionPlanHeadVO> addList);
 

@@ -466,56 +466,42 @@
 		resultType="java.util.List">
 		SELECT
 		<include refid="Base_Column_List" />
-		from PRM_PLAN where DR = 0 and DEFPLAN = 1
-		<!-- <if test="search != null">
-        </if> -->
-        <if test="search != null and search.searchMap != null">
-			<choose>
-                <when test="search.searchMap.seeDisable == null">
-                    and enablestate in (1)
-                </when>
-                <otherwise>
-                	<choose>
-                		<when test="search.searchMap.seeDisable != null and search.searchMap.seeDisable == true">
-                    		and enablestate in (0,1)
-                		</when>
-                		<otherwise>
-                    		and enablestate in (1)
-                		</otherwise>
-            		</choose>
-                </otherwise>
-            </choose>
-			<if
-				test="search.searchMap.code!=null and search.searchMap.code!='' ">
-				and code like CONCAT(CONCAT('%', #{search.searchMap.code}), '%')
-			</if>
-			<if
-				test="search.searchMap.name!=null and search.searchMap.name!='' ">
-				and name like CONCAT(CONCAT('%', #{search.searchMap.name}), '%')
-			</if>
-			<if
-				test="search.searchMap.creator_name!=null and search.searchMap.creator_name!='' ">
-				and creator_name like CONCAT(CONCAT('%', #{search.searchMap.creator_name}), '%')
-			</if>
-		</if>
-    </select>
-    
-    <select id="getModalDataByPage" resultMap="BaseResultMap"
-		resultType="java.util.List">
-		SELECT
-		<include refid="Base_Column_List" />
 		from PRM_PLAN where DR = 0
 		<!-- <if test="search != null">
         </if> -->
         <if test="search != null and search.searchMap != null">
-			<if
-				test="search.searchMap.code!=null and search.searchMap.code!='' ">
-				and code = #{search.searchMap.code}
-			</if>
-			<if
-				test="search.searchMap.name!=null and search.searchMap.name!='' ">
-				and name = #{search.searchMap.name}
-			</if>
+        	<choose>
+        		<when test="search.searchMap.modal!=null">
+        				and code = #{search.searchMap.code} and name = #{search.searchMap.name} order by iversion desc
+        		</when>
+        		<otherwise>
+        			and DEFPLAN = 1
+        			<choose>
+                		<when test="search.searchMap.seeDisable == null">
+                    		and enablestate in (1)
+                		</when>
+                		<otherwise>
+                			<choose>
+                				<when test="search.searchMap.seeDisable != null and search.searchMap.seeDisable == true">
+                    				and enablestate in (0,1)
+                				</when>
+                				<otherwise>
+                    				and enablestate in (1)
+                				</otherwise>
+            				</choose>
+                		</otherwise>
+            		</choose>
+					<if test="search.searchMap.code!=null and search.searchMap.code!='' ">
+						and code like CONCAT(CONCAT('%', #{search.searchMap.code}), '%')
+					</if>
+					<if test="search.searchMap.name!=null and search.searchMap.name!='' ">
+						and name like CONCAT(CONCAT('%', #{search.searchMap.name}), '%')
+					</if>
+					<if test="search.searchMap.creator_name!=null and search.searchMap.creator_name!='' ">
+						and creator_name like CONCAT(CONCAT('%', #{search.searchMap.creator_name}), '%')
+					</if>
+        		</otherwise>
+        	</choose>
 		</if>
     </select>
 

@@ -15,6 +15,7 @@ public class InspectionPlanBodyVO extends MeSuperVO{
 	private String er_project_code;
 	private String er_project_name;
 	private String pk_plan;
+	private Integer plan_order;
 	private String id;
 	private String tenantid;
 	private String sysid;
@@ -128,6 +129,14 @@ public class InspectionPlanBodyVO extends MeSuperVO{
 
 	public void setDr(Integer dr) {
 		this.dr = dr;
+	}
+	
+	public Integer getPlan_order() {
+		return this.plan_order;
+	}
+
+	public void setPlan_order(Integer plan_order) {
+		this.plan_order = plan_order;
 	}
 
 
