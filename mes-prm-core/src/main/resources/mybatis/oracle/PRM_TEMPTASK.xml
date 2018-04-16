@@ -380,8 +380,18 @@
 		SELECT
 		<include refid="Base_Column_List" />
 		from PRM_TEMPTASK where dr=0
-		<if test="search != null">
+		<if test="search != null and search.searchMap!=null">
+			<if test="search.searchMap.vdeptname!=null and search.searchMap.vdeptname!=''">
+				and vdeptname=#{search.searchMap.vdeptname}
+			</if>
+			<if test="search.searchMap.vqcprojectcode!=null and search.searchMap.vqcprojectcode!=''">
+				and vqcprojectcode like '%${search.searchMap.vqcprojectcode}%'
+			</if>
+			<if test="search.searchMap.vqcprojectname!=null and search.searchMap.vqcprojectname!=''">
+				and vqcprojectname like '%${search.searchMap.vqcprojectname}%'
+			</if>
         </if>
+		order by tqctime desc
     </select>
 
 </mapper>
