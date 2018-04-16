@@ -472,7 +472,7 @@
         <if test="search != null and search.searchMap != null">
         	<choose>
         		<when test="search.searchMap.modal!=null">
-        				and code = #{search.searchMap.code} and name = #{search.searchMap.name} order by iversion desc
+        				and code = #{search.searchMap.code} and name = #{search.searchMap.name} and id not in (select id from (select id from prm_plan where DR = 0 AND code = #{search.searchMap.code} AND name = #{search.searchMap.name} ORDER BY iversion DESC) where rownum <![CDATA[ <= ]]> 1) order by iversion desc
         		</when>
         		<otherwise>
         			and DEFPLAN = 1

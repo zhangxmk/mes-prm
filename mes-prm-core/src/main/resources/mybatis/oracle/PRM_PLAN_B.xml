@@ -36,7 +36,7 @@
 		select
 		<include refid="Base_Column_List" />
 		from PRM_PLAN_B
-		where PK_PLAN = #{id} and DR=0
+		where PK_PLAN = #{id} and DR=0 order by plan_order
 	</select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
 		update PRM_PLAN_B 
@@ -337,7 +337,7 @@
 		<if test="search.searchMap != null">
 			<if
 				test="search.searchMap.id!=null and search.searchMap.id!='' ">
-				and pk_plan = #{search.searchMap.id}
+				and pk_plan = #{search.searchMap.id} order by plan_order
 			</if>
 		</if>
 		<if test="page != null">
