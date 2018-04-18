@@ -188,34 +188,37 @@ public class TempTask4AppController
 		{
 			List<InspectionProjectHeadVO> heads = Arrays.asList(project_service.selectByCode(code));
 			
-			List<String> ids = new ArrayList<String>();
-			
-			for(InspectionProjectHeadVO head:heads)
-			{ids.add(head.getId());}
-			
-			List<InspectionProjectBodyVO> bodys = Arrays.asList(project_service.selectByParentKeys(ids));
-			
-			for(InspectionProjectHeadVO head:heads)
+			if(heads.size()!=0)
 			{
-				String id = head.getId();
-				
-				List<InspectionProjectBodyVO> items = new ArrayList<InspectionProjectBodyVO>();
-				
-				//收集表体
-				for(InspectionProjectBodyVO body:bodys)
+				List<String> ids = new ArrayList<String>();
+			
+				for(InspectionProjectHeadVO head:heads)
+				{ids.add(head.getId());}
+			
+				List<InspectionProjectBodyVO> bodys = Arrays.asList(project_service.selectByParentKeys(ids));
+			
+				for(InspectionProjectHeadVO head:heads)
 				{
-					if(body.getCparentid().equals(id))
-					{items.add(body);}
+					String id = head.getId();
+				
+					List<InspectionProjectBodyVO> items = new ArrayList<InspectionProjectBodyVO>();
+				
+					//收集表体
+					for(InspectionProjectBodyVO body:bodys)
+					{
+						if(body.getCparentid().equals(id))
+						{items.add(body);}
+					}
+				
+					//设置表头表体
+					InspectionProjectBillVO bill = new InspectionProjectBillVO();
+					bill.setHead(head);
+					bill.setChildren(InspectionProjectBodyVO.class, items);
+				
+					bill_list.add(bill);
+				
+					bodys.remove(items);
 				}
-				
-				//设置表头表体
-				InspectionProjectBillVO bill = new InspectionProjectBillVO();
-				bill.setHead(head);
-				bill.setChildren(InspectionProjectBodyVO.class, items);
-				
-				bill_list.add(bill);
-				
-				bodys.remove(items);
 			}
 			
 			Gson gson = new GsonBuilder().serializeNulls().setDateFormat("yyyy-MM-dd HH:mm:ss").create(); 

@@ -74,43 +74,46 @@ public class InspectionTask4AppController {
 			Page<InspectionTaskHeadVO> heads_page= service.queryTask(postid);
 			
 			List<InspectionTaskHeadVO> heads=heads_page.getContent();
-			//用于存储所有表头的id
-			List<String> ids = new ArrayList<String>();
-			//用于存储所有表头的
-			//List<String> planids = new ArrayList<String>();
 			
-			for(InspectionTaskHeadVO head:heads)
+			if(heads.size()!=0)
 			{
-				ids.add(head.getId());
-				/*if(head.getPlanid()!=null)
-				planids.add(head.getPlanid());*/
-			}
-			//根据所有表头id查询出所有表体
-			List<InspectionTaskBodyVO> bodys = Arrays.asList(service.queryTaskDetailsByID(ids));
+				//用于存储所有表头的id
+				List<String> ids = new ArrayList<String>();
+				//用于存储所有表头的
+				//List<String> planids = new ArrayList<String>();
 			
-			for(InspectionTaskHeadVO head:heads)
-			{
-				String id = head.getId();
-				
-				List<InspectionTaskBodyVO> items = new ArrayList<InspectionTaskBodyVO>();
-				
-				//收集表体
-				for(InspectionTaskBodyVO body:bodys)
+				for(InspectionTaskHeadVO head:heads)
 				{
-					if(body.getPk_task().equals(id))
-					{items.add(body);}
+					ids.add(head.getId());
+					/*if(head.getPlanid()!=null)
+					planids.add(head.getPlanid());*/
 				}
-				
-				//设置表头表体
-				InspectionTaskBillVO bill = new InspectionTaskBillVO();
-				bill.setHead(head);
-				bill.setChildren(InspectionTaskBodyVO.class, items);
-				
-				list.add(bill);
-				
-				bodys.remove(items);
-			}
+				//根据所有表头id查询出所有表体
+				List<InspectionTaskBodyVO> bodys = Arrays.asList(service.queryTaskDetailsByID(ids));
 			
+				for(InspectionTaskHeadVO head:heads)
+				{
+					String id = head.getId();
+				
+					List<InspectionTaskBodyVO> items = new ArrayList<InspectionTaskBodyVO>();
+				
+					//收集表体
+					for(InspectionTaskBodyVO body:bodys)
+					{
+						if(body.getPk_task().equals(id))
+						{items.add(body);}
+					}
+				
+					//设置表头表体
+					InspectionTaskBillVO bill = new InspectionTaskBillVO();
+					bill.setHead(head);
+					bill.setChildren(InspectionTaskBodyVO.class, items);
+				
+					list.add(bill);
+				
+					bodys.remove(items);
+				}
+			}
 			//Gson gson = new Gson();
 			Gson gson = new GsonBuilder().serializeNulls().setDateFormat("yyyy-MM-dd HH:mm:ss").create(); 
 			String combin ="[";
@@ -224,41 +227,44 @@ public class InspectionTask4AppController {
 		
 		try
 		{
-			service.batchUpdateByPrimaryKeySelective(list);
-			
-			List<String> list_pk_task = new ArrayList<String>();
-			list_pk_task.add(pk_task);
-			
-			//查出表头的所有子表
-			List<InspectionTaskBodyVO> body_list = Arrays.asList(service.queryTaskDetailsByID(list_pk_task));
-			
-			//finish表示表头的项目状态，1：下达:2：执行中、3：完成:4：未完成
-			int billstatus = 1;
-			boolean finish = true;
-			
-			for(InspectionTaskBodyVO body:body_list)
+			if(list.size()!=0)
 			{
-				//完成状态不可能为完成
-				if(body.getProject_status() == null || body.getProject_status() == 1)
-				{ finish = false; }
+				service.batchUpdateByPrimaryKeySelective(list);
+			
+				List<String> list_pk_task = new ArrayList<String>();
+				list_pk_task.add(pk_task);
+			
+				//查出表头的所有子表
+				List<InspectionTaskBodyVO> body_list = Arrays.asList(service.queryTaskDetailsByID(list_pk_task));
+			
+				//finish表示表头的项目状态，1：下达:2：执行中、3：完成:4：未完成
+				int billstatus = 1;
+				boolean finish = true;
+			
+				for(InspectionTaskBodyVO body:body_list)
+				{
+					//完成状态不可能为完成
+					if(body.getProject_status() == null || body.getProject_status() == 1)
+					{ finish = false; }
 				
-				else{billstatus=2;}
+					else{billstatus=2;}
 				
-				//已确认没有全部完成并且有完成的,确认为执行中
-				if(finish == false && billstatus == 2)
-				{break;}
-			}
+					//已确认没有全部完成并且有完成的,确认为执行中
+					if(finish == false && billstatus == 2)
+					{break;}
+				}
 		
-			if(finish == true)
-			{billstatus = 3;}
+				if(finish == true)
+				{billstatus = 3;}
 			
-			if(billstatus != 1)
-			{
-				InspectionTaskHeadVO head = new InspectionTaskHeadVO();
-				head.setBillstatus(billstatus);
-				head.setId(pk_task);
+				if(billstatus != 1)
+				{
+					InspectionTaskHeadVO head = new InspectionTaskHeadVO();
+					head.setBillstatus(billstatus);
+					head.setId(pk_task);
 				
-				service.updateHead(head);
+					service.updateHead(head);
+				}
 			}
 			
 			String rst = "{\"success\":true}";
