@@ -15,6 +15,10 @@ public class InspectionRegionVO extends MeSuperVO {
 	private Integer enablestate;
 	private String pk_equip;
 	private String pk_equip_name;
+	private String pk_workshop;
+	private String pk_workshop_name;
+	private String pk_section;
+	private String pk_section_name;
 	private String name;
 	private String code;
 	private String tenantid;
@@ -68,7 +72,45 @@ public class InspectionRegionVO extends MeSuperVO {
 	public void setPk_equip_name(String pk_equip_name) {
 		this.pk_equip_name = pk_equip_name;
 	}
+	
+	public String getPk_workshop() {
+		return pk_workshop;
+	}
 
+
+	public void setPk_workshop(String pk_workshop) {
+		this.pk_workshop = pk_workshop;
+	}
+
+
+	public String getPk_workshop_name() {
+		return pk_workshop_name;
+	}
+
+
+	public void setPk_workshop_name(String pk_workshop_name) {
+		this.pk_workshop_name = pk_workshop_name;
+	}
+
+
+	public String getPk_section() {
+		return pk_section;
+	}
+
+
+	public void setPk_section(String pk_section) {
+		this.pk_section = pk_section;
+	}
+
+
+	public String getPk_section_name() {
+		return pk_section_name;
+	}
+
+
+	public void setPk_section_name(String pk_section_name) {
+		this.pk_section_name = pk_section_name;
+	}
 
 	public String getName() {
 		return this.name;

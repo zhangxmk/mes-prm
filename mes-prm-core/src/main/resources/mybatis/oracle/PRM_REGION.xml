@@ -6,6 +6,10 @@
 		<result column="ENABLESTATE" property="enablestate"/>
 		<result column="PK_EQUIP" property="pk_equip"/>
 		<result column="PK_EQUIP_NAME" property="pk_equip_name"/>
+		<result column="PK_WORKSHOP" property="pk_workshop"/>
+		<result column="PK_WORKSHOP_NAME" property="pk_workshop_name"/>
+		<result column="PK_SECTION" property="pk_section"/>
+		<result column="PK_SECTION_NAME" property="pk_section_name"/>
 		<result column="NAME" property="name"/>
 		<result column="CODE" property="code"/>
 		<result column="TENANTID" property="tenantid"/>
@@ -22,7 +26,7 @@
 		<result column="MODIFIEDTIME" property="modifiedtime"/>
     </resultMap>
     <sql id="Base_Column_List">
-		ID,ENABLESTATE,PK_EQUIP,PK_EQUIP_NAME,NAME,CODE,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
+		ID,ENABLESTATE,PK_EQUIP,PK_EQUIP_NAME,PK_WORKSHOP,PK_WORKSHOP_NAME,PK_SECTION,PK_SECTION_NAME,NAME,CODE,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
 	</sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -47,13 +51,17 @@
 
     <insert id="insert" parameterType="com.yonyou.mes.prm.core.inspectionregion.entity.InspectionRegionVO">
 		insert into PRM_REGION (
-		ID,ENABLESTATE,PK_EQUIP,PK_EQUIP_NAME,NAME,CODE,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
+		ID,ENABLESTATE,PK_EQUIP,PK_EQUIP_NAME,PK_WORKSHOP,PK_WORKSHOP_NAME,PK_SECTION,PK_SECTION_NAME,NAME,CODE,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
 		)
 		values (
 		#{id,jdbcType=VARCHAR},
 		#{enablestate,jdbcType=INTEGER},
 		#{pk_equip,jdbcType=VARCHAR},
 		#{pk_equip_name,jdbcType=VARCHAR},
+		#{pk_workshop,jdbcType=VARCHAR},
+		#{pk_workshop_name,jdbcType=VARCHAR},
+		#{pk_section,jdbcType=VARCHAR},
+		#{pk_section_name,jdbcType=VARCHAR},
 		#{name,jdbcType=VARCHAR},
 		#{code,jdbcType=VARCHAR},
 		#{tenantid,jdbcType=VARCHAR},
@@ -73,7 +81,7 @@
 
     <insert id="batchInsert" parameterType="java.util.List">
 		insert into PRM_REGION (
-		ID,ENABLESTATE,PK_EQUIP,PK_EQUIP_NAME,NAME,CODE,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
+		ID,ENABLESTATE,PK_EQUIP,PK_EQUIP_NAME,PK_WORKSHOP,PK_WORKSHOP_NAME,PK_SECTION,PK_SECTION_NAME,NAME,CODE,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
 		)
 		<foreach collection="list" item="item" index="index" separator="union" open="(" close=")">
 		select
@@ -81,6 +89,10 @@
 		#{item.enablestate,jdbcType=INTEGER},
 		#{item.pk_equip,jdbcType=VARCHAR},
 		#{item.pk_equip_name,jdbcType=VARCHAR},
+		#{pk_workshop,jdbcType=VARCHAR},
+		#{pk_workshop_name,jdbcType=VARCHAR},
+		#{pk_section,jdbcType=VARCHAR},
+		#{pk_section_name,jdbcType=VARCHAR},
 		#{item.name,jdbcType=VARCHAR},
 		#{item.code,jdbcType=VARCHAR},
 		#{item.tenantid,jdbcType=VARCHAR},
@@ -112,6 +124,18 @@
 			</if>
 			<if test="pk_equip_name != null">
 				PK_EQUIP_NAME,
+			</if>
+			<if test="pk_workshop != null">
+				PK_WORKSHOP,
+			</if>
+			<if test="pk_workshop_name != null">
+				PK_WORKSHOP_NAME,
+			</if>
+			<if test="pk_section != null">
+				PK_SECTION,
+			</if>
+			<if test="pk_section_name != null">
+				PK_SECTION_NAME,
 			</if>
 			<if test="name != null">
 				NAME,
@@ -168,6 +192,18 @@
 			</if>
 			<if test="pk_equip_name != null">
 				#{pk_equip_name,jdbcType=VARCHAR},
+			</if>
+			<if test="pk_workshop != null">
+				#{pk_workshop,jdbcType=VARCHAR},
+			</if>
+			<if test="pk_workshop_name != null">
+				#{pk_workshop_name,jdbcType=VARCHAR},
+			</if>
+			<if test="pk_section != null">
+				#{pk_section,jdbcType=VARCHAR},
+			</if>
+			<if test="pk_section_name != null">
+				#{pk_section_name,jdbcType=VARCHAR},
 			</if>
 			<if test="name != null">
 				#{name,jdbcType=VARCHAR},
@@ -228,6 +264,18 @@
 			<if test="pk_equip_name != null">
 				PK_EQUIP_NAME = #{pk_equip_name,jdbcType=VARCHAR},
 			</if>
+			<if test="pk_workshop != null">
+				PK_WORKSHOP = #{pk_workshop,jdbcType=VARCHAR},
+			</if>
+			<if test="pk_workshop_name != null">
+				PK_WORKSHOP_NAME = #{pk_workshop_name,jdbcType=VARCHAR},
+			</if>
+			<if test="pk_section != null">
+				PK_SECTION = #{pk_section,jdbcType=VARCHAR},
+			</if>
+			<if test="pk_section_name != null">
+				PK_SECTION_NAME = #{pk_section_name,jdbcType=VARCHAR},
+			</if>
 			<if test="name != null">
 				NAME = #{name,jdbcType=VARCHAR},
 			</if>
@@ -280,6 +328,10 @@
 				ENABLESTATE = #{enablestate,jdbcType=INTEGER},
 				PK_EQUIP = #{pk_equip,jdbcType=VARCHAR},
 				PK_EQUIP_NAME = #{pk_equip_name,jdbcType=VARCHAR},
+				PK_WORKSHOP = #{pk_workshop,jdbcType=VARCHAR},
+				PK_WORKSHOP_NAME = #{pk_workshop_name,jdbcType=VARCHAR},
+				PK_SECTION = #{pk_section,jdbcType=VARCHAR},
+				PK_SECTION_NAME = #{pk_section_name,jdbcType=VARCHAR},
 				NAME = #{name,jdbcType=VARCHAR},
 				CODE = #{code,jdbcType=VARCHAR},
 				TENANTID = #{tenantid,jdbcType=VARCHAR},
@@ -307,6 +359,10 @@
 				ENABLESTATE = #{item.enablestate,jdbcType=INTEGER},
 				PK_EQUIP = #{item.pk_equip,jdbcType=VARCHAR},
 				PK_EQUIP_NAME = #{item.pk_equip_name,jdbcType=VARCHAR},
+				PK_WORKSHOP = #{pk_workshop,jdbcType=VARCHAR},
+				PK_WORKSHOP_NAME = #{pk_workshop_name,jdbcType=VARCHAR},
+				PK_SECTION = #{pk_section,jdbcType=VARCHAR},
+				PK_SECTION_NAME = #{pk_section_name,jdbcType=VARCHAR},
 				NAME = #{item.name,jdbcType=VARCHAR},
 				CODE = #{item.code,jdbcType=VARCHAR},
 				TENANTID = #{item.tenantid,jdbcType=VARCHAR},
@@ -354,6 +410,9 @@
 			</if>
 			<if test="search.searchMap.pk_equip_name!=null ">
 				 and pk_equip_name like '%${search.searchMap.pk_equip_name}%'
+			</if>
+			<if test="search.searchMap.pk_workshop!=null ">
+				 and pk_workshop in ${search.searchMap.pk_workshop}
 			</if>
 		</if>
 		order by code
