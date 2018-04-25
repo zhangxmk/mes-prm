@@ -25,6 +25,7 @@ import com.yonyou.me.entity.MeSuperVO;
 import com.yonyou.me.entity.VOUtil;
 import com.yonyou.me.utils.dto.BaseDTO;
 import com.yonyou.me.utils.dto.ExceptionResult;
+import com.yonyou.me.utils.dto.IDValueConvert;
 import com.yonyou.me.utils.dto.PageVO;
 import com.yonyou.me.utils.dto.Result;
 import com.yonyou.me.utils.dto.ViewArea;
@@ -47,6 +48,16 @@ public class InspectionRegionController extends BaseController {
 
 	@Autowired
 	private IInspectionRegionService service;
+	
+	/**
+	 * 表头前端档案id与显示名称的映射
+	 */
+	private static Map<String, String> headDisplayID2Name = new HashMap<String, String>() {
+		{
+			put("pk_workshop", "pk_workshop_name");// 车间
+
+		}
+	};
 
 	/**
 	 * classMap和nameMap分别保存Json子段名到VO类、类中所有字段的映射
@@ -91,7 +102,7 @@ public class InspectionRegionController extends BaseController {
 
 			Map<String, MeSuperVO[]> voIndex = this.convertToVOMap(voMap);
 			// 补充名称和精度
-			// this.afterProcess(data, voIndex);
+			this.afterProcess(data, voIndex);
 			result.setData(data);
 		} catch (Exception ex) {
 			result = ExceptionResult.process(ex);
@@ -335,8 +346,8 @@ public class InspectionRegionController extends BaseController {
 		if (MapUtils.isEmpty(voMap)) {
 			ExceptionUtils.wrapBusinessException("没有数据！");
 		}
-		// // 补全档案名称
-		// this.copyDisplayName(dto, voMap);
+		 // 补全档案名称
+		 this.copyDisplayName(dto, voMap);
 		InspectionRegionVO[] headvos = (InspectionRegionVO[]) voMap
 				.get(EntityConst.HEAD);
 		if (headvos == null || headvos.length == 0) {
@@ -380,8 +391,8 @@ public class InspectionRegionController extends BaseController {
 		// 将查询的实体VO数据按照前端页面需要的属性名转换为前端数据结构
 		Map<String, ViewArea> data = this.convertVO2DTO(classMap, voMap,
 				nameMap);
-		// // 处理显示名称和精度（档案可能不需要，直接去掉）
-		// this.afterProcess(data, voMap);
+		 // 处理显示名称和精度（档案可能不需要，直接去掉）
+		 this.afterProcess(data, voMap);
 
 		result.setData(data);
 		return result;
@@ -423,5 +434,72 @@ public class InspectionRegionController extends BaseController {
 	// BondInterestBillConstant.getHeadRefConvert());
 	// return idValueMap;
 	// }
+	
+	private void afterProcess(Map<String, ViewArea> data,
+			Map<String, MeSuperVO[]> voMap) {
+		// 处理前端页面数值精度
+		this.setPrecision(data);
+
+		// 处理前端枚举和档案的显示名称
+		this.setDisplayName(data, voMap);
+	}
+	
+	private void setPrecision(Map<String, ViewArea> data) {
+		// 设置每个区域需要处理精度的数值字段
+		Map<String, String[]> precisionMap = new HashMap<String, String[]>();
+		String[] names = this
+				.getDecimalTypeAttributes(InspectionRegionVO.class);
+		precisionMap.put(EntityConst.HEAD, names);
+
+		// 调用公共规则处理精度
+		this.setPrecision(data, precisionMap);
+	}
+	
+	private void setDisplayName(Map<String, ViewArea> data,
+			Map<String, MeSuperVO[]> voMap) {
+
+		Map<String, IDValueConvert> idValueMap = this.getIdValueMap();
+
+		// 调用公共规则设置档案主键的显示名称
+		this.setDisplayName(data, voMap, idValueMap);
+
+		// // 调用公共规则设置非冗余档案主键的显示名称
+		// DocMeta[] hmetas = new DocMeta[1];
+		// hmetas[0] = new DocMeta("currtypeid", BaseDocType.Currency);
+		//
+		// Map<String, DocMeta[]> docmap = new HashMap<String, DocMeta[]>();
+		// docmap.put("head", hmetas);
+		//
+		// IDocIDConvertor docConvertor = new BaseDocIDConvertor();
+		// DocIDConvertor convertor = new DocIDConvertor(docConvertor);
+		// convertor.setDisplay(data, docmap);
+	}
+	
+	private Map<String, IDValueConvert> getIdValueMap() {
+		Map<String, IDValueConvert> idValueMap = new HashMap<String, IDValueConvert>();
+
+		// 创建档案主键与档案名称字段的映射关系
+		IDValueConvert convert = new IDValueConvert();
+		for (String key : headDisplayID2Name.keySet()) {
+			convert.add(key, headDisplayID2Name.get(key));
+		}
+
+
+
+		// 注册前端区域的主键名称的翻译器
+		idValueMap.put(EntityConst.HEAD, convert);
+		//idValueMap.put(EntityConst.BODY, bodyconvert);
+
+		return idValueMap;
+	}
+	
+	private void copyDisplayName(BaseDTO dto, Map<String, MeSuperVO[]> voMap) {
+		Map<String, ViewArea> data = dto.getData();
+
+		Map<String, IDValueConvert> idValueMap = this.getIdValueMap();
+
+		// 调用公共规则复制档案主键对应的显示名称
+		this.copyDisplayName(data, voMap, idValueMap);
+	}
 
 }
