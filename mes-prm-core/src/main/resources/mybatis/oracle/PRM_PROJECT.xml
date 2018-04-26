@@ -9,6 +9,8 @@
 		<result column="NAME" property="name"/>
 		<result column="CEQUIP" property="cequip"/>
 		<result column="CEQUIP_NAME" property="cequip_name"/>
+		<result column="PK_DEPT" property="pk_dept"/>
+		<result column="PK_DEPT_NAME" property="pk_dept_name"/>
 		<result column="ENABLESTATE" property="enablestate"/>
 		<result column="TENANTID" property="tenantid"/>
 		<result column="SYSID" property="sysid"/>
@@ -95,6 +97,8 @@
 		#{name,jdbcType=VARCHAR},
 		#{cequip,jdbcType=VARCHAR},
 		#{cequip_name,jdbcType=VARCHAR},
+		#{pk_dept,jdbcType=VARCHAR},
+		#{pk_dept_name,jdbcType=VARCHAR},
 		#{enablestate,jdbcType=INTEGER},
 		#{id,jdbcType=VARCHAR},
 		#{tenantid,jdbcType=VARCHAR},
@@ -126,6 +130,8 @@
 		#{item.name,jdbcType=VARCHAR},
 		#{item.cequip,jdbcType=VARCHAR},
 		#{item.cequip_name,jdbcType=VARCHAR},
+            #{item.pk_dept,jdbcType=VARCHAR},
+            #{item.pk_dept_name,jdbcType=VARCHAR},
 		#{item.enablestate,jdbcType=INTEGER},
 		#{item.id,jdbcType=VARCHAR},
 		#{item.tenantid,jdbcType=VARCHAR},
@@ -163,6 +169,12 @@
 			<if test="cequip_name != null">
 				CEQUIP_NAME,
 			</if>
+            <if test="pk_dept != null">
+                PK_DEPT,
+            </if>
+            <if test="pk_dept_name != null">
+                PK_DEPT_NAME,
+            </if>
 			<if test="enablestate != null">
 				ENABLESTATE,
 			</if>
@@ -225,6 +237,12 @@
 			<if test="cequip_name != null">
 				#{cequip_name,jdbcType=VARCHAR},
 			</if>
+            <if test="pk_dept != null">
+                #{pk_dept,jdbcType=VARCHAR},
+            </if>
+            <if test="pk_dept_name != null">
+                #{pk_dept_name,jdbcType=VARCHAR},
+            </if>
 			<if test="enablestate != null">
 				#{enablestate,jdbcType=INTEGER},
 			</if>
@@ -290,6 +308,12 @@
 			<if test="cequip_name != null">
 				CEQUIP_NAME = #{cequip_name,jdbcType=VARCHAR},
 			</if>
+            <if test="pk_dept != null">
+                PK_DEPT = #{pk_dept_name,jdbcType=VARCHAR},
+            </if>
+            <if test="pk_dept_name != null">
+                PK_DEPT_NAME = #{pk_dept_name,jdbcType=VARCHAR},
+            </if>
 			<if test="enablestate != null">
 				ENABLESTATE = #{enablestate,jdbcType=INTEGER},
 			</if>
@@ -344,6 +368,8 @@
 				NAME = #{name,jdbcType=VARCHAR},
 				CEQUIP = #{cequip,jdbcType=VARCHAR},
 				CEQUIP_NAME = #{cequip_name,jdbcType=VARCHAR},
+				PK_DEPT = #{pk_dept,jdbcType=VARCHAR},
+				PK_DEPT_NAME = #{pk_dept_name,jdbcType=VARCHAR},
 				ENABLESTATE = #{enablestate,jdbcType=INTEGER},
 				TS = #{ts,jdbcType=TIMESTAMP},
 				MODIFIER = #{modifier,jdbcType=VARCHAR},
@@ -363,6 +389,8 @@
 				NAME = #{item.name,jdbcType=VARCHAR},
 				CEQUIP = #{item.cequip,jdbcType=VARCHAR},
 				CEQUIP_NAME = #{item.cequip_name,jdbcType=VARCHAR},
+                PK_DEPT = #{item.pk_dept,jdbcType=VARCHAR},
+                PK_DEPT_NAME = #{item.pk_dept_name,jdbcType=VARCHAR},
 				ENABLESTATE = #{item.enablestate,jdbcType=INTEGER},
 				TS = #{item.ts,jdbcType=TIMESTAMP},
 				MODIFIER = #{item.modifier,jdbcType=VARCHAR},

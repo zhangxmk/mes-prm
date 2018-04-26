@@ -12,6 +12,25 @@ public class InspectionProjectHeadVO extends MeSuperVO {
 	private String name;
 	private String cequip;
 	private String cequip_name;
+	private String pk_dept;
+
+	public String getPk_dept() {
+		return pk_dept;
+	}
+
+	public void setPk_dept(String pk_dept) {
+		this.pk_dept = pk_dept;
+	}
+
+	public String getPk_dept_name() {
+		return pk_dept_name;
+	}
+
+	public void setPk_dept_name(String pk_dept_name) {
+		this.pk_dept_name = pk_dept_name;
+	}
+
+	private String pk_dept_name;
 	private Integer enablestate;
 	private String id;
 	private String tenantid;
