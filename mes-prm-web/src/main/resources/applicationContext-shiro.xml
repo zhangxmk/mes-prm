@@ -120,7 +120,7 @@
 				/**/api/** = anon
 				/**/cxf/** = anon
 				/**/jaxrs/** = anon
-				/**/taskapp/** = anon
+				/**/**app/** = anon
 				/**/common/** = anon
 				/**/restWithSign/** = signAuth
 				/** = statelessAuthc
