@@ -31,6 +31,7 @@ import com.yonyou.me.utils.exception.ExceptionUtils;
 import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBillVO;
 import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBodyVO;
 import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskHeadVO;
+import com.yonyou.mes.prm.core.inspectiontask.entity.TaskForTableVO;
 import com.yonyou.mes.prm.core.inspectiontask.service.IInspectionTaskService;
 
 /**
@@ -76,6 +77,12 @@ public class InspectionTaskController extends BaseController {
 			put(EntityConst.BODY, InspectionTaskBodyVO.class);
 		}
 	};
+	
+	private final Map<String, Class<?>> classMapForTable = new HashMap<String, Class<?>>() {
+		{
+			put(EntityConst.HEAD, TaskForTableVO.class);
+		}
+	};
 
 	private final Map<String, String[]> nameMap = new HashMap<String, String[]>() {
 		{
@@ -83,6 +90,13 @@ public class InspectionTaskController extends BaseController {
 					VOUtil.AllClassFields(InspectionTaskHeadVO.class));
 			put(EntityConst.BODY,
 					VOUtil.AllClassFields(InspectionTaskBodyVO.class));
+		}
+	};
+	
+	private final Map<String, String[]> nameMapForTable = new HashMap<String, String[]>() {
+		{
+			put(EntityConst.HEAD,
+					VOUtil.AllClassFields(TaskForTableVO.class));
 		}
 	};
 
@@ -110,6 +124,37 @@ public class InspectionTaskController extends BaseController {
 			Map<String, MeSuperVO[]> voIndex = this.convertToVOMap(voMap);
 			// 补充名称和精度
 			this.afterProcess(data, voIndex);
+			result.setData(data);
+		} catch (Exception ex) {
+			result = ExceptionResult.process(ex);
+		}
+		return result;
+	}
+	
+	/**
+	 * 查询表头
+	 */
+	@RequestMapping(value = "/queryforsta", method = RequestMethod.POST)
+	public @ResponseBody Object queryForStaTable(@RequestBody PageVO pageVO) {
+
+		Result result = new Result();
+		try {
+			PageRequest pageRequest = pageVO.getPageRequest();
+			SearchParams searchParams = pageVO.getSearchParams();
+			if (pageRequest == null || searchParams == null) {
+				ExceptionUtils.wrapBusinessException("当前参数数据有误");
+			}
+
+			Page<TaskForTableVO> pageVOs = service.selectForStaTable(
+					pageVO.getPageRequest(), pageVO.getSearchParams());
+			Map<String, Page<?>> voMap = new HashMap<String, Page<?>>();
+			voMap.put(EntityConst.HEAD, pageVOs);
+			Map<String, ViewArea> data = this.convertPageVO2DTO(classMapForTable,
+					voMap, nameMapForTable);
+
+			//Map<String, MeSuperVO[]> voIndex = this.convertToVOMap(voMap);
+			// 补充名称和精度
+			//this.afterProcess(data, voIndex);
 			result.setData(data);
 		} catch (Exception ex) {
 			result = ExceptionResult.process(ex);

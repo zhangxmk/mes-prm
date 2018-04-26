@@ -8,6 +8,10 @@
 		<result column="POSTID_NAME" property="postid_name"/>
 		<result column="PLANID" property="planid"/>
 		<result column="PLANID_NAME" property="planid_name"/>
+		<result column="TEAM" property="team"/>
+		<result column="TEAM_NAME" property="team_name"/>
+		<result column="SHIFT" property="shift"/>
+		<result column="SHIFT_NAME" property="shift_name"/>
 		<result column="BILLSTATUS" property="billstatus"/>
 		<result column="TENANTID" property="tenantid"/>
 		<result column="SYSID" property="sysid"/>
@@ -23,8 +27,21 @@
 		<result column="MODIFIER_NAME" property="modifier_name"/>
 		<result column="ASSIGN_TIME" property="assign_time"/>
     </resultMap>
+    
+    <resultMap id="BaseResultMapForTable" type="com.yonyou.mes.prm.core.inspectiontask.entity.TaskForTableVO">
+		<result column="POSTID" property="postid"/>
+		<result column="POSTID_NAME" property="postid_name"/>
+		<result column="TEAM" property="team"/>
+		<result column="TEAM_NAME" property="team_name"/>
+		<result column="SHIFT" property="shift"/>
+		<result column="SHIFT_NAME" property="shift_name"/>
+		<result column="ORGID" property="orgid"/>
+		<result column="ORGID_NAME" property="orgid_name"/>
+		<result column="PLANCOUNT" property="plancount"/>
+		<result column="UNFINISHCOUNT" property="unfinishcount"/>
+    </resultMap>
     <sql id="Base_Column_List">
-		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME
+		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME
 	</sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -51,7 +68,7 @@
 
     <insert id="insert" parameterType="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskHeadVO">
 		insert into PRM_TASK (
-		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME
+		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME
 		)
 		values (
 		#{task_no,jdbcType=VARCHAR},
@@ -59,6 +76,10 @@
 		#{postid_name,jdbcType=VARCHAR},
 		#{planid,jdbcType=VARCHAR},
 		#{planid_name,jdbcType=VARCHAR},
+		#{team,jdbcType=VARCHAR},
+		#{team_name,jdbcType=VARCHAR},
+		#{shift,jdbcType=VARCHAR},
+		#{shift_name,jdbcType=VARCHAR},
 		#{billstatus,jdbcType=INTEGER},
 		#{id,jdbcType=VARCHAR},
 		#{tenantid,jdbcType=VARCHAR},
@@ -79,7 +100,7 @@
 
     <insert id="batchInsert" parameterType="java.util.List">
 		insert into PRM_TASK (
-		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME
+		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME
 		)
 		values
 		<foreach collection="list" item="item" index="index"
@@ -90,6 +111,10 @@
 		#{item.postid_name,jdbcType=VARCHAR},
 		#{item.planid,jdbcType=VARCHAR},
 		#{item.planid_name,jdbcType=VARCHAR},
+		#{item.team,jdbcType=VARCHAR},
+		#{item.team_name,jdbcType=VARCHAR},
+		#{item.shift,jdbcType=VARCHAR},
+		#{item.shift_name,jdbcType=VARCHAR},
 		#{item.billstatus,jdbcType=INTEGER},
 		#{item.id,jdbcType=VARCHAR},
 		#{item.tenantid,jdbcType=VARCHAR},
@@ -125,6 +150,18 @@
 			</if>
 			<if test="planid_name != null">
 				PLANID_NAME,
+			</if>
+			<if test="team != null">
+				TEAM,
+			</if>
+			<if test="team_name != null">
+				TEAM_NAME,
+			</if>
+			<if test="shift != null">
+				SHIFT,
+			</if>
+			<if test="shift_name != null">
+				SHIFT_NAME,
 			</if>
 			<if test="billstatus != null">
 				BILLSTATUS,
@@ -187,6 +224,18 @@
 			</if>
 			<if test="planid_name != null">
 				#{planid_name,jdbcType=VARCHAR},
+			</if>
+			<if test="team != null">
+				#{team,jdbcType=VARCHAR},,
+			</if>
+			<if test="team_name != null">
+				#{team_name,jdbcType=VARCHAR},,
+			</if>
+			<if test="shift != null">
+				#{shift,jdbcType=VARCHAR},,
+			</if>
+			<if test="shift_name != null">
+				#{shift_name,jdbcType=VARCHAR},,
 			</if>
 			<if test="billstatus != null">
 				#{billstatus,jdbcType=INTEGER},
@@ -253,6 +302,18 @@
 			<if test="planid_name != null">
 				PLANID_NAME = #{planid_name,jdbcType=VARCHAR},
 			</if>
+			<if test="team != null">
+				TEAM = #{team,jdbcType=VARCHAR},,
+			</if>
+			<if test="team_name != null">
+				TEAM_NAME = #{team_name,jdbcType=VARCHAR},,
+			</if>
+			<if test="shift != null">
+				SHIFT = #{shift,jdbcType=VARCHAR},,
+			</if>
+			<if test="shift_name != null">
+				SHIFT_NAME = #{shift_name,jdbcType=VARCHAR},,
+			</if>
 			<if test="billstatus != null">
 				BILLSTATUS = #{billstatus,jdbcType=INTEGER},
 			</if>
@@ -310,6 +371,10 @@
 				POSTID_NAME = #{postid_name,jdbcType=VARCHAR},
 				PLANID = #{planid,jdbcType=VARCHAR},
 				PLANID_NAME = #{planid_name,jdbcType=VARCHAR},
+				TEAM = #{team,jdbcType=VARCHAR},,
+				TEAM_NAME = #{team_name,jdbcType=VARCHAR},,
+				SHIFT = #{shift,jdbcType=VARCHAR},,
+				SHIFT_NAME = #{shift_name,jdbcType=VARCHAR},
 				BILLSTATUS = #{billstatus,jdbcType=INTEGER},
 				TENANTID = #{tenantid,jdbcType=VARCHAR},
 				SYSID = #{sysid,jdbcType=VARCHAR},
@@ -339,6 +404,10 @@
 				POSTID_NAME = #{item.postid_name,jdbcType=VARCHAR},
 				PLANID = #{item.planid,jdbcType=VARCHAR},
 				PLANID_NAME = #{item.planid_name,jdbcType=VARCHAR},
+				TEAM = #{team,jdbcType=VARCHAR},,
+				TEAM_NAME = #{team_name,jdbcType=VARCHAR},,
+				SHIFT = #{shift,jdbcType=VARCHAR},,
+				SHIFT_NAME = #{shift_name,jdbcType=VARCHAR},
 				BILLSTATUS = #{item.billstatus,jdbcType=INTEGER},
 				TENANTID = #{item.tenantid,jdbcType=VARCHAR},
 				SYSID = #{item.sysid,jdbcType=VARCHAR},
@@ -375,6 +444,12 @@
 				</if>
 				<if test="search.searchMap.postid!=null">
 					and postid_name	like '%'||#{search.searchMap.postid,jdbcType=VARCHAR}||'%'
+				</if>
+				<if test="search.searchMap.team!=null">
+					and postid_name	like '%'||#{search.searchMap.team,jdbcType=VARCHAR}||'%'
+				</if>
+				<if test="search.searchMap.shift!=null">
+					and postid_name	like '%'||#{search.searchMap.shift,jdbcType=VARCHAR}||'%'
 				</if>
 
 			</if>
@@ -425,4 +500,59 @@
 			and (billstatus = 1 or billstatus = 2)
 			and h.postid = #{postid} 
 	</select>
+	<select id="selectForStaTable" resultMap="BaseResultMapForTable"
+		parameterType="java.lang.String">
+		select 
+		<if test="search != null">
+			<if test="search!=null and search.searchMap!=null">
+				<if test="search.searchMap.orgid_name==null">
+					orgid_name,
+				</if>
+				<if test="search.searchMap.team_name==null">
+					team_name,
+				</if>
+				<if test="search.searchMap.shift_name==null">
+					shift_name,
+				</if>
+				<if test="search.searchMap.postid_name==null">
+					postid_name,
+				</if>
+
+			</if>
+        </if>
+		sum(case when billstatus = '1' then 1 else 1 end) as "PLANCOUNT",
+		sum(case when billstatus = '4' then 1 else 0 end) as "UNFINISHCOUNT"  
+		from prm_task  
+		where 
+		dr = 0 
+		and creationtime between to_date('${search.searchMap.starttime}','yyyy-mm-dd hh24:mi:ss') 
+		and to_date('${search.searchMap.finishtime}','yyyy-mm-dd hh24:mi:ss')
+		<if test="search != null">
+			<if test="search!=null and search.searchMap!=null">
+				<if test="search.searchMap.orgid_name!=null">
+					and orgid_name like '%${search.searchMap.orgid_name}%'
+				</if>
+				<if test="search.searchMap.team_name!=null">
+					and team_name like '%${search.searchMap.team_name}%'
+				</if>
+				<if test="search.searchMap.shift_name!=null">
+					and shift_name	like '%${search.searchMap.shift_name}%'
+				</if>
+				<if test="search.searchMap.postid_name!=null">
+					and postid_name	like '%${search.searchMap.postid_name}%'
+				</if>
+			</if>
+        </if>
+		<if test="search != null">
+			<if test="search!=null and search.searchMap!=null">
+				<if test="search.searchMap.groupstr!=null">
+					${search.searchMap.groupstr}
+				</if>
+			</if>
+        </if>
+
+ 
+	</select>
+	
+	
 </mapper>

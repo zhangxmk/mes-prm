@@ -9,6 +9,7 @@ import com.yonyou.iuap.mvc.type.SearchParams;
 import com.yonyou.iuap.mybatis.type.PageResult;
 import com.yonyou.iuap.persistence.mybatis.anotation.MyBatisRepository;
 import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskHeadVO;
+import com.yonyou.mes.prm.core.inspectiontask.entity.TaskForTableVO;
 
 
 @MyBatisRepository
@@ -29,6 +30,10 @@ public interface TaskHeadMapper {
 
     PageResult<InspectionTaskHeadVO> selectAllByPage(@Param("page") PageRequest pageRequest,
             @Param("search") SearchParams searchParams);
+    
+    PageResult<TaskForTableVO> selectForStaTable(@Param("page") PageRequest pageRequest,
+            @Param("search") SearchParams searchParams);
+
 
     void batchInsert(List<InspectionTaskHeadVO> addList);
 

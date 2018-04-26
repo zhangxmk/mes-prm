@@ -10,6 +10,7 @@ import com.yonyou.iuap.mvc.type.SearchParams;
 import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBillVO;
 import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBodyVO;
 import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskHeadVO;
+import com.yonyou.mes.prm.core.inspectiontask.entity.TaskForTableVO;
 
 /**
  * 巡检任务service
@@ -26,6 +27,16 @@ public interface IInspectionTaskService {
 	 * @return
 	 */
 	public Page<InspectionTaskHeadVO> selectAllByPage(PageRequest pageRequest,
+			SearchParams searchParams);
+	
+	/**
+	 * 巡检完成情况统计表数据
+	 * 
+	 * @param pageRequest
+	 * @param searchParams
+	 * @return
+	 */
+	public Page<TaskForTableVO> selectForStaTable(PageRequest pageRequest,
 			SearchParams searchParams);
 
 	/**
@@ -99,6 +110,7 @@ public interface IInspectionTaskService {
 	 * @return
 	 */
 	public Page<InspectionTaskHeadVO> queryTask(String postid);
+	
 	
 	/**
 	 * 根据主表主键查询任务中的项目明细

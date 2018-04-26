@@ -16,6 +16,10 @@ public class InspectionTaskHeadVO extends MeSuperVO{
 	private String postid_name;
 	private String planid;
 	private String planid_name;
+	private String team;
+	private String team_name;
+	private String shift;
+	private String shift_name;
 	private Integer billstatus;
 	private String id;
 	private String tenantid;
@@ -80,6 +84,45 @@ public class InspectionTaskHeadVO extends MeSuperVO{
 
 	public void setPlanid_name(String planid_name) {
 		this.planid_name = planid_name;
+	}
+	
+	public String getTeam() {
+		return team;
+	}
+
+
+	public void setTeam(String team) {
+		this.team = team;
+	}
+
+
+	public String getTeam_name() {
+		return team_name;
+	}
+
+
+	public void setTeam_name(String team_name) {
+		this.team_name = team_name;
+	}
+
+
+	public String getShift() {
+		return shift;
+	}
+
+
+	public void setShift(String shift) {
+		this.shift = shift;
+	}
+
+
+	public String getShift_name() {
+		return shift_name;
+	}
+
+
+	public void setShift_name(String shift_name) {
+		this.shift_name = shift_name;
 	}
 
 	public String getId() {
