@@ -20,6 +20,7 @@ import com.yonyou.me.utils.service.bill.BillSaveService;
 import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBillVO;
 import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBodyVO;
 import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskHeadVO;
+import com.yonyou.mes.prm.core.inspectiontask.entity.TaskForTableVO;
 import com.yonyou.mes.prm.core.inspectiontask.repository.TaskBodyMapper;
 import com.yonyou.mes.prm.core.inspectiontask.repository.TaskBodyPersistent;
 import com.yonyou.mes.prm.core.inspectiontask.repository.TaskHeadMapper;
@@ -40,6 +41,12 @@ public class InspectionTaskServiceImpl implements IInspectionTaskService {
 	public Page<InspectionTaskHeadVO> selectAllByPage(PageRequest pageRequest,
 			SearchParams searchParams) {
 		return headMapper.selectAllByPage(pageRequest, searchParams).getPage();
+	}
+	
+	@Override
+	public Page<TaskForTableVO> selectForStaTable(PageRequest pageRequest,
+			SearchParams searchParams) {
+		return headMapper.selectForStaTable(pageRequest, searchParams).getPage();
 	}
 
 	@Override
