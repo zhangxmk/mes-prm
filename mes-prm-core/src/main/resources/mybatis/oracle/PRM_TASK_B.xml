@@ -457,14 +457,15 @@
 		         PLANB.ER_PROJECT_CODE PROJECTID_CODE,
 		         PLANB.ER_PROJECT_NAME PROJECTID_NAME,
 		         PROJECTB.CPRJCONTENT  PROJECT_CONTENT,
-		         PROJECTB.CJUDSTD      JUDGE_STANDARD
+		         PROJECTB.CJUDSTD      JUDGE_STANDARD,
+		         PLANB.PLAN_ORDER      PLAN_ORDER
 		    FROM PRM_PLAN PLAN
 		   INNER JOIN PRM_PLAN_B PLANB ON PLAN.ID = PLANB.PK_PLAN
 		   INNER JOIN PRM_PROJECT_B PROJECTB ON PLANB.PK_ER_PROJECT =
 		                                        PROJECTB.CPARENTID
 		   WHERE PLANB.DR = 0
 		     AND PROJECTB.DR = 0
-		     AND PLAN.ID = #{planid}
+		     AND PLAN.ID = #{planid} order by PLANB.PLAN_ORDER
 	</select>
 	
 	<select id="queryTaskDetail4App" resultMap="BaseResultMap"
@@ -489,6 +490,7 @@
 			separator="," open="(" close=")">
 		#{item}
 		</foreach>
+		order by PLAN_ORDER
 	</select>
 	
 	<update id="batchUpdateByPrimaryKeySelective" parameterType="java.util.List">

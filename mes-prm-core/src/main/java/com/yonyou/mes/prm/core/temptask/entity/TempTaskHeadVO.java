@@ -17,6 +17,7 @@ public class TempTaskHeadVO extends MeSuperVO{
 	private String cqcprojectid;
 	private String vqcprojectcode;
 	private String vqcprojectname;
+	private String vbillcode;
 	private String cstationid;
 	private String vstationname;
 	private Timestamp tqctime;
@@ -161,6 +162,14 @@ public class TempTaskHeadVO extends MeSuperVO{
 //		this.ts = ts;
 //	}
 
+
+	public String getVbillcode() {
+		return vbillcode;
+	}
+
+	public void setVbillcode(String vbillcode) {
+		this.vbillcode = vbillcode;
+	}
 
 	public Integer getDr() {
 		return this.dr;

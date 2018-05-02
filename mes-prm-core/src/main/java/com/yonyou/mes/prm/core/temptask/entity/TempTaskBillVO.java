@@ -4,8 +4,17 @@ import com.yonyou.me.constance.EntityConst;
 import com.yonyou.me.entity.AbstractMeBillVO;
 import com.yonyou.me.entity.ApproveMeta;
 import com.yonyou.me.entity.BillCodeMeta;
+import com.yonyou.me.utils.busitype.MesBusitypeConst;
 
 public class TempTaskBillVO extends AbstractMeBillVO{
+
+	/**
+	 * 临时巡检任务
+	 */
+	public static final String BUSITYPECODE_TEMP_TASK = "temp_task";
+	public static final String BUSITYPENAME_TEMP_TASK = "临时巡检任务";
+
+	private static final BillCodeMeta BillCodeMeta = new BillCodeMeta(BUSITYPECODE_TEMP_TASK, "vbillcode");
 
 	@Override
 	public ApproveMeta getApproveMeta() {
@@ -15,10 +24,8 @@ public class TempTaskBillVO extends AbstractMeBillVO{
 
 	@Override
 	public BillCodeMeta getBillCodeMeta() {
-		// TODO 自动生成的方法存根
-		return null;
+		return BillCodeMeta;
 	}
-
 	@Override
 	protected void initChildrenFK() {
 		// TODO 自动生成的方法存根

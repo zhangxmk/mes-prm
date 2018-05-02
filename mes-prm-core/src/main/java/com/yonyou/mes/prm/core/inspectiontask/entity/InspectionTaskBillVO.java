@@ -13,10 +13,17 @@ import com.yonyou.me.utils.busitype.MesBusitypeConst;
  * 2018年3月1日
  */
 public class InspectionTaskBillVO  extends AbstractMeBillVO{
+
+	/**
+	 * 巡检任务
+	 */
+	public static final String BUSITYPECODE_PRM_TASK = "prm_task";
+	public static final String BUSITYPENAME_PRM_TASK = "巡检任务";
+
 	/**
 	 * 单据编码定义
 	 */
-	private static final BillCodeMeta BillCodeMeta = new BillCodeMeta(MesBusitypeConst.BUSITYPECODE_PRM_TASK, "task_no");
+	private static final BillCodeMeta BillCodeMeta = new BillCodeMeta(BUSITYPECODE_PRM_TASK, "task_no");
 	//private static final BillCodeMeta BillCodeMeta = null;
 
 	@Override

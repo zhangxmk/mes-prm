@@ -1,39 +1,26 @@
 package com.yonyou.mes.prm.inspectionplan.web;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.collections.MapUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.mysql.fabric.xmlrpc.base.Data;
 import com.yonyou.iuap.mvc.type.SearchParams;
 import com.yonyou.me.base.BaseController;
 import com.yonyou.me.constance.EntityConst;
 import com.yonyou.me.entity.MeSuperVO;
 import com.yonyou.me.entity.VOUtil;
-import com.yonyou.me.utils.dto.BaseDTO;
-import com.yonyou.me.utils.dto.ExceptionResult;
-import com.yonyou.me.utils.dto.IDValueConvert;
-import com.yonyou.me.utils.dto.PageVO;
-import com.yonyou.me.utils.dto.Result;
-import com.yonyou.me.utils.dto.ViewArea;
+import com.yonyou.me.utils.dto.*;
 import com.yonyou.me.utils.exception.ExceptionUtils;
 import com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanBillVO;
 import com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanBodyVO;
 import com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanHeadVO;
 import com.yonyou.mes.prm.core.inspectionplan.service.IInspectionPlanService;
+import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBillVO;
+import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskHeadVO;
+import org.apache.commons.collections.MapUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.web.bind.annotation.*;
+
+import java.sql.Timestamp;
+import java.util.*;
 
 /**
  * 巡检方案 controller
@@ -113,6 +100,46 @@ public class InspectionPlanController extends BaseController {
 			Map<String, MeSuperVO[]> voIndex = this.convertToVOMap(voMap);
 			// 补充名称和精度
 			this.afterProcess(data, voIndex);
+			result.setData(data);
+		} catch (Exception ex) {
+			result = ExceptionResult.process(ex);
+		}
+		return result;
+	}
+
+	/**
+	 * 查询表头
+	 */
+	@RequestMapping(value = "/push2task", method = RequestMethod.POST)
+	public @ResponseBody Object push2Task(@RequestBody PageVO pageVO) {
+
+		Result result = new Result();
+		try {
+			PageRequest pageRequest = pageVO.getPageRequest();
+			SearchParams searchParams = pageVO.getSearchParams();
+			if (pageRequest == null || searchParams == null) {
+				ExceptionUtils.wrapBusinessException("当前参数数据有误");
+			}
+			String[] ids = (String[])searchParams.getSearchMap().get("planids");
+			for (String id:ids){
+				InspectionTaskBillVO billvo = new InspectionTaskBillVO();
+				InspectionTaskHeadVO headvo = new InspectionTaskHeadVO();
+
+
+			}
+
+
+
+			Page<InspectionPlanHeadVO> pageVOs = service.selectAllByPage(
+					pageVO.getPageRequest(), pageVO.getSearchParams());
+			Map<String, Page<?>> voMap = new HashMap<String, Page<?>>();
+			voMap.put(EntityConst.HEAD, pageVOs);
+
+			Map<String, ViewArea> data = this.convertPageVO2DTO(classMap,
+					voMap, nameMap);
+
+			Map<String, MeSuperVO[]> voIndex = this.convertToVOMap(voMap);
+
 			result.setData(data);
 		} catch (Exception ex) {
 			result = ExceptionResult.process(ex);
