@@ -27,9 +27,11 @@
 		<result column="MODIFIEDTIME" property="modifiedtime"/>
 		<result column="CREATOR_NAME" property="creator_name"/>
 		<result column="MODIFIER_NAME" property="modifier_name"/>
+		<result column="ERRDESCRIBE" property="errdescribe"/>
+		<result column="RDBVALUE" property="rdbvalue"/>
     </resultMap>
     <sql id="Base_Column_List">
-		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME
+		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
 	</sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -56,7 +58,7 @@
 
     <insert id="insert" parameterType="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBodyVO">
 		insert into PRM_TASK_B (
-		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME
+		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
 		)
 		values (
 		#{pk_task,jdbcType=VARCHAR},
@@ -83,13 +85,15 @@
 		#{modifier,jdbcType=VARCHAR},
 		#{modifiedtime,jdbcType=TIMESTAMP},
 		#{creator_name,jdbcType=VARCHAR},
-		#{modifier_name,jdbcType=VARCHAR}
+		#{modifier_name,jdbcType=VARCHAR},
+		#{errdescribe,jdbcType=VARCHAR},
+		#{rdbvalue,jdbcType=VARCHAR}
 		)
 	</insert>
 
     <insert id="batchInsert" parameterType="java.util.List">
 		insert into PRM_TASK_B (
-		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME
+		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
 		)
 		<foreach collection="list" item="item" index="index" separator="union" open="(" close=")">
 		select
@@ -118,7 +122,9 @@
 		#{item.modifier,jdbcType=VARCHAR},
 		#{item.modifiedtime,jdbcType=TIMESTAMP},
 		#{item.creator_name,jdbcType=VARCHAR},
-		#{item.modifier_name,jdbcType=VARCHAR}
+		#{item.modifier_name,jdbcType=VARCHAR},
+		#{item.errdescribe,jdbcType=VARCHAR},
+		#{item.rdbvalue,jdbcType=VARCHAR}
 		from dual
 		</foreach>
 	</insert>
@@ -200,6 +206,12 @@
 			<if test="modifier_name != null">
 				MODIFIER_NAME,
 			</if>
+			<if test="errdescribe != null">
+				ERRDESCRIBE,
+			</if>
+			<if test="rdbvalue != null">
+				RDBVALUE,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="pk_task != null">
@@ -276,6 +288,12 @@
 			</if>
 			<if test="modifier_name != null">
 				#{modifier_name,jdbcType=VARCHAR},
+			</if>
+			<if test="errdescribe != null">
+				#{errdescribe,jdbcType=VARCHAR},
+			</if>
+			<if test="rdbvalue != null">
+				#{rdbvalue,jdbcType=VARCHAR},
 			</if>
 		</trim>
 	</insert>
@@ -357,6 +375,12 @@
 			<if test="modifier_name != null">
 				MODIFIER_NAME = #{modifier_name,jdbcType=VARCHAR},
 			</if>
+			<if test="errdescribe != null">
+				ERRDESCRIBE = #{errdescribe,jdbcType=VARCHAR},
+			</if>
+			<if test="rdbvalue != null">
+				RDBVALUE = #{rdbvalue,jdbcType=VARCHAR},
+			</if>
 		</set>
 		where ID = #{id} 
 		<!--and ts = #ts-->
@@ -387,7 +411,10 @@
 				MODIFIER = #{modifier,jdbcType=VARCHAR},
 				MODIFIEDTIME = #{modifiedtime,jdbcType=TIMESTAMP},
 				CREATOR_NAME = #{creator_name,jdbcType=VARCHAR},
-				MODIFIER_NAME = #{modifier_name,jdbcType=VARCHAR}
+				MODIFIER_NAME = #{modifier_name,jdbcType=VARCHAR},
+				ERRDESCRIBE = #{errdescribe,jdbcType=VARCHAR},
+				RDBVALUE = #{rdbvalue,jdbcType=VARCHAR}
+
 		where ID = #{id}
 		<!-- and ts = #ts-->
 	</update>
@@ -422,7 +449,9 @@
 				MODIFIER = #{item.modifier,jdbcType=VARCHAR},
 				MODIFIEDTIME = #{item.modifiedtime,jdbcType=TIMESTAMP},
 				CREATOR_NAME = #{item.creator_name,jdbcType=VARCHAR},
-				MODIFIER_NAME = #{item.modifier_name,jdbcType=VARCHAR}
+				MODIFIER_NAME = #{item.modifier_name,jdbcType=VARCHAR},
+				ERRDESCRIBE = #{item.errdescribe,jdbcType=VARCHAR},
+				RDBVALUE = #{item.rdbvalue,jdbcType=VARCHAR}
 			</set>
 			where ID = #{item.id} 
 		</foreach>
@@ -571,6 +600,12 @@
 			<if test="item.modifier_name != null">
 				MODIFIER_NAME = #{item.modifier_name,jdbcType=VARCHAR},
 			</if>
+				<if test="item.errdescribe != null">
+					ERRDESCRIBE = #{item.errdescribe,jdbcType=VARCHAR},
+				</if>
+				<if test="item.rdbvalue != null">
+					RDBVALUE = #{item.rdbvalue,jdbcType=VARCHAR}
+				</if>
 			</set>
 			where ID = #{item.id} 
 		</foreach>

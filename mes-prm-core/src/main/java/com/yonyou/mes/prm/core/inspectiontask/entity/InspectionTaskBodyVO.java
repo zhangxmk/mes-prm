@@ -28,6 +28,7 @@ public class InspectionTaskBodyVO extends MeSuperVO{
 	private String sysid;
 	private String orgid;
 	private String orgid_name;
+
 	private Timestamp ts;
 	private Integer dr;
 	private String creator;
@@ -37,6 +38,17 @@ public class InspectionTaskBodyVO extends MeSuperVO{
 	private String creator_name;
 	private String modifier_name;
 	private Timestamp assign_time;
+	private String errdescribe;
+
+	public String getRdbvalue() {
+		return rdbvalue;
+	}
+
+	public void setRdbvalue(String rdbvalue) {
+		this.rdbvalue = rdbvalue;
+	}
+
+	private String rdbvalue;
 	public InspectionTaskBodyVO() {
 	}
     

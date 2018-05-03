@@ -16,6 +16,25 @@ public class InspectionTaskHeadVO extends MeSuperVO{
 	private String postid_name;
 	private String planid;
 	private String planid_name;
+	private String deptid;
+
+	public String getDeptid() {
+		return deptid;
+	}
+
+	public void setDeptid(String deptid) {
+		this.deptid = deptid;
+	}
+
+	public String getDeptid_name() {
+		return deptid_name;
+	}
+
+	public void setDeptid_name(String deptid_name) {
+		this.deptid_name = deptid_name;
+	}
+
+	private String deptid_name;
 	private String team;
 	private String team_name;
 	private String shift;

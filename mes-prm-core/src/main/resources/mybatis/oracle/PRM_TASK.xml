@@ -26,6 +26,9 @@
 		<result column="CREATOR_NAME" property="creator_name"/>
 		<result column="MODIFIER_NAME" property="modifier_name"/>
 		<result column="ASSIGN_TIME" property="assign_time"/>
+		<result column="DEPTID" property="deptid"/>
+		<result column="DEPTID_NAME" property="deptid_name"/>
+
     </resultMap>
     
     <resultMap id="BaseResultMapForTable" type="com.yonyou.mes.prm.core.inspectiontask.entity.TaskForTableVO">
@@ -41,7 +44,7 @@
 		<result column="UNFINISHCOUNT" property="unfinishcount"/>
     </resultMap>
     <sql id="Base_Column_List">
-		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME
+		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME,DEPTID,DEPTID_NAME
 	</sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -68,7 +71,7 @@
 
     <insert id="insert" parameterType="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskHeadVO">
 		insert into PRM_TASK (
-		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME
+		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME,DEPTID,DEPTID_NAME
 		)
 		values (
 		#{task_no,jdbcType=VARCHAR},
@@ -94,13 +97,15 @@
 		#{modifiedtime,jdbcType=TIMESTAMP},
 		#{creator_name,jdbcType=VARCHAR},
 		#{modifier_name,jdbcType=VARCHAR},
-		#{assign_time,jdbcType=TIMESTAMP}
+		#{assign_time,jdbcType=TIMESTAMP},
+		#{deptid,jdbcType=VARCHAR},
+		#{deptid_name,jdbcType=VARCHAR}
 		)
 	</insert>
 
     <insert id="batchInsert" parameterType="java.util.List">
 		insert into PRM_TASK (
-		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME
+		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME,DEPTID,DEPTID_NAME
 		)
 		values
 		<foreach collection="list" item="item" index="index"
@@ -129,7 +134,9 @@
 		#{item.modifiedtime,jdbcType=TIMESTAMP},
 		#{item.creator_name,jdbcType=VARCHAR},
 		#{item.modifier_name,jdbcType=VARCHAR},
-		#{item.assign_time,jdbcType=TIMESTAMP}
+		#{item.assign_time,jdbcType=TIMESTAMP},
+		#{item.deptid,jdbcType=VARCHAR},
+		#{item.deptid_name,jdbcType=VARCHAR}
 			)
 		</foreach>
 	</insert>
@@ -208,6 +215,12 @@
 			<if test="assign_time != null">
 				ASSIGN_TIME,
 			</if>
+			<if test="deptid != null">
+				DEPTID,
+			</if>
+			<if test="deptid_name != null">
+				DEPTID_NAME
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="task_no != null">
@@ -226,16 +239,16 @@
 				#{planid_name,jdbcType=VARCHAR},
 			</if>
 			<if test="team != null">
-				#{team,jdbcType=VARCHAR},,
+				#{team,jdbcType=VARCHAR},
 			</if>
 			<if test="team_name != null">
-				#{team_name,jdbcType=VARCHAR},,
+				#{team_name,jdbcType=VARCHAR},
 			</if>
 			<if test="shift != null">
-				#{shift,jdbcType=VARCHAR},,
+				#{shift,jdbcType=VARCHAR},
 			</if>
 			<if test="shift_name != null">
-				#{shift_name,jdbcType=VARCHAR},,
+				#{shift_name,jdbcType=VARCHAR},
 			</if>
 			<if test="billstatus != null">
 				#{billstatus,jdbcType=INTEGER},
@@ -281,6 +294,12 @@
 			</if>
 			<if test="assign_time != null">
 				#{assign_time,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deptid != null">
+				#{deptid,jdbcType=VARCHAR},
+			</if>
+			<if test="deptid_name != null">
+				#{deptid_name,jdbcType=VARCHAR}
 			</if>
 		</trim>
 	</insert>
@@ -359,6 +378,12 @@
 			<if test="assign_time != null">
 				ASSIGN_TIME = #{assign_time,jdbcType=TIMESTAMP},
 			</if>
+			<if test="deptid != null">
+				DEPTID = #{deptid,jdbcType=VARCHAR},
+			</if>
+			<if test="deptid_name != null">
+				DEPTID_NAME = #{deptid_name,jdbcType=VARCHAR}
+			</if>
 		</set>
 		where ID = #{id} 
 		<!--and ts = #ts-->
@@ -388,7 +413,9 @@
 				MODIFIEDTIME = #{modifiedtime,jdbcType=TIMESTAMP},
 				CREATOR_NAME = #{creator_name,jdbcType=VARCHAR},
 				MODIFIER_NAME = #{modifier_name,jdbcType=VARCHAR},
-				ASSIGN_TIME = #{assign_time,jdbcType=TIMESTAMP}
+				ASSIGN_TIME = #{assign_time,jdbcType=TIMESTAMP},
+				DEPTID = #{deptid,jdbcType=VARCHAR},
+				DEPTID_NAME = #{deptid_name,jdbcType=VARCHAR}
 		where ID = #{id}
 		<!-- and ts = #ts-->
 	</update>
@@ -421,7 +448,9 @@
 				MODIFIEDTIME = #{item.modifiedtime,jdbcType=TIMESTAMP},
 				CREATOR_NAME = #{item.creator_name,jdbcType=VARCHAR},
 				MODIFIER_NAME = #{item.modifier_name,jdbcType=VARCHAR},
-				ASSIGN_TIME = #{item.assign_time,jdbcType=TIMESTAMP}
+				ASSIGN_TIME = #{item.assign_time,jdbcType=TIMESTAMP},
+				DEPTID = #{item.deptid,jdbcType=VARCHAR},
+				DEPTID_NAME = #{item.deptid_name,jdbcType=VARCHAR}
 			</set>
 			where ID = #{item.id} 
 		</foreach>
@@ -443,7 +472,19 @@
 					and task_no	like '%'||#{search.searchMap.task_no,jdbcType=VARCHAR}||'%'
 				</if>
 				<if test="search.searchMap.postid!=null and search.searchMap.postid!=''">
-					and postid_name	like '%'||#{search.searchMap.postid,jdbcType=VARCHAR}||'%'
+					and postid	like '%'||#{search.searchMap.postid,jdbcType=VARCHAR}||'%'
+				</if>
+				<if test="search.searchMap.planid!=null and search.searchMap.planid!=''">
+					and planid	like '%'||#{search.searchMap.planid,jdbcType=VARCHAR}||'%'
+				</if>
+				<if test="search.searchMap.billstatus!=null and search.searchMap.billstatus!=''">
+					and billstatus= #{search.searchMap.billstatus,jdbcType=VARCHAR}
+				</if>
+				<if test="search.searchMap.starttime!=null and search.searchMap.starttime!=''" >
+					and to_char(ASSIGN_TIME,'YYYY-MM-DD')>= '${search.searchMap.starttime}'
+				</if>
+				<if test="search.searchMap.endtime!=null and search.searchMap.endtime!=''">
+					and  '${search.searchMap.endtime}'>=to_char(ASSIGN_TIME,'YYYY-MM-DD')
 				</if>
 				<if test="search.searchMap.team!=null">
 					and postid_name	like '%'||#{search.searchMap.team,jdbcType=VARCHAR}||'%'

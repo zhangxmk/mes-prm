@@ -11,6 +11,7 @@
 		<result column="VBILLCODE" property="vbillcode"/>
 		<result column="CSTATIONID" property="cstationid"/>
 		<result column="VSTATIONNAME" property="vstationname"/>
+		<result column="ERRDESCRIBE" property="errdescribe"/>
 		<result column="TQCTIME" property="tqctime"/>
 		<result column="TENANTID" property="tenantid"/>
 		<result column="SYSID" property="sysid"/>
@@ -26,7 +27,7 @@
 		<result column="MODIFIEDTIME" property="modifiedtime"/>
     </resultMap>
     <sql id="Base_Column_List">
-		ID,CDEPTID,VDEPTNAME,CQCPROJECTID,VQCPROJECTCODE,VQCPROJECTNAME,VBILLCODE,CSTATIONID,VSTATIONNAME,TQCTIME,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
+		ID,CDEPTID,VDEPTNAME,CQCPROJECTID,VQCPROJECTCODE,VQCPROJECTNAME,VBILLCODE,CSTATIONID,VSTATIONNAME,ERRDESCRIBE,TQCTIME,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
 	</sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -64,7 +65,7 @@
 
     <insert id="insert" parameterType="com.yonyou.mes.prm.core.temptask.entity.TempTaskHeadVO">
 		insert into PRM_TEMPTASK (
-		ID,CDEPTID,VDEPTNAME,CQCPROJECTID,VQCPROJECTCODE,VQCPROJECTNAME,VBILLCODE,CSTATIONID,VSTATIONNAME,TQCTIME,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
+		ID,CDEPTID,VDEPTNAME,CQCPROJECTID,VQCPROJECTCODE,VQCPROJECTNAME,VBILLCODE,CSTATIONID,VSTATIONNAME,ERRDESCRIBE,TQCTIME,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
 		)
 		values (
 		#{id,jdbcType=VARCHAR},
@@ -76,6 +77,7 @@
 		#{vbillcode,jdbcType=VARCHAR},
 		#{cstationid,jdbcType=VARCHAR},
 		#{vstationname,jdbcType=VARCHAR},
+		#{errdescribe,jdbcType=VARCHAR},
 		#{tqctime,jdbcType=TIMESTAMP},
 		#{tenantid,jdbcType=VARCHAR},
 		#{sysid,jdbcType=VARCHAR},
@@ -94,7 +96,7 @@
 
     <insert id="batchInsert" parameterType="java.util.List">
 		insert into PRM_TEMPTASK (
-		ID,CDEPTID,VDEPTNAME,CQCPROJECTID,VQCPROJECTCODE,VQCPROJECTNAME,CSTATIONID,VSTATIONNAME,TQCTIME,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
+		ID,CDEPTID,VDEPTNAME,CQCPROJECTID,VQCPROJECTCODE,VQCPROJECTNAME,CSTATIONID,VSTATIONNAME,ERRDESCRIBE,TQCTIME,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
 		)
 		<foreach collection="list" item="item" index="index" separator="union" open="(" close=")">
 		select
@@ -107,6 +109,7 @@
 		#{item.vbillcode,jdbcType=VARCHAR},
 		#{item.cstationid,jdbcType=VARCHAR},
 		#{item.vstationname,jdbcType=VARCHAR},
+		#{item.errdescribe,jdbcType=VARCHAR},
 		#{item.tqctime,jdbcType=TIMESTAMP},
 		#{item.tenantid,jdbcType=VARCHAR},
 		#{item.sysid,jdbcType=VARCHAR},
@@ -152,6 +155,9 @@
 			</if>
 			<if test="vstationname != null">
 				VSTATIONNAME,
+			</if>
+			<if test="errdescribe != null">
+				ERRDESCRIBE,
 			</if>
 			<if test="tqctime != null">
 				TQCTIME,
@@ -220,6 +226,9 @@
 			</if>
 			<if test="vstationname != null">
 				#{vstationname,jdbcType=VARCHAR},
+			</if>
+			<if test="errdescribe != null">
+				#{errdescribe,jdbcType=VARCHAR},
 			</if>
 			<if test="tqctime != null">
 				#{tqctime,jdbcType=TIMESTAMP},
@@ -292,6 +301,9 @@
 			<if test="vstationname != null">
 				VSTATIONNAME = #{vstationname,jdbcType=VARCHAR},
 			</if>
+			<if test="errdescribe != null">
+				ERRDESCRIBE = #{errdescribe,jdbcType=VARCHAR},
+			</if>
 			<if test="tqctime != null">
 				TQCTIME = #{tqctime,jdbcType=TIMESTAMP},
 			</if>
@@ -346,6 +358,7 @@
 				VBILLCODE = #{vbillcode,jdbcType=VARCHAR},
 				CSTATIONID = #{cstationid,jdbcType=VARCHAR},
 				VSTATIONNAME = #{vstationname,jdbcType=VARCHAR},
+				ERRDESCRIBE = #{errdescribe,jdbcType=VARCHAR},
 				TQCTIME = #{tqctime,jdbcType=TIMESTAMP},
 				TS = #{ts,jdbcType=TIMESTAMP},
 				MODIFIER = #{modifier,jdbcType=VARCHAR},
@@ -369,6 +382,7 @@
 				VBILLCODE = #{item.vbillcode,jdbcType=VARCHAR},
 				CSTATIONID = #{item.cstationid,jdbcType=VARCHAR},
 				VSTATIONNAME = #{item.vstationname,jdbcType=VARCHAR},
+				ERRDESCRIBE = #{item.errdescribe,jdbcType=VARCHAR},
 				TQCTIME = #{item.tqctime,jdbcType=TIMESTAMP},
 				TENANTID = #{item.tenantid,jdbcType=VARCHAR},
 				SYSID = #{item.sysid,jdbcType=VARCHAR},
@@ -395,6 +409,9 @@
 		<include refid="Base_Column_List" />
 		from PRM_TEMPTASK where dr=0
 		<if test="search != null and search.searchMap!=null">
+			<if test="search.searchMap.orgid_name!=null and search.searchMap.orgid_name!=''">
+				and vdeptname=#{search.searchMap.orgid_name}
+			</if>
 			<if test="search.searchMap.vdeptname!=null and search.searchMap.vdeptname!=''">
 				and vdeptname=#{search.searchMap.vdeptname}
 			</if>

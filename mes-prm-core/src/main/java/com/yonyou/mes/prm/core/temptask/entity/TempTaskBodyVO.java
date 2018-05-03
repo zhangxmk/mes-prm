@@ -16,6 +16,25 @@ public class TempTaskBodyVO extends MeSuperVO {
 	private String vprjcontent;
 	private String vprjcriterion;
 	private String vqcvalue;
+	private String rdbvalue;
+
+	public String getRdbvalue() {
+		return rdbvalue;
+	}
+
+	public void setRdbvalue(String rdbvalue) {
+		this.rdbvalue = rdbvalue;
+	}
+
+	public Integer getIsqualified() {
+		return isqualified;
+	}
+
+	public void setIsqualified(Integer isqualified) {
+		this.isqualified = isqualified;
+	}
+
+	private Integer isqualified;
 	private String pk_temptask;
 	private String tenantid;
 	private String sysid;
