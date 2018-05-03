@@ -45,6 +45,7 @@ public class InspectionPlanController extends BaseController {
 			put("pk_dept", "pk_dept_name");// 部门
 			put("pk_region", "pk_region_name");// 巡检区域
 			put("pk_post", "pk_post_name");// 岗位
+			put("orgid","orgid_name");//工厂
 		}
 	};
 	/**
