@@ -423,6 +423,12 @@
 			<if test="search.searchMap.pk_section_name!=null ">
 				 and pk_section_name like '%${search.searchMap.pk_section_name}%'
 			</if>
+			<if test="search.searchMap.orgid!=null ">
+				 and orgid like '%${search.searchMap.orgid}%'
+			</if>
+			<if test="search.searchMap.orgid_name!=null ">
+				 and orgid_name like '%${search.searchMap.orgid_name}%'
+			</if>
 		</if>
 		order by code
     </select>
