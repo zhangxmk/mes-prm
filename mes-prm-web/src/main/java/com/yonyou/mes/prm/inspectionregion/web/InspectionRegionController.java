@@ -55,7 +55,7 @@ public class InspectionRegionController extends BaseController {
 	private static Map<String, String> headDisplayID2Name = new HashMap<String, String>() {
 		{
 			put("pk_workshop", "pk_workshop_name");// 车间
-
+			put("orgid", "orgid_name");// 车间
 		}
 	};
 

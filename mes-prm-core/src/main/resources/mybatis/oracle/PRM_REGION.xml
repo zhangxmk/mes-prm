@@ -412,7 +412,16 @@
 				 and pk_equip_name like '%${search.searchMap.pk_equip_name}%'
 			</if>
 			<if test="search.searchMap.pk_workshop!=null ">
-				 and pk_workshop in ${search.searchMap.pk_workshop}
+				 and pk_workshop like '%${search.searchMap.pk_workshop}%'
+			</if>
+			<if test="search.searchMap.pk_workshop_name!=null ">
+				 and pk_workshop_name like '%${search.searchMap.pk_workshop_name}%'
+			</if>
+			<if test="search.searchMap.pk_section!=null ">
+				 and pk_section like '%${search.searchMap.pk_section}%'
+			</if>
+			<if test="search.searchMap.pk_section_name!=null ">
+				 and pk_section_name like '%${search.searchMap.pk_section_name}%'
 			</if>
 		</if>
 		order by code
