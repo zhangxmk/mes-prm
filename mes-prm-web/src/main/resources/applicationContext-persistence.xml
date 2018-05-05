@@ -130,7 +130,7 @@
                         <props>
                         	<!--修改数据库类型后，dbms的属性需要修改，如oracle、postgresql、mysql-->
                             <prop key="dbms">oracle</prop>
-                            <prop key="sqlRegex">.*selectAllByPage</prop>
+                            <prop key="sqlRegex">.*ByPage</prop>
                         </props>
                     </property>
                 </bean>
