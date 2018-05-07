@@ -322,16 +322,16 @@
 				PLANID_NAME = #{planid_name,jdbcType=VARCHAR},
 			</if>
 			<if test="team != null">
-				TEAM = #{team,jdbcType=VARCHAR},,
+				TEAM = #{team,jdbcType=VARCHAR},
 			</if>
 			<if test="team_name != null">
-				TEAM_NAME = #{team_name,jdbcType=VARCHAR},,
+				TEAM_NAME = #{team_name,jdbcType=VARCHAR},
 			</if>
 			<if test="shift != null">
-				SHIFT = #{shift,jdbcType=VARCHAR},,
+				SHIFT = #{shift,jdbcType=VARCHAR},
 			</if>
 			<if test="shift_name != null">
-				SHIFT_NAME = #{shift_name,jdbcType=VARCHAR},,
+				SHIFT_NAME = #{shift_name,jdbcType=VARCHAR},
 			</if>
 			<if test="billstatus != null">
 				BILLSTATUS = #{billstatus,jdbcType=INTEGER},
@@ -396,9 +396,9 @@
 				POSTID_NAME = #{postid_name,jdbcType=VARCHAR},
 				PLANID = #{planid,jdbcType=VARCHAR},
 				PLANID_NAME = #{planid_name,jdbcType=VARCHAR},
-				TEAM = #{team,jdbcType=VARCHAR},,
-				TEAM_NAME = #{team_name,jdbcType=VARCHAR},,
-				SHIFT = #{shift,jdbcType=VARCHAR},,
+				TEAM = #{team,jdbcType=VARCHAR},
+				TEAM_NAME = #{team_name,jdbcType=VARCHAR},
+				SHIFT = #{shift,jdbcType=VARCHAR},
 				SHIFT_NAME = #{shift_name,jdbcType=VARCHAR},
 				BILLSTATUS = #{billstatus,jdbcType=INTEGER},
 				TENANTID = #{tenantid,jdbcType=VARCHAR},
@@ -431,9 +431,9 @@
 				POSTID_NAME = #{item.postid_name,jdbcType=VARCHAR},
 				PLANID = #{item.planid,jdbcType=VARCHAR},
 				PLANID_NAME = #{item.planid_name,jdbcType=VARCHAR},
-				TEAM = #{team,jdbcType=VARCHAR},,
-				TEAM_NAME = #{team_name,jdbcType=VARCHAR},,
-				SHIFT = #{shift,jdbcType=VARCHAR},,
+				TEAM = #{team,jdbcType=VARCHAR},
+				TEAM_NAME = #{team_name,jdbcType=VARCHAR},
+				SHIFT = #{shift,jdbcType=VARCHAR},
 				SHIFT_NAME = #{shift_name,jdbcType=VARCHAR},
 				BILLSTATUS = #{item.billstatus,jdbcType=INTEGER},
 				TENANTID = #{item.tenantid,jdbcType=VARCHAR},
@@ -477,8 +477,13 @@
 				<if test="search.searchMap.planid!=null and search.searchMap.planid!=''">
 					and planid	like '%'||#{search.searchMap.planid,jdbcType=VARCHAR}||'%'
 				</if>
-				<if test="search.searchMap.billstatus!=null and search.searchMap.billstatus!=''">
-					and billstatus= #{search.searchMap.billstatus,jdbcType=VARCHAR}
+				<if test="search.searchMap.billstatus!=null and search.searchMap.billstatus.size>0">
+					and BILLSTATUS in
+					<foreach collection="search.searchMap.billstatus" item="item" index="index"
+							 separator="," open="(" close=")">
+						${item}
+					</foreach>
+
 				</if>
 				<if test="search.searchMap.starttime!=null and search.searchMap.starttime!=''" >
 					and to_char(ASSIGN_TIME,'YYYY-MM-DD')>= '${search.searchMap.starttime}'

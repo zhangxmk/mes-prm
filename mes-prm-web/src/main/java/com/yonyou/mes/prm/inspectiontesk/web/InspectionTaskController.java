@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.yonyou.mes.prm.core.inspectionplan.repository.InspectionPlanBodyMapper;
+import com.yonyou.mes.prm.core.inspectionplan.repository.InspectionPlanHeadMapper;
 import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -48,6 +50,14 @@ public class InspectionTaskController extends BaseController {
 
 	@Autowired
 	private IInspectionTaskService service;
+
+    // 主表mapper
+    @Autowired
+    InspectionPlanHeadMapper planheadMapper;
+
+    // 子表mapper
+    @Autowired
+    InspectionPlanBodyMapper planbodyMapper;
 
 	/**
 	 * 表头前端档案id与显示名称的映射
