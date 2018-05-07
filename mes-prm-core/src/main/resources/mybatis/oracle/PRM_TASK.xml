@@ -552,8 +552,8 @@
 		select 
 		<if test="search != null">
 			<if test="search!=null and search.searchMap!=null">
-				<if test="search.searchMap.orgid_name==null">
-					orgid_name,
+				<if test="search.searchMap.deptid_name==null">
+					deptid_name,
 				</if>
 				<if test="search.searchMap.team_name==null">
 					team_name,
@@ -576,8 +576,8 @@
 		and to_date('${search.searchMap.finishtime}','yyyy-mm-dd hh24:mi:ss')
 		<if test="search != null">
 			<if test="search!=null and search.searchMap!=null">
-				<if test="search.searchMap.orgid_name!=null">
-					and orgid_name like '%${search.searchMap.orgid_name}%'
+				<if test="search.searchMap.deptid_name!=null">
+					and deptid_name like '%${search.searchMap.deptid_name}%'
 				</if>
 				<if test="search.searchMap.team_name!=null">
 					and team_name like '%${search.searchMap.team_name}%'
