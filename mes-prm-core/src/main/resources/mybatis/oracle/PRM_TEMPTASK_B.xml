@@ -365,7 +365,7 @@
 				and pk_temptask = #{search.searchMap.pk_temptask}
 			</if>
 		</if>
-	    order by vrowno
+		order by to_number(vrowno)
     </select>
 
 </mapper>

@@ -410,7 +410,7 @@
 		from PRM_TEMPTASK where dr=0
 		<if test="search != null and search.searchMap!=null">
 			<if test="search.searchMap.orgid_name!=null and search.searchMap.orgid_name!=''">
-				and vdeptname=#{search.searchMap.orgid_name}
+				and ORGID_NAME=#{search.searchMap.orgid_name}
 			</if>
 			<if test="search.searchMap.vdeptname!=null and search.searchMap.vdeptname!=''">
 				and vdeptname=#{search.searchMap.vdeptname}
