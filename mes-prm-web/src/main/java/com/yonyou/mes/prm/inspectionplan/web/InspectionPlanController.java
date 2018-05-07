@@ -135,7 +135,7 @@ public class InspectionPlanController extends BaseController {
             if (pageRequest == null || searchParams == null) {
                 ExceptionUtils.wrapBusinessException("当前参数数据有误");
             }
-            String[] ids = (String[]) searchParams.getSearchMap().get("planids");
+            String[] ids = ((ArrayList<String>)searchParams.getSearchMap().get("planids")).toArray(new String[0]);
             InspectionPlanBillVO[] billvos = service.query(Arrays.asList(ids));
             List<InspectionTaskBillVO> newbills = new ArrayList<>();
             for (InspectionPlanBillVO bill :
