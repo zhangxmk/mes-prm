@@ -12,8 +12,8 @@ public class TaskForTableVO extends MeSuperVO{
 	private String team_name;
 	private String shift;
 	private String shift_name;
-	private String orgid;
-	private String orgid_name;
+	private String deptid;
+	private String deptid_name;
 	private String plancount;
 	private String unfinishcount;
 
@@ -109,22 +109,26 @@ public class TaskForTableVO extends MeSuperVO{
 
 
 
-	public String getOrgid() {
-		return this.orgid;
-	}
-
-	public void setOrgid(String orgid) {
-		this.orgid = orgid;
+	public String getDeptid() {
+		return deptid;
 	}
 
 
-	public String getOrgid_name() {
-		return this.orgid_name;
+	public void setDeptid(String deptid) {
+		this.deptid = deptid;
 	}
 
-	public void setOrgid_name(String orgid_name) {
-		this.orgid_name = orgid_name;
+
+	public String getDeptid_name() {
+		return deptid_name;
 	}
+
+
+	public void setDeptid_name(String deptid_name) {
+		this.deptid_name = deptid_name;
+	}
+
+
 
 
 
@@ -344,6 +348,20 @@ public class TaskForTableVO extends MeSuperVO{
 
 	@Override
 	public void setTs(Timestamp arg0) {
+		// TODO 自动生成的方法存根
+		
+	}
+
+
+	@Override
+	public String getOrgid() {
+		// TODO 自动生成的方法存根
+		return null;
+	}
+
+
+	@Override
+	public void setOrgid(String arg0) {
 		// TODO 自动生成的方法存根
 		
 	}
