@@ -26,7 +26,7 @@
 		<result column="MODIFIEDTIME" property="modifiedtime"/>
 	</resultMap>
 	<sql id="Base_Column_List">
-		CREGION,CREGION_NAME,CODE,NAME,CEQUIP,CEQUIP_NAME,PK_DEPT,PK_DEPT,ENABLESTATE,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
+		CREGION,CREGION_NAME,CODE,NAME,CEQUIP,CEQUIP_NAME,PK_DEPT,PK_DEPT_NAME,ENABLESTATE,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -309,7 +309,7 @@
 				CEQUIP_NAME = #{cequip_name,jdbcType=VARCHAR},
 			</if>
             <if test="pk_dept != null">
-                PK_DEPT = #{pk_dept_name,jdbcType=VARCHAR},
+                PK_DEPT = #{pk_dept,jdbcType=VARCHAR},
             </if>
             <if test="pk_dept_name != null">
                 PK_DEPT_NAME = #{pk_dept_name,jdbcType=VARCHAR},
