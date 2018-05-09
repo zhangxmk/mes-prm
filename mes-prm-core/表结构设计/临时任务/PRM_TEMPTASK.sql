@@ -10,6 +10,8 @@ create table PRM_TEMPTASK
   cstationid     VARCHAR2(36),
   vstationname   VARCHAR2(50),
   tqctime        TIMESTAMP(6),
+  vbillcode      VARCHAR2(50),
+  errdescribe    VARCHAR2(50),
   tenantid       VARCHAR2(36),
   sysid          VARCHAR2(50),
   orgid          VARCHAR2(36),

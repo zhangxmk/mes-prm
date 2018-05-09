@@ -7,6 +7,8 @@ create table PRM_TEMPTASK_B
   vprjcriterion VARCHAR2(1000),
   vqcvalue      VARCHAR2(50),
   pk_temptask   CHAR(36) not null,
+  isqualified   INTEGER,
+  rdbvalue	 	VARCHAR2(300),
   tenantid      VARCHAR2(36),
   sysid         VARCHAR2(50),
   orgid         VARCHAR2(36),
