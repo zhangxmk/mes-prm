@@ -11,6 +11,8 @@
 		<result column="CEQUIP_NAME" property="cequip_name"/>
 		<result column="PK_DEPT" property="pk_dept"/>
 		<result column="PK_DEPT_NAME" property="pk_dept_name"/>
+		<result column="PK_PROCESS" property="pk_process"/>
+		<result column="PK_PROCESS_NAME" property="pk_process_name"/>
 		<result column="ENABLESTATE" property="enablestate"/>
 		<result column="TENANTID" property="tenantid"/>
 		<result column="SYSID" property="sysid"/>
@@ -26,7 +28,7 @@
 		<result column="MODIFIEDTIME" property="modifiedtime"/>
 	</resultMap>
 	<sql id="Base_Column_List">
-		CREGION,CREGION_NAME,CODE,NAME,CEQUIP,CEQUIP_NAME,PK_DEPT,PK_DEPT_NAME,ENABLESTATE,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
+		CREGION,CREGION_NAME,CODE,NAME,CEQUIP,CEQUIP_NAME,PK_DEPT,PK_DEPT_NAME,PK_PROCESS,PK_PROCESS_NAME,ENABLESTATE,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -88,7 +90,7 @@
 
 	<insert id="insert" parameterType="com.yonyou.mes.prm.core.inspectionproject.entity.InspectionProjectHeadVO">
 		insert into PRM_PROJECT (
-		CREGION,CREGION_NAME,CODE,NAME,CEQUIP,CEQUIP_NAME,PK_DEPT,PK_DEPT_NAME,ENABLESTATE,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
+		CREGION,CREGION_NAME,CODE,NAME,CEQUIP,CEQUIP_NAME,PK_DEPT,PK_DEPT_NAME,PK_PROCESS,PK_PROCESS_NAME,ENABLESTATE,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
 		)
 		values (
 		#{cregion,jdbcType=VARCHAR},
@@ -99,6 +101,8 @@
 		#{cequip_name,jdbcType=VARCHAR},
 		#{pk_dept,jdbcType=VARCHAR},
 		#{pk_dept_name,jdbcType=VARCHAR},
+		#{pk_process,jdbcType=VARCHAR},
+		#{pk_process_name,jdbcType=VARCHAR},
 		#{enablestate,jdbcType=INTEGER},
 		#{id,jdbcType=VARCHAR},
 		#{tenantid,jdbcType=VARCHAR},
@@ -118,7 +122,7 @@
 
 	<insert id="batchInsert" parameterType="java.util.List">
 		insert into PRM_PROJECT (
-		CREGION,CREGION_NAME,CODE,NAME,CEQUIP,CEQUIP_NAME,PK_DEPT,PK_DEPT_NAME,ENABLESTATE,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME
+		CREGION,CREGION_NAME,CODE,NAME,CEQUIP,CEQUIP_NAME,PK_DEPT,PK_DEPT_NAME,PK_PROCESS,PK_PROCESS_NAME,ENABLESTATE,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME
 		)
 		values
 		<foreach collection="list" item="item" index="index"
@@ -130,8 +134,10 @@
 		#{item.name,jdbcType=VARCHAR},
 		#{item.cequip,jdbcType=VARCHAR},
 		#{item.cequip_name,jdbcType=VARCHAR},
-            #{item.pk_dept,jdbcType=VARCHAR},
-            #{item.pk_dept_name,jdbcType=VARCHAR},
+        #{item.pk_dept,jdbcType=VARCHAR},
+        #{item.pk_dept_name,jdbcType=VARCHAR},
+        #{pk_process,jdbcType=VARCHAR},
+		#{pk_process_name,jdbcType=VARCHAR},
 		#{item.enablestate,jdbcType=INTEGER},
 		#{item.id,jdbcType=VARCHAR},
 		#{item.tenantid,jdbcType=VARCHAR},
@@ -174,6 +180,12 @@
             </if>
             <if test="pk_dept_name != null">
                 PK_DEPT_NAME,
+            </if>
+            <if test="pk_process != null">
+                PK_PROCESS,
+            </if>
+            <if test="pk_process_name != null">
+                PK_PROCESS_NAME,
             </if>
 			<if test="enablestate != null">
 				ENABLESTATE,
@@ -242,6 +254,12 @@
             </if>
             <if test="pk_dept_name != null">
                 #{pk_dept_name,jdbcType=VARCHAR},
+            </if>
+            <if test="pk_process != null">
+                #{pk_process,jdbcType=VARCHAR},
+            </if>
+            <if test="pk_process_name != null">
+                #{pk_process_name,jdbcType=VARCHAR},
             </if>
 			<if test="enablestate != null">
 				#{enablestate,jdbcType=INTEGER},
@@ -314,6 +332,12 @@
             <if test="pk_dept_name != null">
                 PK_DEPT_NAME = #{pk_dept_name,jdbcType=VARCHAR},
             </if>
+            <if test="pk_process != null">
+                PK_PROCESS = #{pk_process,jdbcType=VARCHAR},
+            </if>
+            <if test="pk_process_name != null">
+                PK_PROCESS_NAME = #{pk_process_name,jdbcType=VARCHAR},
+            </if>
 			<if test="enablestate != null">
 				ENABLESTATE = #{enablestate,jdbcType=INTEGER},
 			</if>
@@ -370,6 +394,8 @@
 				CEQUIP_NAME = #{cequip_name,jdbcType=VARCHAR},
 				PK_DEPT = #{pk_dept,jdbcType=VARCHAR},
 				PK_DEPT_NAME = #{pk_dept_name,jdbcType=VARCHAR},
+				PK_PROCESS = #{pk_process,jdbcType=VARCHAR},
+				PK_PROCESS_NAME = #{pk_process_name,jdbcType=VARCHAR},
 				ENABLESTATE = #{enablestate,jdbcType=INTEGER},
 				TS = #{ts,jdbcType=TIMESTAMP},
 				MODIFIER = #{modifier,jdbcType=VARCHAR},
@@ -391,6 +417,8 @@
 				CEQUIP_NAME = #{item.cequip_name,jdbcType=VARCHAR},
                 PK_DEPT = #{item.pk_dept,jdbcType=VARCHAR},
                 PK_DEPT_NAME = #{item.pk_dept_name,jdbcType=VARCHAR},
+                PK_PROCESS = #{pk_process,jdbcType=VARCHAR},
+				PK_PROCESS_NAME = #{pk_process_name,jdbcType=VARCHAR},
 				ENABLESTATE = #{item.enablestate,jdbcType=INTEGER},
 				TS = #{item.ts,jdbcType=TIMESTAMP},
 				MODIFIER = #{item.modifier,jdbcType=VARCHAR},

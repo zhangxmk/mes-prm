@@ -45,10 +45,28 @@ public class InspectionProjectHeadVO extends MeSuperVO {
 	private String modifier;
 	private String modifier_name;
 	private Timestamp modifiedtime;
-
+	private String pk_process;
+	private String pk_process_name;
+	
 	public InspectionProjectHeadVO() {
 	}
+	
+	public String getPk_process() {
+		return pk_process;
+	}
 
+	public void setPk_process(String pk_process) {
+		this.pk_process = pk_process;
+	}
+
+	public String getPk_process_name() {
+		return pk_process_name;
+	}
+
+	public void setPk_process_name(String pk_process_name) {
+		this.pk_process_name = pk_process_name;
+	}
+	
 	public String getCregion() {
 		return this.cregion;
 	}
