@@ -17,7 +17,7 @@ public class InspectionProjectBodyVO extends MeSuperVO {
 	private String cdatalabel_name;
 	private String brequired;
 	private String cparentid;
-	private String crowno;
+	private Integer crowno;
 	private String id;
 	private String tenantid;
 	private String sysid;
@@ -99,11 +99,11 @@ public class InspectionProjectBodyVO extends MeSuperVO {
 		this.cparentid = cparentid;
 	}
 
-	public String getCrowno() {
+	public Integer getCrowno() {
 		return this.crowno;
 	}
 
-	public void setCrowno(String crowno) {
+	public void setCrowno(Integer crowno) {
 		this.crowno = crowno;
 	}
 

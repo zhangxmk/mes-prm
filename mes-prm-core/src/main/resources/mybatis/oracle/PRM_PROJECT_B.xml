@@ -3,6 +3,7 @@
 <mapper namespace="com.yonyou.mes.prm.core.inspectionproject.repository.ProjectBodyMapper">
 	<resultMap id="BaseResultMap" type="com.yonyou.mes.prm.core.inspectionproject.entity.InspectionProjectBodyVO">
 		<id column="ID" property="id"/>
+		<result column="CROWNO" property="crowno"/>
 		<result column="CPRJCONTENT" property="cprjcontent"/>
 		<result column="CJUDSTD" property="cjudstd"/>
 		<result column="FVALUETYPE" property="fvaluetype"/>
@@ -23,7 +24,7 @@
 		<result column="MODIFIEDTIME" property="modifiedtime"/>
 	</resultMap>
 	<sql id="Base_Column_List">
-		CPRJCONTENT,CJUDSTD,FVALUETYPE,BAUTOCOLLECT,CDATALABEL,CDATALABEL_NAME,BREQUIRED,CPARENTID,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME
+		CROWNO,CPRJCONTENT,CJUDSTD,FVALUETYPE,BAUTOCOLLECT,CDATALABEL,CDATALABEL_NAME,BREQUIRED,CPARENTID,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -71,8 +72,9 @@
 
 	<insert id="insert" parameterType="com.yonyou.mes.prm.core.inspectionproject.entity.InspectionProjectBodyVO">
 		insert into PRM_PROJECT_B (
-		CPRJCONTENT,CJUDSTD,FVALUETYPE,BAUTOCOLLECT,CDATALABEL,CDATALABEL_NAME,BREQUIRED,CPARENTID,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME)
+		CROWNO,CPRJCONTENT,CJUDSTD,FVALUETYPE,BAUTOCOLLECT,CDATALABEL,CDATALABEL_NAME,BREQUIRED,CPARENTID,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME)
 		values (
+		#{crowno,jdbcType=INTEGER},
 		#{cprjcontent,jdbcType=VARCHAR},
 		#{cjudstd,jdbcType=VARCHAR},
 		#{fvaluetype,jdbcType=INTEGER},
@@ -97,10 +99,11 @@
 
 	<insert id="batchInsert" parameterType="java.util.List">
 		insert into PRM_PROJECT_B (
-		CPRJCONTENT,CJUDSTD,FVALUETYPE,BAUTOCOLLECT,CDATALABEL,CDATALABEL_NAME,BREQUIRED,CPARENTID,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME
+		CROWNO,CPRJCONTENT,CJUDSTD,FVALUETYPE,BAUTOCOLLECT,CDATALABEL,CDATALABEL_NAME,BREQUIRED,CPARENTID,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME
 		)
 		<foreach collection="list" item="item" separator="union" open="(" close=")">
 		select
+		#{item.crowno,jdbcType=INTEGER},
 		#{item.cprjcontent,jdbcType=VARCHAR},
 		#{item.cjudstd,jdbcType=VARCHAR},
 		#{item.fvaluetype,jdbcType=INTEGER},
@@ -125,6 +128,9 @@
 	<insert id="insertSelective" parameterType="com.yonyou.mes.prm.core.inspectionproject.entity.InspectionProjectBodyVO">
 		insert into PRM_PROJECT_B
 		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="crowno != null">
+				CROWNO,
+			</if>
 			<if test="cprjcontent != null">
 				CPRJCONTENT,
 			</if>
@@ -190,6 +196,9 @@
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="crowno != null">
+				#{crowno,jdbcType=INTEGER},
+			</if>
 			<if test="cprjcontent != null">
 				#{cprjcontent,jdbcType=VARCHAR},
 			</if>
@@ -258,6 +267,9 @@
 	<update id="updateByPrimaryKeySelective" parameterType="com.yonyou.mes.prm.core.inspectionproject.entity.InspectionProjectBodyVO">
 		update PRM_PROJECT_B
 		<set>
+			<if test="crowno != null">
+				CROWNO = #{crowno,jdbcType=INTEGER},
+			</if>
 			<if test="cprjcontent != null">
 				CPRJCONTENT = #{cprjcontent,jdbcType=VARCHAR},
 			</if>
@@ -327,6 +339,7 @@
 	<update id="updateByPrimaryKey" parameterType="com.yonyou.mes.prm.core.inspectionproject.entity.InspectionProjectBodyVO">
 		update PRM_PROJECT_B
 		set
+				CROWNO = #{crowno,jdbcType=INTEGER},
 				CPRJCONTENT = #{cprjcontent,jdbcType=VARCHAR},
 				CJUDSTD = #{cjudstd,jdbcType=VARCHAR},
 				FVALUETYPE = #{fvaluetype,jdbcType=INTEGER},
@@ -346,6 +359,7 @@
 			close="" separator=";">
 			update PRM_PROJECT_B
 			<set>
+				CROWNO = #{item.crowno,jdbcType=INTEGER},
 				CPRJCONTENT = #{item.cprjcontent,jdbcType=VARCHAR},
 				CJUDSTD = #{item.cjudstd,jdbcType=VARCHAR},
 				FVALUETYPE = #{item.fvaluetype,jdbcType=INTEGER},
