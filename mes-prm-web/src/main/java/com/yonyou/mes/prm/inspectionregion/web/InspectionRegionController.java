@@ -56,6 +56,7 @@ public class InspectionRegionController extends BaseController {
 		{
 			put("pk_workshop", "pk_workshop_name");// 车间
 			put("orgid", "orgid_name");// 工厂
+			put("pk_section", "pk_section_name");
 		}
 	};
 
