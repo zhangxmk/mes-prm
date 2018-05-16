@@ -53,7 +53,7 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.5</version>
                 <configuration>
-                    <warName>${project.artifactId}</warName>
+                    <warName>prm</warName>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
