@@ -76,7 +76,7 @@ public class InspectionTimingTask {
 	
 	private void executeTask(String planid) throws Exception {
 		logger.error("任务执行开始");
-		service.createTaskBill(planid);
+		//TODO
 	}
 
 	/**
