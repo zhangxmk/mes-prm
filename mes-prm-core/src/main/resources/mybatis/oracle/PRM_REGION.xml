@@ -34,13 +34,14 @@
 		<include refid="Base_Column_List" />
 		from PRM_REGION
 		where ID = #{id}
+		and dr=0
 	</select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-		update PRM_REGION set DR=1
+		update PRM_REGION set DR=1,TS = sysdate
 		where ID = #{id}
 	</delete>
     <delete id="batchDeleteByPrimaryKey" parameterType="java.util.List">
-		update PRM_REGION set DR=1
+		update PRM_REGION set DR=1,TS = sysdate
 		where
 		ID in
 		<foreach collection="list" item="item" index="index"
@@ -384,11 +385,14 @@
 	</update>
 
 
-<select id="selectAllByPage" resultMap="BaseResultMap"
+	<select id="selectAllByPage" resultMap="BaseResultMap"
 		resultType="java.util.List">
 		SELECT
 		<include refid="Base_Column_List" />
 		from PRM_REGION where DR=0
+		<!-- <if test="authCondSql != null">
+			${authCondSql}
+		</if> -->
 		<if test="search.searchMap != null">
 			<if test="search.searchMap.code!=null ">
 				 and code like '%${search.searchMap.code}%'

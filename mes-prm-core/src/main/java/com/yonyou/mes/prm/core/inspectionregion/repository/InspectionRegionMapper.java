@@ -1,16 +1,14 @@
 package com.yonyou.mes.prm.core.inspectionregion.repository;
 
 import java.util.List;
-import java.util.Map;
-
-import com.yonyou.iuap.mvc.type.SearchParams;
-import com.yonyou.iuap.mybatis.type.PageResult;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.PageRequest;
 
-import com.yonyou.mes.prm.core.inspectionregion.entity.InspectionRegionVO;
+import com.yonyou.iuap.mvc.type.SearchParams;
+import com.yonyou.iuap.mybatis.type.PageResult;
 import com.yonyou.iuap.persistence.mybatis.anotation.MyBatisRepository;
+import com.yonyou.mes.prm.core.inspectionregion.entity.InspectionRegionVO;
 
 
 @MyBatisRepository
