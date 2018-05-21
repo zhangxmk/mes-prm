@@ -1,11 +1,23 @@
 package com.yonyou.mes.prm.inspectiontesk.web;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.sql.Timestamp;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.yonyou.me.entity.MeSuperVO;
+import com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanBillVO;
+import com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanBodyVO;
+import com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanHeadVO;
+import com.yonyou.mes.prm.core.inspectionplan.service.IInspectionPlanService;
+import com.yonyou.mes.prm.core.inspectionproject.entity.InspectionProjectBillVO;
+import com.yonyou.mes.prm.core.inspectionproject.entity.InspectionProjectBodyVO;
+import com.yonyou.mes.prm.core.inspectionproject.entity.InspectionProjectHeadVO;
+import com.yonyou.mes.prm.core.inspectionproject.service.IInspectionProjectService;
+import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBillVO;
+import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBodyVO;
+import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskHeadVO;
 import net.sf.json.JSONObject;
 
 import org.slf4j.Logger;
@@ -35,7 +47,11 @@ public class InspectionTimingTask {
 	@Autowired
 	private ThreadPoolTaskExecutor threadPoolTaskExecutor;
 	@Autowired
-	private IInspectionTaskService service;
+	private IInspectionPlanService service;
+	@Autowired
+	private IInspectionProjectService projservice;
+	@Autowired
+	private IInspectionTaskService taskService;
 	
 	@RequestMapping(value = "/createtask", method = RequestMethod.POST)
 	public @ResponseBody Object pageString(HttpServletRequest request, HttpServletResponse response, @RequestBody JSONObject data) {
@@ -76,7 +92,65 @@ public class InspectionTimingTask {
 	
 	private void executeTask(String planid) throws Exception {
 		logger.error("任务执行开始");
-		service.createTaskBill(planid);
+		String[] ids = new String[]{planid};
+		InspectionPlanBillVO[] billvos = service.query(Arrays.asList(ids));
+		List<InspectionTaskBillVO> newbills = new ArrayList<>();
+		for (InspectionPlanBillVO bill :
+				billvos) {
+			InspectionTaskBillVO nbill = new InspectionTaskBillVO();
+
+			InspectionPlanHeadVO head = (InspectionPlanHeadVO) bill.getHead();
+			List<MeSuperVO> bodys = bill.getChildren(InspectionPlanBodyVO.class);
+
+			InspectionTaskHeadVO nhead = new InspectionTaskHeadVO();
+			nhead.setOrgid(head.getOrgid());
+			nhead.setOrgid_name(head.getOrgid_name());
+			nhead.setDeptid(head.getPk_dept());
+			nhead.setDeptid_name(head.getPk_dept_name());
+			nhead.setPlanid(head.getId());
+			nhead.setPlanid_name(head.getName());
+			nhead.setAssign_time(new Timestamp(System.currentTimeMillis()));
+			nhead.setPostid(head.getPk_post());
+			nhead.setPostid_name(head.getPk_post_name());
+			nhead.setSysid(head.getSysid());
+			nhead.setTenantid(head.getTenantid());
+			nhead.setStatus(2);
+
+			List<InspectionTaskBodyVO> nlist = new ArrayList<>();
+			for (MeSuperVO spvo:
+					bodys ) {
+				InspectionPlanBodyVO bodyvo = (InspectionPlanBodyVO) spvo;
+				List<String> bids = new ArrayList<>();
+				bids.add(bodyvo.getPk_er_project());
+				InspectionProjectBillVO[] projbills = projservice.query(bids);
+				InspectionProjectBillVO projbill =  projbills[0];
+				InspectionProjectHeadVO phead = (InspectionProjectHeadVO) projbill.getHead();
+				List<MeSuperVO> pbodys = projbill.getChildren(InspectionProjectBodyVO.class);
+
+				for (MeSuperVO psuper :
+						pbodys) {
+					InspectionProjectBodyVO pbody = (InspectionProjectBodyVO) psuper;
+					InspectionTaskBodyVO tbvo = new InspectionTaskBodyVO();
+					tbvo.setSysid(phead.getSysid());
+					tbvo.setTenantid(phead.getTenantid());
+					tbvo.setProjectid(phead.getId());
+					tbvo.setProjectid_code(phead.getCode());
+					tbvo.setProjectid_name(phead.getName());
+					tbvo.setPlan_order(bodyvo.getPlan_order());
+					tbvo.setProject_content(pbody.getCprjcontent());
+					tbvo.setJudge_standard(pbody.getCjudstd());
+					tbvo.setProject_status(1);//下达
+					tbvo.setStatus(2);
+					nlist.add(tbvo);
+
+				}
+
+
+			}
+			nbill.setHead(nhead);
+			nbill.setChildren(InspectionTaskBodyVO.class,nlist);
+			taskService.add(nbill);
+		}
 	}
 
 	/**

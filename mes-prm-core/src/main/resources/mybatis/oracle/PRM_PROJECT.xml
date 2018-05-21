@@ -59,6 +59,7 @@
 			</otherwise>
 		</choose>
 		</if>
+		order by ORGID,CODE
 	</select>
 	
 	<select id="selectByIDs" resultMap="BaseResultMap"
@@ -399,6 +400,7 @@
 				ENABLESTATE = #{enablestate,jdbcType=INTEGER},
 				TS = #{ts,jdbcType=TIMESTAMP},
 				MODIFIER = #{modifier,jdbcType=VARCHAR},
+				MODIFIER_NAME = #{modifier_name,jdbcType=VARCHAR},
 				MODIFIEDTIME = #{modifiedtime,jdbcType=TIMESTAMP}
 		where ID = #{id}
 	</update>
