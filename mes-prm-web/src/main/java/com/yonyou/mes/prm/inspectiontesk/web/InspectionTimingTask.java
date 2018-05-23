@@ -109,7 +109,6 @@ public class InspectionTimingTask {
 			nhead.setDeptid_name(head.getPk_dept_name());
 			nhead.setPlanid(head.getId());
 			nhead.setPlanid_name(head.getName());
-			nhead.setAssign_time(new Timestamp(System.currentTimeMillis()));
 			nhead.setPostid(head.getPk_post());
 			nhead.setPostid_name(head.getPk_post_name());
 			nhead.setSysid(head.getSysid());
