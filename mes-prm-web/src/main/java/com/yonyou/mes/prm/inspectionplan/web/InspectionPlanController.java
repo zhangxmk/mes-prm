@@ -1,11 +1,36 @@
 package com.yonyou.mes.prm.inspectionplan.web;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.collections.MapUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.yonyou.iuap.mvc.type.SearchParams;
 import com.yonyou.me.base.BaseController;
 import com.yonyou.me.constance.EntityConst;
 import com.yonyou.me.entity.MeSuperVO;
 import com.yonyou.me.entity.VOUtil;
-import com.yonyou.me.utils.dto.*;
+import com.yonyou.me.utils.dto.BaseDTO;
+import com.yonyou.me.utils.dto.ExceptionResult;
+import com.yonyou.me.utils.dto.IDValueConvert;
+import com.yonyou.me.utils.dto.PageVO;
+import com.yonyou.me.utils.dto.Result;
+import com.yonyou.me.utils.dto.ViewArea;
 import com.yonyou.me.utils.exception.ExceptionUtils;
 import com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanBillVO;
 import com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanBodyVO;
@@ -19,14 +44,6 @@ import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBillVO;
 import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBodyVO;
 import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskHeadVO;
 import com.yonyou.mes.prm.core.inspectiontask.service.IInspectionTaskService;
-import org.apache.commons.collections.MapUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.web.bind.annotation.*;
-
-import java.sql.Timestamp;
-import java.util.*;
 
 /**
  * 巡检方案 controller
@@ -39,6 +56,7 @@ import java.util.*;
 @RestController
 @RequestMapping(value = "/prm/inspectionplan")
 public class InspectionPlanController extends BaseController {
+	private Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private IInspectionPlanService service;
@@ -116,6 +134,7 @@ public class InspectionPlanController extends BaseController {
             this.afterProcess(data, voIndex);
             result.setData(data);
         } catch (Exception ex) {
+        	log.error(ex.getMessage());
             result = ExceptionResult.process(ex);
         }
         return result;
@@ -197,6 +216,7 @@ public class InspectionPlanController extends BaseController {
 
             result.setSuccess(true);
         } catch (Exception ex) {
+        	log.error(ex.getMessage());
             result = ExceptionResult.process(ex);
         }
         return result;
@@ -234,6 +254,7 @@ public class InspectionPlanController extends BaseController {
             this.afterProcess(data, voIndex);
             result.setData(data);
         } catch (Exception ex) {
+        	log.error(ex.getMessage());
             result = ExceptionResult.process(ex);
         }
         return result;
@@ -262,6 +283,7 @@ public class InspectionPlanController extends BaseController {
             // 3.保存结果转化成返回值结构
             result = this.voToDTO(resultData);
         } catch (Exception e) {
+        	log.error(e.getMessage());
             result = ExceptionResult.process(e);
         }
 
@@ -291,6 +313,7 @@ public class InspectionPlanController extends BaseController {
             // 3.保存结果转化成返回值结构
             result = this.voToDTO(resultData);
         } catch (Exception e) {
+        	log.error(e.getMessage());
             result = ExceptionResult.process(e);
         }
 
@@ -320,6 +343,7 @@ public class InspectionPlanController extends BaseController {
             // 3.保存结果转化成返回值结构
             result = this.voToDTO(resultData);
         } catch (Exception e) {
+        	log.error(e.getMessage());
             result = ExceptionResult.process(e);
         }
 
@@ -353,6 +377,7 @@ public class InspectionPlanController extends BaseController {
             // 2.调用废除旧版本接口
             this.service.disableoldplan((InspectionPlanHeadVO) billvos[0].getHead());
         } catch (Exception e) {
+        	log.error(e.getMessage());
             result = ExceptionResult.process(e);
         }
 
@@ -407,6 +432,7 @@ public class InspectionPlanController extends BaseController {
 
             service.batchDeleteByPrimaryKey(billvos);
         } catch (Exception ex) {
+        	log.error(ex.getMessage());
             // 将异常转换为返回信息，并且记入后台日志
             result = ExceptionResult.process(ex);
         }
@@ -461,6 +487,7 @@ public class InspectionPlanController extends BaseController {
             this.service.batchDisableByPrimaryKey(list);
 
         } catch (Exception e) {
+        	log.error(e.getMessage());
             result = ExceptionResult.process(e);
         }
         return result;
@@ -513,6 +540,7 @@ public class InspectionPlanController extends BaseController {
             // 2.调用批量启用接口
             this.service.batchEnableByPrimaryKey(list);
         } catch (Exception e) {
+        	log.error(e.getMessage());
             result = ExceptionResult.process(e);
         }
         return result;

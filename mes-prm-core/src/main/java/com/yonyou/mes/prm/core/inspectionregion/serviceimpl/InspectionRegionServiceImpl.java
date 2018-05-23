@@ -3,7 +3,6 @@ package com.yonyou.mes.prm.core.inspectionregion.serviceimpl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.yonyou.me.utils.service.IBaseQueryBS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,9 +14,8 @@ import com.yonyou.me.entity.AbstractMeBillVO;
 import com.yonyou.me.entity.EnableStateVO;
 import com.yonyou.me.utils.exception.ExceptionUtils;
 import com.yonyou.me.utils.repository.BillPersistent;
-import com.yonyou.me.utils.repository.IVOPersistent;
-import com.yonyou.me.utils.repository.VOPersistent;
 import com.yonyou.me.utils.service.EnableStateServiceImpl;
+import com.yonyou.me.utils.service.IBaseQueryBS;
 import com.yonyou.me.utils.service.IEnableStateService;
 import com.yonyou.me.utils.service.bill.BillSaveService;
 import com.yonyou.me.utils.service.vo.VODeleteService;

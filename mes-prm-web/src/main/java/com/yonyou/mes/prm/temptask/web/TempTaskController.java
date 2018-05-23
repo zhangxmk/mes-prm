@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.collections.MapUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -40,6 +42,7 @@ import com.yonyou.mes.prm.core.temptask.service.ITempTaskService;
 @RestController
 @RequestMapping(value = "/prm/temptask")
 public class TempTaskController extends BaseController {
+	private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private ITempTaskService service;
@@ -94,6 +97,7 @@ public class TempTaskController extends BaseController {
 			// this.afterProcess(data, voIndex);
 			result.setData(data);
 		} catch (Exception ex) {
+			log.error(ex.getMessage());
 			result = ExceptionResult.process(ex);
 		}
 		return result;
@@ -127,6 +131,8 @@ public class TempTaskController extends BaseController {
 //	      this.afterProcess(data, voIndex);
 	      result.setData(data);
 	    } catch (Exception ex) {
+	    	log.error(ex.getMessage());
+
 	      result = ExceptionResult.process(ex);
 	    }
 	    return result;
@@ -155,6 +161,7 @@ public class TempTaskController extends BaseController {
 			// 3.保存结果转化成返回值结构
 			result = this.voToDTO(resultData);
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			result = ExceptionResult.process(e);
 		}
 
@@ -184,6 +191,7 @@ public class TempTaskController extends BaseController {
 			// 3.保存结果转化成返回值结构
 			result = this.voToDTO(resultData);
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			result = ExceptionResult.process(e);
 		}
 
@@ -237,6 +245,7 @@ public class TempTaskController extends BaseController {
 
 			service.batchDeleteByPrimaryKey(billvos);
 		} catch (Exception ex) {
+			log.error(ex.getMessage());
 			// 将异常转换为返回信息，并且记入后台日志
 			result = ExceptionResult.process(ex);
 		}

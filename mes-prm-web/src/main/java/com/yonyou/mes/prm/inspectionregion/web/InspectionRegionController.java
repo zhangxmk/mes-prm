@@ -20,7 +20,6 @@ import com.yonyou.iuap.iweb.entity.DataTable;
 import com.yonyou.iuap.mvc.type.SearchParams;
 import com.yonyou.me.base.BaseController;
 import com.yonyou.me.constance.EntityConst;
-import com.yonyou.me.entity.EnableStateVO;
 import com.yonyou.me.entity.MeSuperVO;
 import com.yonyou.me.entity.VOUtil;
 import com.yonyou.me.utils.dto.BaseDTO;
@@ -30,8 +29,6 @@ import com.yonyou.me.utils.dto.PageVO;
 import com.yonyou.me.utils.dto.Result;
 import com.yonyou.me.utils.dto.ViewArea;
 import com.yonyou.me.utils.exception.ExceptionUtils;
-import com.yonyou.me.utils.service.EnableStateServiceImpl;
-import com.yonyou.me.utils.service.IEnableStateService;
 import com.yonyou.mes.prm.core.inspectionregion.entity.InspectionRegionBillVO;
 import com.yonyou.mes.prm.core.inspectionregion.entity.InspectionRegionVO;
 import com.yonyou.mes.prm.core.inspectionregion.service.IInspectionRegionService;
@@ -78,7 +75,7 @@ public class InspectionRegionController extends BaseController {
 			// VOUtil.AllClassFields(MeasurePointTypeBodyVO.class));
 		}
 	};
-
+	
 	/**
 	 * 查询表头
 	 */
