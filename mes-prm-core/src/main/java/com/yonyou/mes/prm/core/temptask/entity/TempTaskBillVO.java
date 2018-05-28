@@ -14,7 +14,7 @@ public class TempTaskBillVO extends AbstractMeBillVO{
 	public static final String BUSITYPECODE_TEMP_TASK = "temp_task";
 	public static final String BUSITYPENAME_TEMP_TASK = "临时巡检任务";
 
-	private static final BillCodeMeta BillCodeMeta = new BillCodeMeta(BUSITYPECODE_TEMP_TASK, "vbillcode");
+	//private static final BillCodeMeta BillCodeMeta = new BillCodeMeta(BUSITYPECODE_TEMP_TASK, "vbillcode");
 
 	@Override
 	public ApproveMeta getApproveMeta() {
@@ -24,7 +24,8 @@ public class TempTaskBillVO extends AbstractMeBillVO{
 
 	@Override
 	public BillCodeMeta getBillCodeMeta() {
-		return BillCodeMeta;
+		//return BillCodeMeta;
+		return null;
 	}
 	@Override
 	protected void initChildrenFK() {
