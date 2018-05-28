@@ -1,5 +1,6 @@
 package com.yonyou.mes.prm.inspectiontesk.web;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -138,134 +139,72 @@ public class InspectionTask4AppController {
 		catch (Exception ex) {}
 	}
 	
-	/*@RequestMapping(value = "/submit2", method = RequestMethod.POST)
-	public void submit2(HttpServletRequest request, HttpServletResponse response) throws Exception 
-	{
-		String[] param = request.getParameterValues("param");
-		
-		String id = request.getParameter("id");
-		String polling_value = request.getParameter("polling_value");
-		String pk_task = request.getParameter("pk_task");
-		
-		List<String> list_pk_task = new ArrayList<String>();
-		list_pk_task.add(pk_task);
-		
-		try
-		{
-			service.submit(id,polling_value);
-			
-			List<InspectionTaskBodyVO> bodys = Arrays.asList(service.queryTaskDetailsByID(list_pk_task));
-			
-			//finish表示表头的项目状态，1：下达:2：执行中、3：完成:4：未完成
-			int billstatus = 1;
-			boolean finish = true;
-			
-			for(InspectionTaskBodyVO body:bodys)
-			{
-				//完成状态不可能为完成
-				if(body.getProject_status() == null || body.getProject_status() == 1)
-				{ finish = false; }
-				
-				else{billstatus=2;}
-				
-				//已确认没有全部完成并且有完成的,确认为执行中
-				if(finish == false && billstatus == 2)
-				{break;}
-			}
-		
-			if(finish == true)
-			{billstatus = 3;}
-			
-			if(billstatus != 1)
-			{
-				InspectionTaskHeadVO head = new InspectionTaskHeadVO();
-				head.setBillstatus(billstatus);
-				head.setId(pk_task);
-				
-				service.updateHead(head);
-			}
-			
-			String rst = "{\"success\":true}";
-			HttpClientUtil.writeJSON(response, rst);
-		}
-		catch (Exception ex) 
-		{}
-	}*/
-	
 	@RequestMapping(value = "/submit", method = RequestMethod.POST)
 	public void submit(HttpServletRequest request, HttpServletResponse response) throws Exception 
 	{
-		String param = request.getParameter("param");
-		JSONArray bodys = JSONArray.fromObject(param);
-		
-		String pk_task="";
-		
-		List<InspectionTaskBodyVO> list = new ArrayList<InspectionTaskBodyVO>();
-		
-		//构建VO用于更新
-		for(int i=0;i<bodys.size();i++)
-		{
-			//String str = param[i];
-			
-			//JSONObject obj = JSONObject.fromObject();
-			
-			JSONObject body = bodys.getJSONObject(i);
-			
-			if(i==0)
-			{pk_task = body.getString("pk_task");}
-			
-			String id = body.getString("id");
-			String polling_value = body.getString("polling_value");
-			
-			InspectionTaskBodyVO bodyVO = new InspectionTaskBodyVO();
-			bodyVO.setId(id);
-			bodyVO.setPolling_value(polling_value);
-			bodyVO.setProject_status(2);
-			
-			list.add(bodyVO);
-		}
-		
 		try
 		{
-			if(list.size()!=0)
-			{
-				service.batchUpdateByPrimaryKeySelective(list);
-			
-				List<String> list_pk_task = new ArrayList<String>();
-				list_pk_task.add(pk_task);
-			
-				//查出表头的所有子表
-				List<InspectionTaskBodyVO> body_list = Arrays.asList(service.queryTaskDetailsByID(list_pk_task));
-			
-				//finish表示表头的项目状态，1：下达:2：执行中、3：完成:4：未完成
-				int billstatus = 1;
-				boolean finish = true;
-			
-				for(InspectionTaskBodyVO body:body_list)
-				{
-					//完成状态不可能为完成
-					if(body.getProject_status() == null || body.getProject_status() == 1)
-					{ finish = false; }
-				
-					else{billstatus=2;}
-				
-					//已确认没有全部完成并且有完成的,确认为执行中
-					if(finish == false && billstatus == 2)
-					{break;}
-				}
+			String param = request.getParameter("param");
+			JSONArray bodys = JSONArray.fromObject(param);
+			HashMap<String,String> hmap = new HashMap<String,String>();
+			String pk_task="";
 		
-				if(finish == true)
-				{billstatus = 3;}
+			for(int i=0;i<bodys.size();i++)
+			{
+				JSONObject body = bodys.getJSONObject(i);
 			
-				if(billstatus != 1)
-				{
-					InspectionTaskHeadVO head = new InspectionTaskHeadVO();
-					head.setBillstatus(billstatus);
-					head.setId(pk_task);
-				
-					service.updateHead(head);
-				}
+				if(i==0)
+				{pk_task = body.getString("pk_task");}
+			
+				String id = body.getString("id");
+				String polling_value = body.getString("polling_value");
+			
+				hmap.put(id, polling_value);
 			}
+		
+			List<String> list_pk_task = new ArrayList<String>();
+			list_pk_task.add(pk_task);
+		
+			//查出表头的所有子表
+			List<InspectionTaskBodyVO> body_list = Arrays.asList(service.queryTaskDetailsByID(list_pk_task));
+		
+			//finish表示表头的项目状态，1：下达:2：执行中、3：完成:4：未完成
+			int billstatus = 1;
+			boolean finish = true;
+	
+			for(InspectionTaskBodyVO body:body_list)
+			{
+				String id = body.getId();
+			
+				if(hmap.containsKey(id))
+				{
+					body.setPolling_value(hmap.get(id));
+					body.setProject_status(2);
+					body.setStatus(1);
+				}
+			
+				//完成状态不可能为完成
+				if(body.getProject_status() == null || body.getProject_status() == 1)
+				{ finish = false; }
+		
+				else{billstatus=2;}
+			}
+
+			if(finish == true)
+			{billstatus = 3;}
+		
+			InspectionTaskHeadVO head = service.queryHeadById(pk_task);
+			if(head.getBillstatus() != billstatus)
+			{
+				head.setBillstatus(billstatus);
+				head.setStatus(1);
+			}
+		
+			InspectionTaskBillVO billVO = new InspectionTaskBillVO();
+			billVO.setHead(head);
+			billVO.setChildren(InspectionTaskBodyVO.class, body_list);
+		
+			service.update(billVO);
 			
 			String rst = "{\"success\":true}";
 			HttpClientUtil.writeJSON(response, rst);

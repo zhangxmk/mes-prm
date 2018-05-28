@@ -512,6 +512,7 @@
 			separator="," open="(" close=")">
 		#{item}
 		</foreach>
+		order by assign_time desc
 	</select>
 	
 	<select id="queryTask" resultMap="BaseResultMap"
