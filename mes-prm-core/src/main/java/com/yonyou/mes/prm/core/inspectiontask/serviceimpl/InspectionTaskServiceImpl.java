@@ -16,6 +16,7 @@ import com.yonyou.me.utils.exception.ExceptionUtils;
 import com.yonyou.me.utils.repository.BillPersistent;
 import com.yonyou.me.utils.service.bill.BillDeleteService;
 import com.yonyou.me.utils.service.bill.BillSaveService;
+import com.yonyou.me.utils.service.vo.VOUpdateService;
 import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBillVO;
 import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBodyVO;
 import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskHeadVO;
@@ -175,12 +176,19 @@ public class InspectionTaskServiceImpl implements IInspectionTaskService {
 	}
 	
 	@Override
-	public void batchUpdateByPrimaryKeySelective(List<InspectionTaskBodyVO> updateList) {
-		this.bodyMapper.batchUpdateByPrimaryKeySelective(updateList);
+	public InspectionTaskHeadVO queryHeadById(String id) 
+	{
+		if (null == id) 
+		{
+			ExceptionUtils.wrapBusinessException("查询主键不能为空！" + id);
+		}
+		
+		return this.headMapper.selectByPrimaryKey(id);
 	}
 	
 	@Override
 	public void updateHead(InspectionTaskHeadVO vo)  {
 		this.headMapper.updateByPrimaryKeySelective(vo);
 	}
+
 }

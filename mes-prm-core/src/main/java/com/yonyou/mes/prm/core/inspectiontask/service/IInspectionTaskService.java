@@ -120,6 +120,12 @@ public interface IInspectionTaskService {
 	 */
 	public InspectionTaskBodyVO[] queryTaskDetailsByID(List<String> ids);
 	
+	
+	/**
+	 * 根据表头id查表头
+	 */
+	public InspectionTaskHeadVO queryHeadById(String id);
+	
 	/**
 	 * 更新标头
 	 * 
@@ -127,13 +133,5 @@ public interface IInspectionTaskService {
 	 * @return
 	 */
 	public void updateHead(InspectionTaskHeadVO vo);
-	
-	/**
-	 * 批量选择更新
-	 * 
-	 * @param List<VO>
-	 * @return
-	 */
-	public void batchUpdateByPrimaryKeySelective(List<InspectionTaskBodyVO> updateList);
 
 }
