@@ -54,6 +54,8 @@ public class InspectionTaskHeadVO extends MeSuperVO{
 	private String creator_name;
 	private String modifier_name;
 	private Timestamp assign_time;
+	private String pk_region_name;
+	private String routeflag;
 	public InspectionTaskHeadVO() {
 	}
     
@@ -269,6 +271,21 @@ public class InspectionTaskHeadVO extends MeSuperVO{
 		this.assign_time = assign_time;
 	}
 
+	public String getPk_region_name() {
+		return this.pk_region_name;
+	}
+
+	public void setPk_region_name(String pk_region_name) {
+		this.pk_region_name = pk_region_name;
+	}
+	
+	public String getRouteflag() {
+		return this.routeflag;
+	}
+
+	public void setRouteflag(String routeflag) {
+		this.routeflag = routeflag;
+	}
 
 	@Override
 	public String getName() {

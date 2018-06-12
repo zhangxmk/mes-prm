@@ -40,6 +40,7 @@ public class InspectionTaskBodyVO extends MeSuperVO{
 	private String modifier_name;
 	private Timestamp assign_time;
 	private String errdescribe;
+	private	Integer fvaluetype;
 
 	public String getRdbvalue() {
 		return rdbvalue;
@@ -279,6 +280,13 @@ public class InspectionTaskBodyVO extends MeSuperVO{
 		this.assign_time = assign_time;
 	}
 
+	public Integer getFvaluetype() {
+		return this.fvaluetype;
+	}
+
+	public void setFvaluetype(Integer fvaluetype) {
+		this.fvaluetype = fvaluetype;
+	}
 
 	@Override
 	public String getName() {

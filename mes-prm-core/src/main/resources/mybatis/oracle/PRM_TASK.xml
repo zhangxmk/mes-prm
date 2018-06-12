@@ -28,7 +28,8 @@
 		<result column="ASSIGN_TIME" property="assign_time"/>
 		<result column="DEPTID" property="deptid"/>
 		<result column="DEPTID_NAME" property="deptid_name"/>
-
+		<result column="PK_REGION_NAME" property="pk_region_name"/>
+		<result column="ROUTEFLAG" property="routeflag"/>
     </resultMap>
     
     <resultMap id="BaseResultMapForTable" type="com.yonyou.mes.prm.core.inspectiontask.entity.TaskForTableVO">
@@ -541,7 +542,10 @@
 			   p.vnote 				modifier,
 			   
 			   h.modifier_name		modifier_name,
-			   h.modifiedtime		modifiedtime
+			   h.modifiedtime		modifiedtime,
+			   
+			   p.pk_region_name		pk_region_name,
+			   p.routeflag			routeflag
 			   
 		from prm_task h left join prm_plan p on h.planid = p.id
 		where h.dr=0 

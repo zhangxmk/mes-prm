@@ -30,6 +30,7 @@
 		<result column="MODIFIER_NAME" property="modifier_name"/>
 		<result column="ERRDESCRIBE" property="errdescribe"/>
 		<result column="RDBVALUE" property="rdbvalue"/>
+		<result column="FVALUETYPE" property="fvaluetype"/>
     </resultMap>
     <sql id="Base_Column_List">
 		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,CROWNO,PROJECT_CONTENT,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
@@ -525,12 +526,41 @@
 	
 	<select id="queryTaskDetailsByID" resultMap="BaseResultMap"
 		parameterType="java.util.List">
-		select b.* 
-			from prm_task_b b 
-		inner join prm_task h on b.pk_task = h.id
-		where b.dr=0 and h.dr=0 
-			and (billstatus = 1 or billstatus = 2)
-			and h.id in
+		select
+		
+		b.pk_task 				pk_task,
+ 	    b.plan_order			plan_order,
+		b.projectid				projectid,
+		b.projectid_code		projectid_code,
+		b.projectid_name		projectid_name,
+		b.fact_order			fact_order,
+		b.crowno				crowno,
+		b.project_status		project_status,
+		b.project_content		project_content,
+		b.judge_standard		judge_standard,
+		b.polling_value			polling_value,
+		b.polling_result		polling_result,
+		b.pic_url				pic_url,
+		b.id					id,
+		b.tenantid				tenantid,
+		b.sysid					sysid,
+		b.orgid					orgid,
+		b.orgid_name			orgid_name,
+		b.ts					ts,
+		b.dr					dr,
+		b.creator				creator,
+		b.creationtime			creationtime,
+		b.modifier				modifier,
+		b.modifiedtime			modifiedtime,
+		b.creator_name			creator_name,
+		b.modifier_name			modifier_name,
+		b.errdescribe			errdescribe,
+		pb.fvaluetype			fvaluetype
+		
+		from prm_task h left join prm_task_b b on h.id=b.pk_task left join prm_project_b pb on b.projectid=pb.id
+		where b.dr=0 and h.dr=0 and (pb.dr=0 or pb.dr is null)
+		and (billstatus = 1 or billstatus = 2)
+		and h.id in
 		<foreach collection="list" item="item" index="index"
 			separator="," open="(" close=")">
 		#{item}
