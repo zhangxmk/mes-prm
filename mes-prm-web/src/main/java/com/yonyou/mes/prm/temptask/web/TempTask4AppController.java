@@ -158,177 +158,94 @@ public class TempTask4AppController {
 		TempTaskHeadVO headVO = new TempTaskHeadVO();
 		List<TempTaskBodyVO> body_list = new ArrayList<TempTaskBodyVO>();
 
-		try {
+		try 
+		{
 			JSONObject head = JSONObject.fromObject(param);
-
-			// String str_head = obj.getString("temptask");
-			// JSONObject head = JSONObject.fromObject(str_head);
-
-			/*
-			 * String h_id = (obj.getString("id")); if(h_id!="null")
-			 * {headVO.setId(h_id);}
-			 * 
-			 * String h_cdeptid = (obj.getString("cdeptid"));
-			 * if(h_cdeptid!="null") {headVO.setCdeptid(h_cdeptid);}
-			 * 
-			 * String h_vdeptname = (obj.getString("vdeptname"));
-			 * if(h_vdeptname!="null") {headVO.setVdeptname(h_vdeptname);}
-			 */
+			 
+//			String h_cdeptid = head.getString("cdeptid");
+//			if(h_cdeptid!="null") 
+//			{headVO.setCdeptid(h_cdeptid);}
 
 			String h_cqcprojectid = head.getString("cqcprojectid");
-			if (h_cqcprojectid != "null") {
-				headVO.setCqcprojectid(h_cqcprojectid);
-			}
+			if (h_cqcprojectid != "null") 
+			{headVO.setCqcprojectid(h_cqcprojectid);}
+			
+//			String h_vbillcode = head.getString("vbillcode");
+//			if (h_vbillcode != "null") 
+//			{headVO.setVbillcode(h_vbillcode);}
+			
+			String h_cstationid = head.getString("cstationid");
+			if (h_cstationid != "null") 
+			{headVO.setCstationid(h_cstationid);}
+			
+			String h_vstationname = head.getString("vstationname");
+			if (h_vstationname != "null") 
+			{headVO.setVstationname(h_vstationname);}
+			
+			String h_errdescribe = head.getString("errdescribe");
+			if (h_errdescribe != "null") 
+			{headVO.setErrdescribe(h_errdescribe);}
 
 			String h_vqcprojectcode = head.getString("vqcprojectcode");
-			if (h_vqcprojectcode != "null") {
-				headVO.setVqcprojectcode(h_vqcprojectcode);
-			}
+			if (h_vqcprojectcode != "null") 
+			{headVO.setVqcprojectcode(h_vqcprojectcode);}
 
 			String h_vqcprojectname = head.getString("vqcprojectname");
-			if (h_vqcprojectname != "null") {
-				headVO.setVqcprojectname(h_vqcprojectname);
-			}
-
-			/*
-			 * String h_cstationid = obj.getString("cstationid");
-			 * if(h_cstationid!="null") {headVO.setCstationid(h_cstationid);}
-			 * 
-			 * String h_vstationname = obj.getString("vstationname");
-			 * if(h_vstationname!="null")
-			 * {headVO.setVstationname(h_vstationname);}
-			 */
+			if (h_vqcprojectname != "null") 
+			{headVO.setVqcprojectname(h_vqcprojectname);}
 
 			String h_tqctime = head.getString("tqctime");
-			if (h_tqctime != "null") {
-				headVO.setTqctime(Timestamp.valueOf(h_tqctime));
-			}
-
-			/*
-			 * String h_tenantid = obj.getString("tenantid");
-			 * if(h_tenantid!="null") {headVO.setTenantid(h_tenantid);}
-			 * 
-			 * String h_sysid = obj.getString("sysid"); if(h_sysid!="null")
-			 * {headVO.setSysid(h_sysid);}
-			 */
+			if (h_tqctime != "null") 
+			{headVO.setTqctime(Timestamp.valueOf(h_tqctime));}
 
 			String h_orgid = head.getString("orgid");
-			if (h_orgid != "null") {
-				headVO.setOrgid(h_orgid);
-			}
+			if (h_orgid != "null") 
+			{headVO.setOrgid(h_orgid);}
 
 			String h_orgid_name = head.getString("orgid_name");
-			if (h_orgid_name != "null") {
-				headVO.setOrgid_name(h_orgid_name);
-			}
+			if (h_orgid_name != "null") 
+			{headVO.setOrgid_name(h_orgid_name);}
 
 			headVO.setDr(0);
-
-			/*
-			 * String h_ts = obj.getString("ts"); if(h_ts!="null")
-			 * {headVO.setTs(Timestamp.valueOf(h_ts));}
-			 * 
-			 * String h_creator = obj.getString("creator_name");
-			 * if(h_creator!="null") {headVO.setCreator(h_creator);}
-			 * 
-			 * String h_creator_name = obj.getString("creator_name");
-			 * if(h_creator_name!="null")
-			 * {headVO.setCreator_name(h_creator_name);}
-			 * 
-			 * String h_creationtime = obj.getString("creationtime");
-			 * if(h_creationtime!="null")
-			 * {headVO.setCreationtime(Timestamp.valueOf(h_creationtime));}
-			 * 
-			 * String h_modifier = obj.getString("modifier");
-			 * if(h_modifier!="null") {headVO.setModifier(h_modifier);}
-			 * 
-			 * String h_modifier_name = obj.getString("modifier_name");
-			 * if(h_modifier_name!="null")
-			 * {headVO.setModifier_name(h_modifier_name);}
-			 * 
-			 * String h_modifiedtime = obj.getString("modifiedtime");
-			 * if(h_modifiedtime!="null")
-			 * {headVO.setModifiedtime(Timestamp.valueOf(h_modifiedtime));}
-			 */
 
 			String bitem = head.getString("bitems");
 			JSONArray bodys = JSONArray.fromObject(bitem);
 
-			for (int j = 0; j < bodys.size(); j++) {
+			for (int j = 0; j < bodys.size(); j++) 
+			{
 				JSONObject body = bodys.getJSONObject(j);
 
 				TempTaskBodyVO bodyVO = new TempTaskBodyVO();
 
-				/*
-				 * String b_id = body.getString("id"); if(b_id!="null")
-				 * {bodyVO.setId(body.getString("id"));}
-				 * 
-				 * String b_pk_temptask = body.getString("pk_temptask");
-				 * if(b_pk_temptask!="null")
-				 * {bodyVO.setPk_temptask(body.getString("pk_temptask"));}
-				 */
-
 				String b_vprjcontent = body.getString("vprjcontent");
-				if (b_vprjcontent != null) {
-					bodyVO.setVprjcontent(b_vprjcontent);
-				}
+				if (b_vprjcontent != null) 
+				{bodyVO.setVprjcontent(b_vprjcontent);}
 
 				String b_vprjcriterion = body.getString("vprjcriterion");
-				if (b_vprjcriterion != "null") {
-					bodyVO.setVprjcriterion(b_vprjcriterion);
-				}
+				if (b_vprjcriterion != "null") 
+				{bodyVO.setVprjcriterion(b_vprjcriterion);}
 
 				String b_vqcvalue = body.getString("vqcvalue");
-				if (b_vqcvalue != "null") {
-					bodyVO.setVqcvalue(b_vqcvalue);
-				}
-
-				/*
-				 * String b_tenantid = body.getString("tenantid");
-				 * if(b_tenantid!="null") {bodyVO.setTenantid(b_tenantid);}
-				 * 
-				 * String b_sysid = body.getString("sysid"); if(b_sysid!="null")
-				 * {bodyVO.setSysid(b_sysid);}
-				 */
+				if (b_vqcvalue != "null") 
+				{bodyVO.setVqcvalue(b_vqcvalue);}
 
 				String b_orgid = body.getString("orgid");
-				if (b_orgid != "null") {
-					bodyVO.setOrgid(b_orgid);
-				}
+				if (b_orgid != "null") 
+				{bodyVO.setOrgid(b_orgid);}
 
 				String b_orgid_name = body.getString("orgid_name");
-				if (b_orgid_name != "null") {
-					bodyVO.setOrgid_name(b_orgid_name);
-				}
+				if (b_orgid_name != "null") 
+				{bodyVO.setOrgid_name(b_orgid_name);}
+				
+				String b_vrowno = body.getString("vrowno");
+				if (b_vrowno != "null") 
+				{bodyVO.setVrowno(b_vrowno);}
+				
+				String b_isqualified = body.getString("isqualified");
+				if (b_isqualified != "null") 
+				{bodyVO.setIsqualified(Integer.parseInt(b_isqualified));}
 
 				bodyVO.setDr(0);
-
-				/*
-				 * String b_ts = body.getString("ts"); if(b_ts!="null")
-				 * {bodyVO.setTs(Timestamp.valueOf(b_ts));}
-				 * 
-				 * String b_creator = body.getString("creator");
-				 * if(b_creator!="null") {bodyVO.setCreator(b_creator);}
-				 * 
-				 * String b_creator_name = body.getString("creator_name");
-				 * if(b_creator_name!="null")
-				 * {bodyVO.setCreator_name(b_creator_name);}
-				 * 
-				 * String b_creationtime = body.getString("creationtime");
-				 * if(b_creationtime!="null")
-				 * {bodyVO.setCreationtime(Timestamp.valueOf(b_creationtime));}
-				 * 
-				 * String b_modifier = body.getString("modifier");
-				 * if(b_modifier!="null") {bodyVO.setModifier(b_modifier);}
-				 * 
-				 * String b_modifier_name = body.getString("modifier_name");
-				 * if(b_modifier_name!="null")
-				 * {bodyVO.setModifier_name(b_modifier_name);}
-				 * 
-				 * String b_modifiedtime = body.getString("modifiedtime");
-				 * if(b_modifiedtime!="null")
-				 * {bodyVO.setModifiedtime(Timestamp.valueOf(b_modifiedtime));}
-				 */
 
 				body_list.add(bodyVO);
 			}
@@ -343,14 +260,14 @@ public class TempTask4AppController {
 			HttpClientUtil.writeJSON(response, rst);
 		}
 
-		catch (Exception e) {
+		catch (Exception e) 
+		{
 			log.error(e.getMessage());
-			try {
-				HttpClientUtil.writeJSON(response, e.getMessage());
-			} catch (Exception e1) {
-				// TODO 自动生成的 catch 块
-				e1.printStackTrace();
-			}
+			try 
+			{HttpClientUtil.writeJSON(response, e.getMessage());} 
+			
+			catch (Exception e1) 
+			{e1.printStackTrace();}
 		}
 	}
 

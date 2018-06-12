@@ -17,6 +17,7 @@ public class InspectionTaskBodyVO extends MeSuperVO{
 	private String projectid_code;
 	private String projectid_name;
 	private Integer fact_order;
+	private Integer crowno;
 	private Integer project_status;
 	private String project_content;
 	private String judge_standard;
@@ -107,6 +108,14 @@ public class InspectionTaskBodyVO extends MeSuperVO{
 
 	public void setFact_order(Integer fact_order) {
 		this.fact_order = fact_order;
+	}
+	
+	public Integer getCrowno() {
+		return this.crowno;
+	}
+
+	public void setCrowno(Integer crowno) {
+		this.crowno = crowno;
 	}
 
 	public String getProject_content() {

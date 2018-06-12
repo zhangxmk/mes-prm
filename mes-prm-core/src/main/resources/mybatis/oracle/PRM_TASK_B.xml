@@ -15,6 +15,7 @@
 		<result column="POLLING_VALUE" property="polling_value"/>
 		<result column="POLLING_RESULT" property="polling_result"/>
 		<result column="PIC_URL" property="pic_url"/>
+		<result column="CROWNO" property="crowno"/>
 		<result column="TENANTID" property="tenantid"/>
 		<result column="SYSID" property="sysid"/>
 		<result column="ORGID" property="orgid"/>
@@ -31,7 +32,7 @@
 		<result column="RDBVALUE" property="rdbvalue"/>
     </resultMap>
     <sql id="Base_Column_List">
-		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
+		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,CROWNO,PROJECT_CONTENT,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
 	</sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -58,7 +59,7 @@
 
     <insert id="insert" parameterType="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBodyVO">
 		insert into PRM_TASK_B (
-		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
+		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,CROWNO,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
 		)
 		values (
 		#{pk_task,jdbcType=VARCHAR},
@@ -73,6 +74,7 @@
 		#{polling_value,jdbcType=VARCHAR},
 		#{polling_result,jdbcType=INTEGER},		
 		#{pic_url,jdbcType=VARCHAR},
+		#{crowno,jdbcType=INTEGER},
 		#{id,jdbcType=VARCHAR},
 		#{tenantid,jdbcType=VARCHAR},
 		#{sysid,jdbcType=VARCHAR},
@@ -93,7 +95,7 @@
 
     <insert id="batchInsert" parameterType="java.util.List">
 		insert into PRM_TASK_B (
-		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
+		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,CROWNO,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
 		)
 		<foreach collection="list" item="item" index="index" separator="union" open="(" close=")">
 		select
@@ -103,6 +105,7 @@
 		#{item.projectid_code,jdbcType=VARCHAR},
 		#{item.projectid_name,jdbcType=VARCHAR},
 		#{item.fact_order,jdbcType=INTEGER},
+		#{item.crowno,jdbcType=INTEGER},
 		#{item.project_status,jdbcType=INTEGER},
 		#{item.project_content,jdbcType=VARCHAR},
 		#{item.judge_standard,jdbcType=VARCHAR},
@@ -148,6 +151,9 @@
 			</if>
 			<if test="fact_order != null">
 				FACT_ORDER,
+			</if>
+			<if test="crowno != null">
+				CROWNO,
 			</if>
 			<if test="project_status != null">
 				PROJECT_STATUS,
@@ -231,6 +237,9 @@
 			</if>
 			<if test="fact_order != null">
 				#{fact_order,jdbcType=INTEGER},
+			</if>
+			<if test="crowno != null">
+				#{crowno,jdbcType=INTEGER},
 			</if>
 			<if test="project_status != null">
 				#{project_status,jdbcType=INTEGER},
@@ -318,6 +327,9 @@
 			<if test="fact_order != null">
 				FACT_ORDER = #{fact_order,jdbcType=INTEGER},
 			</if>
+			<if test="crowno != null">
+				CROWNO = #{crowno,jdbcType=INTEGER},
+			</if>
 			<if test="project_status != null">
 				PROJECT_STATUS = #{project_status,jdbcType=INTEGER},
 			</if>
@@ -394,6 +406,7 @@
 				PROJECTID_CODE = #{projectid_code,jdbcType=VARCHAR},
 				PROJECTID_NAME = #{projectid_name,jdbcType=VARCHAR},
 				FACT_ORDER = #{fact_order,jdbcType=INTEGER},
+				CROWNO = #{crowno,jdbcType=INTEGER},
 				PROJECT_STATUS = #{project_status,jdbcType=INTEGER},
 				PROJECT_CONTENT = #{project_content,jdbcType=VARCHAR},
 				JUDGE_STANDARD = #{judge_standard,jdbcType=VARCHAR},
@@ -431,6 +444,7 @@
 				PROJECTID_CODE = #{item.projectid_code,jdbcType=VARCHAR},
 				PROJECTID_NAME = #{item.projectid_name,jdbcType=VARCHAR},
 				FACT_ORDER = #{item.fact_order,jdbcType=INTEGER},
+				CROWNO = #{item.crowno,jdbcType=INTEGER},
 				PROJECT_STATUS = #{item.project_status,jdbcType=INTEGER},
 				PROJECT_CONTENT = #{item.project_content,jdbcType=VARCHAR},
 				JUDGE_STANDARD = #{item.judge_standard,jdbcType=VARCHAR},
@@ -470,6 +484,7 @@
 				and PK_TASK = #{search.searchMap.id}
 			</if>
         </if>
+        order by plan_order,crowno
     </select>
     
 	<select id="selectByParentKey" resultMap="BaseResultMap"
@@ -487,14 +502,15 @@
 		         PLANB.ER_PROJECT_NAME PROJECTID_NAME,
 		         PROJECTB.CPRJCONTENT  PROJECT_CONTENT,
 		         PROJECTB.CJUDSTD      JUDGE_STANDARD,
-		         PLANB.PLAN_ORDER      PLAN_ORDER
+		         PLANB.PLAN_ORDER      PLAN_ORDER,
+		         PROJECTB.CROWNO       CROWNO
 		    FROM PRM_PLAN PLAN
 		   INNER JOIN PRM_PLAN_B PLANB ON PLAN.ID = PLANB.PK_PLAN
 		   INNER JOIN PRM_PROJECT_B PROJECTB ON PLANB.PK_ER_PROJECT =
 		                                        PROJECTB.CPARENTID
 		   WHERE PLANB.DR = 0
 		     AND PROJECTB.DR = 0
-		     AND PLAN.ID = #{planid} order by PLANB.PLAN_ORDER
+		     AND PLAN.ID = #{planid} order by PLANB.PLAN_ORDER,PROJECTB.CROWNO
 	</select>
 	
 	<select id="queryTaskDetail4App" resultMap="BaseResultMap"
@@ -545,6 +561,9 @@
 			</if>
 			<if test="item.fact_order != null">
 				FACT_ORDER = #{item.fact_order,jdbcType=INTEGER},
+			</if>
+			<if test="item.crowno != null">
+				CROWNO = #{item.crowno,jdbcType=INTEGER},
 			</if>
 			<if test="item.project_status != null">
 				PROJECT_STATUS = #{item.project_status,jdbcType=INTEGER},
