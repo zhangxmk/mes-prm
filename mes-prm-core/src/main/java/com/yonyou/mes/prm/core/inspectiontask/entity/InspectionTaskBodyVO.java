@@ -359,5 +359,19 @@ public class InspectionTaskBodyVO extends MeSuperVO{
 		this.polling_result = polling_result;
 	}
 
+	/**
+	 * @return errdescribe
+	 */
+	public String getErrdescribe() {
+		return errdescribe;
+	}
+
+	/**
+	 * @param errdescribe 要设置的 errdescribe
+	 */
+	public void setErrdescribe(String errdescribe) {
+		this.errdescribe = errdescribe;
+	}
+
 
 }

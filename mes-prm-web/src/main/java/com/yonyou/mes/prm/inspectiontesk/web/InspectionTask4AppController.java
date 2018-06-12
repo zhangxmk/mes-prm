@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.yonyou.me.entity.MeSuperVO;
 import com.yonyou.me.http.HttpClientUtil;
 import com.yonyou.me.utils.dto.ExceptionResult;
@@ -145,8 +146,9 @@ public class InspectionTask4AppController {
 		try
 		{
 			String param = request.getParameter("param");
-			JSONArray bodys = JSONArray.fromObject(param);
-			HashMap<String,String> hmap = new HashMap<String,String>();
+			JSONObject head = JSONObject.fromObject(param);
+			JSONArray bodys = JSONArray.fromObject(head.getString("bitems"));
+			HashMap<String,InspectionTaskBodyVO> hmap = new HashMap<String,InspectionTaskBodyVO>();
 			String pk_task="";
 		
 			for(int i=0;i<bodys.size();i++)
@@ -155,11 +157,40 @@ public class InspectionTask4AppController {
 			
 				if(i==0)
 				{pk_task = body.getString("pk_task");}
+				
+				InspectionTaskBodyVO bodyVO = new InspectionTaskBodyVO();
 			
-				String id = body.getString("id");
-				String polling_value = body.getString("polling_value");
-			
-				hmap.put(id, polling_value);
+				bodyVO.setId(body.getString("id"));
+				
+				String assign_time=body.getString("assign_time");
+				if(assign_time != null && assign_time != "null")
+				{bodyVO.setAssign_time(Timestamp.valueOf(assign_time));}
+				
+				String rdbvalue=body.getString("rdbvalue");
+				if(rdbvalue != null && rdbvalue != "null")
+				{bodyVO.setRdbvalue(rdbvalue);}
+				
+				String errdescribe=body.getString("errdescribe");
+				if(errdescribe != null && errdescribe != "null")
+				{bodyVO.setErrdescribe(errdescribe);}
+				
+				String polling_result=body.getString("polling_result");
+				if(polling_result != null && polling_result != "null")
+				{bodyVO.setPolling_result(polling_result);}
+				
+				String polling_value=body.getString("polling_value");
+				if(polling_value != null && polling_value != "null")
+				{bodyVO.setPolling_value(polling_value);}
+				
+				String pic_url=body.getString("pic_url");
+				if(pic_url != null && pic_url != "null")
+				{bodyVO.setPolling_value(pic_url);}
+				
+				String fact_order = body.getString("fact_order");
+				if(fact_order != null && fact_order != "null")
+				{bodyVO.setFact_order(Integer.parseInt(fact_order));}
+				
+				hmap.put(body.getString("id"), bodyVO);
 			}
 		
 			List<String> list_pk_task = new ArrayList<String>();
@@ -178,7 +209,36 @@ public class InspectionTask4AppController {
 			
 				if(hmap.containsKey(id))
 				{
-					body.setPolling_value(hmap.get(id));
+					InspectionTaskBodyVO bodyVO=hmap.get(id);
+					
+					Timestamp assign_time=bodyVO.getAssign_time();
+					if(assign_time != null)
+					{body.setAssign_time(assign_time);}
+					
+					String rdbvalue=bodyVO.getRdbvalue();
+					if(rdbvalue != null && rdbvalue != "null")
+					{body.setRdbvalue(rdbvalue);}
+					
+					String errdescribe=bodyVO.getErrdescribe();
+					if(errdescribe != null && errdescribe != "null")
+					{body.setErrdescribe(errdescribe);}
+					
+					String polling_result=bodyVO.getPolling_result();
+					if(polling_result != null && polling_result != "null")
+					{body.setPolling_result(polling_result);}
+					
+					String polling_value=bodyVO.getPolling_value();
+					if(polling_value != null && polling_value != "null")
+					{body.setPolling_value(polling_value);}
+					
+					String pic_url=bodyVO.getPic_url();
+					if(pic_url != null && pic_url != "null")
+					{body.setPolling_value(pic_url);}
+					
+					Integer fact_order = bodyVO.getFact_order();
+					if(fact_order!=null)
+					{body.setFact_order(fact_order);}
+					
 					body.setProject_status(2);
 					body.setStatus(1);
 				}
@@ -193,15 +253,20 @@ public class InspectionTask4AppController {
 			if(finish == true)
 			{billstatus = 3;}
 		
-			InspectionTaskHeadVO head = service.queryHeadById(pk_task);
-			if(head.getBillstatus() != billstatus)
-			{
-				head.setBillstatus(billstatus);
-				head.setStatus(1);
+			InspectionTaskHeadVO headVO = service.queryHeadById(pk_task);
+			if(headVO.getBillstatus() != billstatus)
+			{	
+				headVO.setBillstatus(billstatus);
 			}
+			
+			headVO.setShift(head.getString("shift"));
+			headVO.setShift_name(head.getString("shift_name"));
+			headVO.setTeam(head.getString("team"));
+			headVO.setTeam_name(head.getString("team_name"));
+			headVO.setStatus(1);
 		
 			InspectionTaskBillVO billVO = new InspectionTaskBillVO();
-			billVO.setHead(head);
+			billVO.setHead(headVO);
 			billVO.setChildren(InspectionTaskBodyVO.class, body_list);
 		
 			service.update(billVO);
