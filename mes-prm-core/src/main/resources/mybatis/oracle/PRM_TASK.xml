@@ -12,6 +12,8 @@
 		<result column="TEAM_NAME" property="team_name"/>
 		<result column="SHIFT" property="shift"/>
 		<result column="SHIFT_NAME" property="shift_name"/>
+		<result column="USERID" property="userid"/>
+		<result column="USERID_NAME" property="userid_name"/>
 		<result column="BILLSTATUS" property="billstatus"/>
 		<result column="TENANTID" property="tenantid"/>
 		<result column="SYSID" property="sysid"/>
@@ -39,13 +41,15 @@
 		<result column="TEAM_NAME" property="team_name"/>
 		<result column="SHIFT" property="shift"/>
 		<result column="SHIFT_NAME" property="shift_name"/>
+		<result column="USERID" property="userid"/>
+		<result column="USERID_NAME" property="userid_name"/>
 		<result column="ORGID" property="orgid"/>
 		<result column="ORGID_NAME" property="orgid_name"/>
 		<result column="PLANCOUNT" property="plancount"/>
 		<result column="UNFINISHCOUNT" property="unfinishcount"/>
     </resultMap>
     <sql id="Base_Column_List">
-		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME,DEPTID,DEPTID_NAME
+		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,USERID,USERID_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME,DEPTID,DEPTID_NAME
 	</sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -72,7 +76,7 @@
 
     <insert id="insert" parameterType="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskHeadVO">
 		insert into PRM_TASK (
-		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME,DEPTID,DEPTID_NAME
+		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,USERID,USERID_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME,DEPTID,DEPTID_NAME
 		)
 		values (
 		#{task_no,jdbcType=VARCHAR},
@@ -84,6 +88,8 @@
 		#{team_name,jdbcType=VARCHAR},
 		#{shift,jdbcType=VARCHAR},
 		#{shift_name,jdbcType=VARCHAR},
+		#{userid,jdbcType=VARCHAR},
+		#{userid_name,jdbcType=VARCHAR},
 		#{billstatus,jdbcType=INTEGER},
 		#{id,jdbcType=VARCHAR},
 		#{tenantid,jdbcType=VARCHAR},
@@ -106,7 +112,7 @@
 
     <insert id="batchInsert" parameterType="java.util.List">
 		insert into PRM_TASK (
-		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME,DEPTID,DEPTID_NAME
+		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,USERID,USERID_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME,DEPTID,DEPTID_NAME
 		)
 		values
 		<foreach collection="list" item="item" index="index"
@@ -121,6 +127,8 @@
 		#{item.team_name,jdbcType=VARCHAR},
 		#{item.shift,jdbcType=VARCHAR},
 		#{item.shift_name,jdbcType=VARCHAR},
+		#{item.userid,jdbcType=VARCHAR},
+		#{item.userid_name,jdbcType=VARCHAR},
 		#{item.billstatus,jdbcType=INTEGER},
 		#{item.id,jdbcType=VARCHAR},
 		#{item.tenantid,jdbcType=VARCHAR},
@@ -170,6 +178,12 @@
 			</if>
 			<if test="shift_name != null">
 				SHIFT_NAME,
+			</if>
+			<if test="userid != null">
+				USERID,
+			</if>
+			<if test="userid_name != null">
+				USERID_NAME,
 			</if>
 			<if test="billstatus != null">
 				BILLSTATUS,
@@ -250,6 +264,12 @@
 			</if>
 			<if test="shift_name != null">
 				#{shift_name,jdbcType=VARCHAR},
+			</if>
+			<if test="userid != null">
+				#{userid,jdbcType=VARCHAR},
+			</if>
+			<if test="userid_name != null">
+				#{userid_name,jdbcType=VARCHAR},
 			</if>
 			<if test="billstatus != null">
 				#{billstatus,jdbcType=INTEGER},
@@ -334,6 +354,12 @@
 			<if test="shift_name != null">
 				SHIFT_NAME = #{shift_name,jdbcType=VARCHAR},
 			</if>
+			<if test="userid != null">
+				USERID = #{userid,jdbcType=VARCHAR},
+			</if>
+			<if test="userid_name != null">
+				USERID_NAME = #{userid_name,jdbcType=VARCHAR},
+			</if>
 			<if test="billstatus != null">
 				BILLSTATUS = #{billstatus,jdbcType=INTEGER},
 			</if>
@@ -401,6 +427,8 @@
 				TEAM_NAME = #{team_name,jdbcType=VARCHAR},
 				SHIFT = #{shift,jdbcType=VARCHAR},
 				SHIFT_NAME = #{shift_name,jdbcType=VARCHAR},
+				USERID = #{userid,jdbcType=VARCHAR},
+				USERID_NAME = #{userid_name,jdbcType=VARCHAR},
 				BILLSTATUS = #{billstatus,jdbcType=INTEGER},
 				TENANTID = #{tenantid,jdbcType=VARCHAR},
 				SYSID = #{sysid,jdbcType=VARCHAR},
@@ -432,10 +460,12 @@
 				POSTID_NAME = #{item.postid_name,jdbcType=VARCHAR},
 				PLANID = #{item.planid,jdbcType=VARCHAR},
 				PLANID_NAME = #{item.planid_name,jdbcType=VARCHAR},
-				TEAM = #{team,jdbcType=VARCHAR},
-				TEAM_NAME = #{team_name,jdbcType=VARCHAR},
-				SHIFT = #{shift,jdbcType=VARCHAR},
-				SHIFT_NAME = #{shift_name,jdbcType=VARCHAR},
+				TEAM = #{item.team,jdbcType=VARCHAR},
+				TEAM_NAME = #{item.team_name,jdbcType=VARCHAR},
+				SHIFT = #{item.shift,jdbcType=VARCHAR},
+				SHIFT_NAME = #{item.shift_name,jdbcType=VARCHAR},
+				USERID = #{item.userid,jdbcType=VARCHAR},
+				USERID_NAME = #{item.userid_name,jdbcType=VARCHAR},
 				BILLSTATUS = #{item.billstatus,jdbcType=INTEGER},
 				TENANTID = #{item.tenantid,jdbcType=VARCHAR},
 				SYSID = #{item.sysid,jdbcType=VARCHAR},
@@ -542,7 +572,7 @@
 			   p.vnote 				modifier,
 			   
 			   h.modifier_name		modifier_name,
-			   h.modifiedtime		modifiedtime,
+			   h.modifiedtime		modifiedtime
 			   
 			   p.pk_region_name		pk_region_name,
 			   p.routeflag			routeflag

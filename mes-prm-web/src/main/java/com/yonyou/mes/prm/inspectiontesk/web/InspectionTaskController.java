@@ -69,6 +69,7 @@ public class InspectionTaskController extends BaseController {
 			put("postid", "postid_name");// 岗位
 			put("deptid","deptid_name");
 			put("shift","shift_name");
+			put("userid","userid_name");
 			put("team","team_name");
 		}
 	};

@@ -39,6 +39,8 @@ public class InspectionTaskHeadVO extends MeSuperVO{
 	private String team_name;
 	private String shift;
 	private String shift_name;
+	private String userid;
+	private String userid_name;
 	private Integer billstatus;
 	private String id;
 	private String tenantid;
@@ -107,6 +109,22 @@ public class InspectionTaskHeadVO extends MeSuperVO{
 		this.planid_name = planid_name;
 	}
 	
+	public String getPk_region_name() {
+		return this.pk_region_name;
+	}
+
+	public void setPk_region_name(String pk_region_name) {
+		this.pk_region_name = pk_region_name;
+	}
+	
+	public String getRouteflag() {
+		return this.routeflag;
+	}
+
+	public void setRouteflag(String routeflag) {
+		this.routeflag = routeflag;
+	}
+	
 	public String getTeam() {
 		return team;
 	}
@@ -144,6 +162,25 @@ public class InspectionTaskHeadVO extends MeSuperVO{
 
 	public void setShift_name(String shift_name) {
 		this.shift_name = shift_name;
+	}
+	
+	public String getUserid() {
+		return userid;
+	}
+
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+
+
+	public String getUserid_name() {
+		return userid_name;
+	}
+
+
+	public void setUserid_name(String userid_name) {
+		this.userid_name = userid_name;
 	}
 
 	public String getId() {
@@ -271,21 +308,6 @@ public class InspectionTaskHeadVO extends MeSuperVO{
 		this.assign_time = assign_time;
 	}
 
-	public String getPk_region_name() {
-		return this.pk_region_name;
-	}
-
-	public void setPk_region_name(String pk_region_name) {
-		this.pk_region_name = pk_region_name;
-	}
-	
-	public String getRouteflag() {
-		return this.routeflag;
-	}
-
-	public void setRouteflag(String routeflag) {
-		this.routeflag = routeflag;
-	}
 
 	@Override
 	public String getName() {
