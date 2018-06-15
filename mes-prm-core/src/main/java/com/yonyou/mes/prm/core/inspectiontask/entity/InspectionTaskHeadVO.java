@@ -56,6 +56,7 @@ public class InspectionTaskHeadVO extends MeSuperVO{
 	private String creator_name;
 	private String modifier_name;
 	private Timestamp assign_time;
+	private Timestamp released_time;
 	private String pk_region_name;
 	private String routeflag;
 	public InspectionTaskHeadVO() {
@@ -306,6 +307,14 @@ public class InspectionTaskHeadVO extends MeSuperVO{
 
 	public void setAssign_time(Timestamp assign_time) {
 		this.assign_time = assign_time;
+	}
+	
+	public Timestamp getReleased_time() {
+		return this.released_time;
+	}
+
+	public void setReleased_time(Timestamp released_time) {
+		this.released_time = released_time;
 	}
 
 

@@ -26,6 +26,7 @@
 		<result column="CREATIONTIME" property="creationtime"/>
 		<result column="MODIFIER" property="modifier"/>
 		<result column="MODIFIEDTIME" property="modifiedtime"/>
+		<result column="COMPLETE_TIME" property="complete_time"/>
 		<result column="CREATOR_NAME" property="creator_name"/>
 		<result column="MODIFIER_NAME" property="modifier_name"/>
 		<result column="ERRDESCRIBE" property="errdescribe"/>
@@ -33,7 +34,7 @@
 		<result column="FVALUETYPE" property="fvaluetype"/>
     </resultMap>
     <sql id="Base_Column_List">
-		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,CROWNO,PROJECT_CONTENT,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
+		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,CROWNO,PROJECT_CONTENT,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,COMPLETE_TIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
 	</sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -60,7 +61,7 @@
 
     <insert id="insert" parameterType="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBodyVO">
 		insert into PRM_TASK_B (
-		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,CROWNO,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
+		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,CROWNO,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,COMPLETE_TIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
 		)
 		values (
 		#{pk_task,jdbcType=VARCHAR},
@@ -87,6 +88,7 @@
 		#{creationtime,jdbcType=TIMESTAMP},
 		#{modifier,jdbcType=VARCHAR},
 		#{modifiedtime,jdbcType=TIMESTAMP},
+		#{complete_time,jdbcType=TIMESTAMP},
 		#{creator_name,jdbcType=VARCHAR},
 		#{modifier_name,jdbcType=VARCHAR},
 		#{errdescribe,jdbcType=VARCHAR},
@@ -96,7 +98,7 @@
 
     <insert id="batchInsert" parameterType="java.util.List">
 		insert into PRM_TASK_B (
-		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,CROWNO,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
+		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,CROWNO,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,COMPLETE_TIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
 		)
 		<foreach collection="list" item="item" index="index" separator="union" open="(" close=")">
 		select
@@ -125,6 +127,7 @@
 		#{item.creationtime,jdbcType=TIMESTAMP},
 		#{item.modifier,jdbcType=VARCHAR},
 		#{item.modifiedtime,jdbcType=TIMESTAMP},
+		#{item.complete_time,jdbcType=TIMESTAMP},
 		#{item.creator_name,jdbcType=VARCHAR},
 		#{item.modifier_name,jdbcType=VARCHAR},
 		#{item.errdescribe,jdbcType=VARCHAR},
@@ -206,6 +209,9 @@
 			</if>
 			<if test="modifiedtime != null">
 				MODIFIEDTIME,
+			</if>
+			<if test="complete_time != null">
+				COMPLETE_TIME,
 			</if>
 			<if test="creator_name != null">
 				CREATOR_NAME,
@@ -292,6 +298,9 @@
 			</if>
 			<if test="modifiedtime != null">
 				#{modifiedtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="complete_time != null">
+				#{complete_time,jdbcType=TIMESTAMP},
 			</if>
 			<if test="creator_name != null">
 				#{creator_name,jdbcType=VARCHAR},
@@ -382,6 +391,9 @@
 			<if test="modifiedtime != null">
 				MODIFIEDTIME = #{modifiedtime,jdbcType=TIMESTAMP},
 			</if>
+			<if test="complete_time != null">
+				COMPLETE_TIME = #{complete_time,jdbcType=TIMESTAMP},
+			</if>
 			<if test="creator_name != null">
 				CREATOR_NAME = #{creator_name,jdbcType=VARCHAR},
 			</if>
@@ -424,6 +436,7 @@
 				CREATIONTIME = #{creationtime,jdbcType=TIMESTAMP},
 				MODIFIER = #{modifier,jdbcType=VARCHAR},
 				MODIFIEDTIME = #{modifiedtime,jdbcType=TIMESTAMP},
+				COMPLETE_TIME = #{complete_time,jdbcType=TIMESTAMP},
 				CREATOR_NAME = #{creator_name,jdbcType=VARCHAR},
 				MODIFIER_NAME = #{modifier_name,jdbcType=VARCHAR},
 				ERRDESCRIBE = #{errdescribe,jdbcType=VARCHAR},
@@ -463,6 +476,7 @@
 				CREATIONTIME = #{item.creationtime,jdbcType=TIMESTAMP},
 				MODIFIER = #{item.modifier,jdbcType=VARCHAR},
 				MODIFIEDTIME = #{item.modifiedtime,jdbcType=TIMESTAMP},
+				COMPLETE_TIME = #{item.complete_time,jdbcType=TIMESTAMP},
 				CREATOR_NAME = #{item.creator_name,jdbcType=VARCHAR},
 				MODIFIER_NAME = #{item.modifier_name,jdbcType=VARCHAR},
 				ERRDESCRIBE = #{item.errdescribe,jdbcType=VARCHAR},
@@ -642,6 +656,9 @@
 			</if>
 			<if test="item.modifiedtime != null">
 				MODIFIEDTIME = #{item.modifiedtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="item.complete_time != null">
+				COMPLETE_TIME = #{item.complete_time,jdbcType=TIMESTAMP},
 			</if>
 			<if test="item.creator_name != null">
 				CREATOR_NAME = #{item.creator_name,jdbcType=VARCHAR},

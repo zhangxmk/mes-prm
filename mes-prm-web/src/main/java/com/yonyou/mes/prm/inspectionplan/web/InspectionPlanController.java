@@ -176,6 +176,7 @@ public class InspectionPlanController extends BaseController {
                 nhead.setSysid(head.getSysid());
                 nhead.setTenantid(head.getTenantid());
                 nhead.setStatus(2);
+                nhead.setReleased_time(new Timestamp(new Date().getTime()));
 
                 List<InspectionTaskBodyVO> nlist = new ArrayList<>();
                 for (MeSuperVO spvo:

@@ -164,7 +164,7 @@ public class InspectionTask4AppController {
 				
 				String assign_time=body.getString("assign_time");
 				if(assign_time != null && assign_time != "null")
-				{bodyVO.setAssign_time(Timestamp.valueOf(assign_time));}
+				{bodyVO.setComplete_time(Timestamp.valueOf(assign_time));}
 				
 				String rdbvalue=body.getString("rdbvalue");
 				if(rdbvalue != null && rdbvalue != "null")
@@ -211,9 +211,9 @@ public class InspectionTask4AppController {
 				{
 					InspectionTaskBodyVO bodyVO=hmap.get(id);
 					
-					Timestamp assign_time=bodyVO.getAssign_time();
+					Timestamp assign_time=bodyVO.getComplete_time();
 					if(assign_time != null)
-					{body.setAssign_time(assign_time);}
+					{body.setComplete_time(assign_time);}
 					
 					String rdbvalue=bodyVO.getRdbvalue();
 					if(rdbvalue != null && rdbvalue != "null")

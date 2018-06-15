@@ -38,7 +38,7 @@ public class InspectionTaskBodyVO extends MeSuperVO{
 	private Timestamp modifiedtime;
 	private String creator_name;
 	private String modifier_name;
-	private Timestamp assign_time;
+	private Timestamp complete_time;
 	private String errdescribe;
 	private	Integer fvaluetype;
 
@@ -272,12 +272,12 @@ public class InspectionTaskBodyVO extends MeSuperVO{
 	}
 
 
-	public Timestamp getAssign_time() {
-		return this.assign_time;
+	public Timestamp getComplete_time() {
+		return this.complete_time;
 	}
 
-	public void setAssign_time(Timestamp assign_time) {
-		this.assign_time = assign_time;
+	public void setComplete_time(Timestamp complete_time) {
+		this.complete_time = complete_time;
 	}
 
 	public Integer getFvaluetype() {

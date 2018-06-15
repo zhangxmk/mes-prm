@@ -28,6 +28,7 @@
 		<result column="CREATOR_NAME" property="creator_name"/>
 		<result column="MODIFIER_NAME" property="modifier_name"/>
 		<result column="ASSIGN_TIME" property="assign_time"/>
+		<result column="RELEASED_TIME" property="released_time"/>
 		<result column="DEPTID" property="deptid"/>
 		<result column="DEPTID_NAME" property="deptid_name"/>
 		<result column="PK_REGION_NAME" property="pk_region_name"/>
@@ -49,7 +50,7 @@
 		<result column="UNFINISHCOUNT" property="unfinishcount"/>
     </resultMap>
     <sql id="Base_Column_List">
-		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,USERID,USERID_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME,DEPTID,DEPTID_NAME
+		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,USERID,USERID_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME,RELEASED_TIME,DEPTID,DEPTID_NAME
 	</sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -76,7 +77,7 @@
 
     <insert id="insert" parameterType="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskHeadVO">
 		insert into PRM_TASK (
-		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,USERID,USERID_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME,DEPTID,DEPTID_NAME
+		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,USERID,USERID_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME,RELEASED_TIME,DEPTID,DEPTID_NAME
 		)
 		values (
 		#{task_no,jdbcType=VARCHAR},
@@ -105,6 +106,7 @@
 		#{creator_name,jdbcType=VARCHAR},
 		#{modifier_name,jdbcType=VARCHAR},
 		#{assign_time,jdbcType=TIMESTAMP},
+		#{released_time,jdbcType=TIMESTAMP},
 		#{deptid,jdbcType=VARCHAR},
 		#{deptid_name,jdbcType=VARCHAR}
 		)
@@ -112,7 +114,7 @@
 
     <insert id="batchInsert" parameterType="java.util.List">
 		insert into PRM_TASK (
-		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,USERID,USERID_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME,DEPTID,DEPTID_NAME
+		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,USERID,USERID_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME,RELEASED_TIME,DEPTID,DEPTID_NAME
 		)
 		values
 		<foreach collection="list" item="item" index="index"
@@ -144,6 +146,7 @@
 		#{item.creator_name,jdbcType=VARCHAR},
 		#{item.modifier_name,jdbcType=VARCHAR},
 		#{item.assign_time,jdbcType=TIMESTAMP},
+		#{item.released_time,jdbcType=TIMESTAMP},
 		#{item.deptid,jdbcType=VARCHAR},
 		#{item.deptid_name,jdbcType=VARCHAR}
 			)
@@ -230,6 +233,9 @@
 			<if test="assign_time != null">
 				ASSIGN_TIME,
 			</if>
+			<if test="released_time != null">
+				RELEASED_TIME,
+			</if>
 			<if test="deptid != null">
 				DEPTID,
 			</if>
@@ -315,6 +321,9 @@
 			</if>
 			<if test="assign_time != null">
 				#{assign_time,jdbcType=TIMESTAMP},
+			</if>
+			<if test="released_time != null">
+				#{released_time,jdbcType=TIMESTAMP},
 			</if>
 			<if test="deptid != null">
 				#{deptid,jdbcType=VARCHAR},
@@ -405,6 +414,9 @@
 			<if test="assign_time != null">
 				ASSIGN_TIME = #{assign_time,jdbcType=TIMESTAMP},
 			</if>
+			<if test="released_time != null">
+				RELEASED_TIME = #{released_time,jdbcType=TIMESTAMP},
+			</if>
 			<if test="deptid != null">
 				DEPTID = #{deptid,jdbcType=VARCHAR},
 			</if>
@@ -443,6 +455,7 @@
 				CREATOR_NAME = #{creator_name,jdbcType=VARCHAR},
 				MODIFIER_NAME = #{modifier_name,jdbcType=VARCHAR},
 				ASSIGN_TIME = #{assign_time,jdbcType=TIMESTAMP},
+				RELEASED_TIME = #{released_time,jdbcType=TIMESTAMP},
 				DEPTID = #{deptid,jdbcType=VARCHAR},
 				DEPTID_NAME = #{deptid_name,jdbcType=VARCHAR}
 		where ID = #{id}
@@ -480,6 +493,7 @@
 				CREATOR_NAME = #{item.creator_name,jdbcType=VARCHAR},
 				MODIFIER_NAME = #{item.modifier_name,jdbcType=VARCHAR},
 				ASSIGN_TIME = #{item.assign_time,jdbcType=TIMESTAMP},
+				RELEASED_TIME = #{item.released_time,jdbcType=TIMESTAMP},
 				DEPTID = #{item.deptid,jdbcType=VARCHAR},
 				DEPTID_NAME = #{item.deptid_name,jdbcType=VARCHAR}
 			</set>
