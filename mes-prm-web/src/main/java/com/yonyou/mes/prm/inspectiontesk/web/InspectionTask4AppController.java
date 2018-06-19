@@ -179,8 +179,8 @@ public class InspectionTask4AppController {
 				if(errdescribe != null && errdescribe != "null")
 				{bodyVO.setErrdescribe(errdescribe);}
 				
-				String polling_result=body.getString("polling_result");
-				if(polling_result != null && polling_result != "null")
+				Integer polling_result=body.getInt("polling_result");
+				if(polling_result != null && polling_result != null)
 				{bodyVO.setPolling_result(polling_result);}
 				
 				String polling_value=body.getString("polling_value");
@@ -228,8 +228,8 @@ public class InspectionTask4AppController {
 					if(errdescribe != null && errdescribe != "null")
 					{body.setErrdescribe(errdescribe);}
 					
-					String polling_result=bodyVO.getPolling_result();
-					if(polling_result != null && polling_result != "null")
+					Integer polling_result=bodyVO.getPolling_result();
+					if(polling_result != null && polling_result != null)
 					{body.setPolling_result(polling_result);}
 					
 					String polling_value=bodyVO.getPolling_value();
