@@ -4,8 +4,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,23 +14,21 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 import com.yonyou.me.entity.MeSuperVO;
 import com.yonyou.me.http.HttpClientUtil;
 import com.yonyou.me.utils.dto.ExceptionResult;
 import com.yonyou.me.utils.dto.Result;
 import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBillVO;
-import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskHeadVO;
 import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBodyVO;
+import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskHeadVO;
 import com.yonyou.mes.prm.core.inspectiontask.service.IInspectionTaskService;
-
-import org.springframework.data.domain.Page;
 
 /*
  * 巡检任务提供给巡检APP的服务
@@ -137,7 +135,14 @@ public class InspectionTask4AppController {
 			HttpClientUtil.writeJSON(response, combin);
 			
 		} 
-		catch (Exception ex) {}
+		catch (Exception ex) {
+			try {
+				HttpClientUtil.writeJSON(response, ex.getMessage().toString());
+			} catch (Exception e) {
+				// TODO 自动生成的 catch 块
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	@RequestMapping(value = "/submit", method = RequestMethod.POST)
@@ -275,6 +280,13 @@ public class InspectionTask4AppController {
 			HttpClientUtil.writeJSON(response, rst);
 		}
 		
-		catch(Exception e){}
+		catch(Exception e){
+			try {
+				HttpClientUtil.writeJSON(response, e.getMessage().toString());
+			} catch (Exception ex) {
+				// TODO 自动生成的 catch 块
+				e.printStackTrace();
+			}
+		}
 	}
 }
