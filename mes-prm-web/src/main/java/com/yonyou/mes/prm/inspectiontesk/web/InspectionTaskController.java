@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.yonyou.mes.prm.core.inspectionplan.repository.InspectionPlanBodyMapper;
 import com.yonyou.mes.prm.core.inspectionplan.repository.InspectionPlanHeadMapper;
+
 import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,8 +27,11 @@ import com.yonyou.me.entity.VOUtil;
 import com.yonyou.me.utils.dto.BaseDTO;
 import com.yonyou.me.utils.dto.ExceptionResult;
 import com.yonyou.me.utils.dto.IDValueConvert;
+import com.yonyou.me.utils.dto.PageInfo;
 import com.yonyou.me.utils.dto.PageVO;
 import com.yonyou.me.utils.dto.Result;
+import com.yonyou.me.utils.dto.Row;
+import com.yonyou.me.utils.dto.VORowConvertor;
 import com.yonyou.me.utils.dto.ViewArea;
 import com.yonyou.me.utils.exception.ExceptionUtils;
 import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBillVO;
@@ -51,13 +55,13 @@ public class InspectionTaskController extends BaseController {
 	@Autowired
 	private IInspectionTaskService service;
 
-    // 主表mapper
-    @Autowired
-    InspectionPlanHeadMapper planheadMapper;
+	// 主表mapper
+	@Autowired
+	InspectionPlanHeadMapper planheadMapper;
 
-    // 子表mapper
-    @Autowired
-    InspectionPlanBodyMapper planbodyMapper;
+	// 子表mapper
+	@Autowired
+	InspectionPlanBodyMapper planbodyMapper;
 
 	/**
 	 * 表头前端档案id与显示名称的映射
@@ -67,10 +71,10 @@ public class InspectionTaskController extends BaseController {
 			put("orgid", "orgid_name");// 工厂
 			put("planid", "planid_name");// 巡检方案
 			put("postid", "postid_name");// 岗位
-			put("deptid","deptid_name");
-			put("shift","shift_name");
-			put("userid","userid_name");
-			put("team","team_name");
+			put("deptid", "deptid_name");
+			put("shift", "shift_name");
+			put("userid", "userid_name");
+			put("team", "team_name");
 		}
 	};
 	/**
@@ -91,7 +95,7 @@ public class InspectionTaskController extends BaseController {
 			put(EntityConst.BODY, InspectionTaskBodyVO.class);
 		}
 	};
-	
+
 	private final Map<String, Class<?>> classMapForTable = new HashMap<String, Class<?>>() {
 		{
 			put(EntityConst.HEAD, TaskForTableVO.class);
@@ -106,11 +110,10 @@ public class InspectionTaskController extends BaseController {
 					VOUtil.AllClassFields(InspectionTaskBodyVO.class));
 		}
 	};
-	
+
 	private final Map<String, String[]> nameMapForTable = new HashMap<String, String[]>() {
 		{
-			put(EntityConst.HEAD,
-					VOUtil.AllClassFields(TaskForTableVO.class));
+			put(EntityConst.HEAD, VOUtil.AllClassFields(TaskForTableVO.class));
 		}
 	};
 
@@ -144,7 +147,7 @@ public class InspectionTaskController extends BaseController {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * 查询表头
 	 */
@@ -163,17 +166,51 @@ public class InspectionTaskController extends BaseController {
 					pageVO.getPageRequest(), pageVO.getSearchParams());
 			Map<String, Page<?>> voMap = new HashMap<String, Page<?>>();
 			voMap.put(EntityConst.HEAD, pageVOs);
-			Map<String, ViewArea> data = this.convertPageVO2DTO(classMapForTable,
-					voMap, nameMapForTable);
+			Map<String, ViewArea> data = this.convertPageVO2DTO_new(
+					classMapForTable, voMap, nameMapForTable);
 
-			//Map<String, MeSuperVO[]> voIndex = this.convertToVOMap(voMap);
+			// Map<String, MeSuperVO[]> voIndex = this.convertToVOMap(voMap);
 			// 补充名称和精度
-			//this.afterProcess(data, voIndex);
+			// this.afterProcess(data, voIndex);
 			result.setData(data);
 		} catch (Exception ex) {
 			result = ExceptionResult.process(ex);
 		}
 		return result;
+	}
+
+	public <T extends MeSuperVO> Map<String, ViewArea> convertPageVO2DTO_new(
+			Map<String, Class<?>> classMap, Map<String, Page<?>> voMap,
+			Map<String, String[]> nameMap) {
+		if ((classMap != null) && (voMap != null)) {
+			VORowConvertor<T> convertor = new VORowConvertor();
+			Map<String, ViewArea> returnMap = new HashMap();
+			new HashMap();
+			for (String key : classMap.keySet())
+				if ((voMap.containsKey(key)) && (nameMap.containsKey(key))) {
+					ViewArea area = new ViewArea();
+					String[] names = (String[]) nameMap.get(key);
+					Page<?> page = (Page) voMap.get(key);
+					if ((page != null) && (page.getContent().size() != 0)) {
+
+						int size = page.getContent().size();
+						MeSuperVO[] vos = new MeSuperVO[size];
+						vos = (MeSuperVO[]) page.getContent().toArray(vos);
+						if(vos!=null&&vos[0]!=null){
+							Row[] rows = convertor.convert(vos, names);
+							area.addRows(rows);
+
+							PageInfo pageinfo = new PageInfo(page);
+							area.setPageinfo(pageinfo);
+
+							returnMap.put(key, area);
+						}
+						
+					}
+				}
+			return returnMap;
+		}
+		return null;
 	}
 
 	/**
@@ -224,9 +261,11 @@ public class InspectionTaskController extends BaseController {
 			if (pageRequest == null || searchParams == null) {
 				ExceptionUtils.wrapBusinessException("当前参数数据有误");
 			}
-			String planid = searchParams.getSearchMap().get("planid").toString();
+			String planid = searchParams.getSearchMap().get("planid")
+					.toString();
 			// 查询表体数据
-			Page<InspectionTaskBodyVO> pageVOs = service.queryProjectAndContent(planid);
+			Page<InspectionTaskBodyVO> pageVOs = service
+					.queryProjectAndContent(planid);
 			Map<String, Page<?>> voMap = new HashMap<String, Page<?>>();
 			voMap.put(EntityConst.BODY, pageVOs);
 
