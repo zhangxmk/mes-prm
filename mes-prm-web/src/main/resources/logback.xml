@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true">
-    <property name="log.base" value="/var/log/test"/>
+    <property name="log.base" value="/var/log/prm"/>
     
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
@@ -21,6 +21,7 @@
 
 	<!-- 自定义特殊包的日志级别 -->
 	<logger name="com.yonyou.iuap" level="ERROR" />
+	<logger name="org.apache" level="WARN"/>
 
 	<!--log4jdbc 选项，默认关闭-->
 	<!--
