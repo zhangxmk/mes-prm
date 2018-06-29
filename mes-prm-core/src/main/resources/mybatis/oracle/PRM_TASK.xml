@@ -4,6 +4,7 @@
     <resultMap id="BaseResultMap" type="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskHeadVO">
 		<id column="ID" property="id"/>
 		<result column="TASK_NO" property="task_no"/>
+		<result column="TASKTYPE" property="tasktype"/>
 		<result column="POSTID" property="postid"/>
 		<result column="POSTID_NAME" property="postid_name"/>
 		<result column="PLANID" property="planid"/>
@@ -50,7 +51,7 @@
 		<result column="UNFINISHCOUNT" property="unfinishcount"/>
     </resultMap>
     <sql id="Base_Column_List">
-		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,USERID,USERID_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME,RELEASED_TIME,DEPTID,DEPTID_NAME
+		TASK_NO,TASKTYPE,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,USERID,USERID_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME,RELEASED_TIME,DEPTID,DEPTID_NAME
 	</sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -77,10 +78,11 @@
 
     <insert id="insert" parameterType="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskHeadVO">
 		insert into PRM_TASK (
-		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,USERID,USERID_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME,RELEASED_TIME,DEPTID,DEPTID_NAME
+		TASK_NO,TASKTYPE,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,USERID,USERID_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME,RELEASED_TIME,DEPTID,DEPTID_NAME
 		)
 		values (
 		#{task_no,jdbcType=VARCHAR},
+		#{tasktype,jdbcType=INTEGER},
 		#{postid,jdbcType=VARCHAR},
 		#{postid_name,jdbcType=VARCHAR},
 		#{planid,jdbcType=VARCHAR},
@@ -114,13 +116,14 @@
 
     <insert id="batchInsert" parameterType="java.util.List">
 		insert into PRM_TASK (
-		TASK_NO,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,USERID,USERID_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME,RELEASED_TIME,DEPTID,DEPTID_NAME
+		TASK_NO,TASKTYPE,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,USERID,USERID_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME,RELEASED_TIME,DEPTID,DEPTID_NAME
 		)
 		values
 		<foreach collection="list" item="item" index="index"
 			separator=",">
 			(
 		#{item.task_no,jdbcType=VARCHAR},
+		#{item.tasktype,jdbcType=INTEGER},
 		#{item.postid,jdbcType=VARCHAR},
 		#{item.postid_name,jdbcType=VARCHAR},
 		#{item.planid,jdbcType=VARCHAR},
@@ -157,6 +160,9 @@
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="task_no != null">
 				TASK_NO,
+			</if>
+			<if test="tasktype != null">
+				TASKTYPE,
 			</if>
 			<if test="postid != null">
 				POSTID,
@@ -246,6 +252,9 @@
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="task_no != null">
 				#{task_no,jdbcType=VARCHAR},
+			</if>
+			<if test="tasktype != null">
+				#{tasktype,jdbcType=INTEGER},
 			</if>
 			<if test="postid != null">
 				#{postid,jdbcType=VARCHAR},
@@ -339,6 +348,9 @@
 			<if test="task_no != null">
 				TASK_NO = #{task_no,jdbcType=VARCHAR},
 			</if>
+			<if test="tasktype != null">
+				TASKTYPE = #{tasktype,jdbcType=INTEGER},
+			</if>
 			<if test="postid != null">
 				POSTID = #{postid,jdbcType=VARCHAR},
 			</if>
@@ -431,6 +443,7 @@
 		update PRM_TASK
 		set
 				TASK_NO = #{task_no,jdbcType=VARCHAR},
+				TASKTYPE = #{tasktype,jdbcType=INTEGER},
 				POSTID = #{postid,jdbcType=VARCHAR},
 				POSTID_NAME = #{postid_name,jdbcType=VARCHAR},
 				PLANID = #{planid,jdbcType=VARCHAR},
@@ -469,6 +482,7 @@
 			update PRM_TASK
 			<set>
 				TASK_NO = #{item.task_no,jdbcType=VARCHAR},
+				TASKTYPE = #{item.tasktype,jdbcType=INTEGER},
 				POSTID = #{item.postid,jdbcType=VARCHAR},
 				POSTID_NAME = #{item.postid_name,jdbcType=VARCHAR},
 				PLANID = #{item.planid,jdbcType=VARCHAR},

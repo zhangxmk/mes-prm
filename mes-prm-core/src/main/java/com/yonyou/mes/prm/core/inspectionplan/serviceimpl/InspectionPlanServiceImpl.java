@@ -18,6 +18,7 @@ import com.yonyou.me.entity.EnableStateVO;
 import com.yonyou.me.entity.MeSuperVO;
 import com.yonyou.me.utils.exception.ExceptionUtils;
 import com.yonyou.me.utils.repository.BillPersistent;
+import com.yonyou.me.utils.rule.UniqueCommonInsertRule;
 import com.yonyou.me.utils.service.EnableStateServiceImpl;
 import com.yonyou.me.utils.service.IEnableStateService;
 import com.yonyou.me.utils.service.bill.BillDeleteService;
@@ -37,6 +38,10 @@ public class InspectionPlanServiceImpl implements IInspectionPlanService {
 	// 主表mapper
 	@Autowired
 	InspectionPlanHeadMapper headMapper;
+	
+//	//唯一性校验规则
+//	@Autowired
+//	UniqueCommonInsertRule uniqueRule;
 
 	// 子表mapper
 	@Autowired
@@ -64,8 +69,8 @@ public class InspectionPlanServiceImpl implements IInspectionPlanService {
 		BillPersistent dao = this.createBillDao();
 		BillSaveService service = new BillSaveService(dao);
 
-		// 保存前后规则
-		// service.addBeforeRule(rule);
+		 //保存前后规则
+//		 service.addBeforeRule(uniqueRule);
 		// service.addAfterRule(rule);
 		// 设置填充字段
 		// TODO
@@ -85,8 +90,8 @@ public class InspectionPlanServiceImpl implements IInspectionPlanService {
 		BillPersistent dao = this.createBillDao();
 		BillSaveService service = new BillSaveService(dao);
 
-		// 保存前后规则
-		// service.addBeforeRule(rule);
+//		 //保存前后规则
+//		 service.addBeforeRule(uniqueRule);
 		// service.addAfterRule(rule);
 		// 设置填充字段
 		// TODO

@@ -12,6 +12,7 @@ import com.yonyou.me.entity.MeSuperVO;
 public class InspectionTaskHeadVO extends MeSuperVO{
 	
 	private String task_no;
+	private Integer tasktype;
 	private String postid;
 	private String postid_name;
 	private String planid;
@@ -24,6 +25,14 @@ public class InspectionTaskHeadVO extends MeSuperVO{
 
 	public void setDeptid(String deptid) {
 		this.deptid = deptid;
+	}
+	
+	public Integer getTasktype() {
+		return tasktype;
+	}
+
+	public void setTasktype(Integer tasktype) {
+		this.tasktype = tasktype;
 	}
 
 	public String getDeptid_name() {

@@ -141,7 +141,7 @@ public class InspectionPlanController extends BaseController {
     }
 
     /**
-     * 查询表头
+     * 推送巡检任务
      */
     @RequestMapping(value = "/push2task", method = RequestMethod.POST)
     public @ResponseBody
@@ -177,6 +177,7 @@ public class InspectionPlanController extends BaseController {
                 nhead.setTenantid(head.getTenantid());
                 nhead.setStatus(2);
                 nhead.setReleased_time(new Timestamp(new Date().getTime()));
+                nhead.setTasktype(1);
 
                 List<InspectionTaskBodyVO> nlist = new ArrayList<>();
                 for (MeSuperVO spvo:

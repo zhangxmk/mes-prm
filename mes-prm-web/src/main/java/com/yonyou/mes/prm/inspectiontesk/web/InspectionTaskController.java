@@ -392,6 +392,68 @@ public class InspectionTaskController extends BaseController {
 		}
 		return result;
 	}
+	
+	/**
+	 * datatable 分配巡检人实现。
+	 *
+	 * @param sysDictTypeDataTable
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/pushtask2person", method = RequestMethod.POST)
+	public @ResponseBody Result pushtask2person(@RequestBody BaseDTO dto) {
+		Result result = new Result();
+		try {
+			// 获取表头
+			Map<String, Class<?>> classMap = new HashMap<String, Class<?>>();
+			classMap.put(EntityConst.HEAD, InspectionTaskHeadVO.class);
+
+			Map<String, MeSuperVO[]> voMap = this.convertDTO2VO(classMap, dto);
+			if (MapUtils.isEmpty(voMap)) {
+				ExceptionUtils.wrapBusinessException("没有数据！");
+			}
+			InspectionTaskHeadVO[] headvos = (InspectionTaskHeadVO[]) voMap
+					.get(EntityConst.HEAD);
+			if (headvos == null || headvos.length == 0) {
+				ExceptionUtils.wrapBusinessException("表头数据为空，无法保存！");
+			}
+
+			List<String> ids = new ArrayList<String>();
+			// 记录界面数据id和ts映射
+			Map<String, Timestamp> tsMap = new HashMap<String, Timestamp>();
+			Map<String, String> userMap = new HashMap<String, String>();
+			Map<String, String> userNameMap = new HashMap<String, String>();
+
+			for (InspectionTaskHeadVO headvo : headvos) {
+				ids.add(headvo.getId());
+				tsMap.put(headvo.getId(), headvo.getTs());
+				userMap.put(headvo.getId(), headvo.getUserid());
+				userNameMap.put(headvo.getId(), headvo.getUserid_name());
+			}
+			// 根据表头id查询主子表
+			InspectionTaskBillVO[] billvos = this.service.query(ids);
+
+			for (InspectionTaskBillVO billvo : billvos) {
+				// 前台ts赋值，用于校验ts
+				if (ids.contains(billvo.getHead().getId())) {
+					billvo.getHead().setStatus(1);
+					billvo.getHead().setTs(tsMap.get(billvo.getHead().getId()));
+					((InspectionTaskHeadVO)billvo.getHead()).setUserid(userMap.get(billvo.getHead().getId()));
+					((InspectionTaskHeadVO)billvo.getHead()).setUserid_name(userNameMap.get(billvo.getHead().getId()));
+				} else {
+					ExceptionUtils.wrapBusinessException("刪除對象不存在");
+				}
+			}
+
+			InspectionTaskBillVO resultData = this.service.update(billvos[0]);
+			// 3.保存结果转化成返回值结构
+			result = this.voToDTO(resultData);
+		} catch (Exception ex) {
+			// 将异常转换为返回信息，并且记入后台日志
+			result = ExceptionResult.process(ex);
+		}
+		return result;
+	}
 
 	private void copyDisplayName(BaseDTO dto, Map<String, MeSuperVO[]> voMap) {
 		Map<String, ViewArea> data = dto.getData();
