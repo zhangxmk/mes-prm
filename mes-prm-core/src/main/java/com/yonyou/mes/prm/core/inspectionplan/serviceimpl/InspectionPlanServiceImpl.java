@@ -18,7 +18,6 @@ import com.yonyou.me.entity.EnableStateVO;
 import com.yonyou.me.entity.MeSuperVO;
 import com.yonyou.me.utils.exception.ExceptionUtils;
 import com.yonyou.me.utils.repository.BillPersistent;
-import com.yonyou.me.utils.rule.UniqueCommonInsertRule;
 import com.yonyou.me.utils.service.EnableStateServiceImpl;
 import com.yonyou.me.utils.service.IEnableStateService;
 import com.yonyou.me.utils.service.bill.BillDeleteService;
