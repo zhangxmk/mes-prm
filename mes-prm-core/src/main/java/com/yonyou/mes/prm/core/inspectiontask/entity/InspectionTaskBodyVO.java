@@ -20,6 +20,7 @@ public class InspectionTaskBodyVO extends MeSuperVO{
 	private Integer crowno;
 	private Integer project_status;
 	private String project_content;
+	private String project_contentid;
 	private String judge_standard;
 	private String polling_value;
 	private Integer polling_result;
@@ -125,6 +126,14 @@ public class InspectionTaskBodyVO extends MeSuperVO{
 
 	public void setProject_content(String project_content) {
 		this.project_content = project_content;
+	}
+	
+	public String getProject_contentid() {
+		return this.project_contentid;
+	}
+
+	public void setProject_contentid(String project_contentid) {
+		this.project_contentid = project_contentid;
 	}
 
 

@@ -11,6 +11,7 @@
 		<result column="FACT_ORDER" property="fact_order"/>
 		<result column="PROJECT_STATUS" property="project_status"/>
 		<result column="PROJECT_CONTENT" property="project_content"/>
+		<result column="PROJECT_CONTENTID" property="project_contentid"/>
 		<result column="JUDGE_STANDARD" property="judge_standard"/>
 		<result column="POLLING_VALUE" property="polling_value"/>
 		<result column="POLLING_RESULT" property="polling_result"/>
@@ -34,7 +35,7 @@
 		<result column="FVALUETYPE" property="fvaluetype"/>
     </resultMap>
     <sql id="Base_Column_List">
-		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,CROWNO,PROJECT_CONTENT,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,COMPLETE_TIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
+		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,CROWNO,PROJECT_CONTENT,PROJECT_CONTENTID,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,COMPLETE_TIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
 	</sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -61,7 +62,7 @@
 
     <insert id="insert" parameterType="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBodyVO">
 		insert into PRM_TASK_B (
-		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,CROWNO,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,COMPLETE_TIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
+		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,PROJECT_CONTENTID,CROWNO,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,COMPLETE_TIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
 		)
 		values (
 		#{pk_task,jdbcType=VARCHAR},
@@ -72,6 +73,7 @@
 		#{fact_order,jdbcType=INTEGER},
 		#{project_status,jdbcType=INTEGER},
 		#{project_content,jdbcType=VARCHAR},
+		#{project_contentid,jdbcType=VARCHAR},
 		#{crowno,jdbcType=INTEGER},
 		#{judge_standard,jdbcType=VARCHAR},
 		#{polling_value,jdbcType=VARCHAR},
@@ -98,7 +100,7 @@
 
     <insert id="batchInsert" parameterType="java.util.List">
 		insert into PRM_TASK_B (
-		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,CROWNO,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,COMPLETE_TIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
+		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,PROJECT_CONTENTID,CROWNO,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,COMPLETE_TIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
 		)
 		<foreach collection="list" item="item" index="index" separator="union" open="(" close=")">
 		select
@@ -110,6 +112,7 @@
 		#{item.fact_order,jdbcType=INTEGER},
 		#{item.project_status,jdbcType=INTEGER},
 		#{item.project_content,jdbcType=VARCHAR},
+		#{item.project_contentid,jdbcType=VARCHAR},
 		#{item.crowno,jdbcType=INTEGER},
 		#{item.judge_standard,jdbcType=VARCHAR},
 		#{item.polling_value,jdbcType=VARCHAR},
@@ -164,6 +167,9 @@
 			</if>
 			<if test="project_content != null">
 				PROJECT_CONTENT,
+			</if>
+			<if test="project_contentid != null">
+				PROJECT_CONTENTID,
 			</if>
 			<if test="judge_standard != null">
 				JUDGE_STANDARD,
@@ -253,6 +259,9 @@
 			</if>
 			<if test="project_content != null">
 				#{project_content,jdbcType=VARCHAR},
+			</if>
+			<if test="project_contentid != null">
+				#{project_contentid,jdbcType=VARCHAR},
 			</if>
 			<if test="judge_standard != null">
 				#{judge_standard,jdbcType=VARCHAR},
@@ -346,6 +355,9 @@
 			<if test="project_content != null">
 				PROJECT_CONTENT = #{project_content,jdbcType=VARCHAR},
 			</if>
+			<if test="project_contentid != null">
+				PROJECT_CONTENTID = #{project_contentid,jdbcType=VARCHAR},
+			</if>
 			<if test="judge_standard != null">
 				JUDGE_STANDARD = #{judge_standard,jdbcType=VARCHAR},
 			</if>
@@ -422,6 +434,7 @@
 				CROWNO = #{crowno,jdbcType=INTEGER},
 				PROJECT_STATUS = #{project_status,jdbcType=INTEGER},
 				PROJECT_CONTENT = #{project_content,jdbcType=VARCHAR},
+				PROJECT_CONTENTID = #{project_contentid,jdbcType=VARCHAR},
 				JUDGE_STANDARD = #{judge_standard,jdbcType=VARCHAR},
 				POLLING_VALUE = #{polling_value,jdbcType=VARCHAR},
 				POLLING_RESULT = #{polling_result,jdbcType=INTEGER},				
@@ -460,6 +473,7 @@
 				FACT_ORDER = #{item.fact_order,jdbcType=INTEGER},
 				PROJECT_STATUS = #{item.project_status,jdbcType=INTEGER},
 				PROJECT_CONTENT = #{item.project_content,jdbcType=VARCHAR},
+				PROJECT_CONTENTID = #{item.project_contentid,jdbcType=VARCHAR},
 				CROWNO = #{item.crowno,jdbcType=INTEGER},
 				JUDGE_STANDARD = #{item.judge_standard,jdbcType=VARCHAR},
 				POLLING_VALUE = #{item.polling_value,jdbcType=VARCHAR},
@@ -515,7 +529,8 @@
 		  SELECT PLANB.PK_ER_PROJECT   PROJECTID,
 		         PLANB.ER_PROJECT_CODE PROJECTID_CODE,
 		         PLANB.ER_PROJECT_NAME PROJECTID_NAME,
-		         PROJECTB.CPRJCONTENT  PROJECT_CONTENT,
+		         PROJECTB.CPRJCONTENT  PROJECT_CONTENTID,
+		         PROJECTB.CPRJCONTENT_NAME  PROJECT_CONTENT,
 		         PROJECTB.CJUDSTD      JUDGE_STANDARD,
 		         PLANB.PLAN_ORDER      PLAN_ORDER,
 		         PROJECTB.CROWNO       CROWNO
@@ -551,6 +566,7 @@
 		b.crowno				crowno,
 		b.project_status		project_status,
 		b.project_content		project_content,
+		b.project_contentid		project_contentid,
 		b.judge_standard		judge_standard,
 		b.polling_value			polling_value,
 		b.polling_result		polling_result,
@@ -614,6 +630,9 @@
 			</if>
 			<if test="item.project_content != null">
 				PROJECT_CONTENT = #{item.project_content,jdbcType=VARCHAR},
+			</if>
+			<if test="item.project_contentid != null">
+				PROJECT_CONTENTID = #{item.project_contentid,jdbcType=VARCHAR},
 			</if>
 			<if test="item.judge_standard != null">
 				JUDGE_STANDARD = #{item.judge_standard,jdbcType=VARCHAR},
