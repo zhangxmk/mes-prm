@@ -201,7 +201,8 @@ public class InspectionPlanController extends BaseController {
                         tbvo.setProjectid_name(phead.getName());
                         tbvo.setPlan_order(bodyvo.getPlan_order());
                         tbvo.setCrowno(pbody.getCrowno());
-                        tbvo.setProject_content(pbody.getCprjcontent());
+                        tbvo.setProject_content(pbody.getCprjcontent_name());
+                        tbvo.setProject_contentid(pbody.getCprjcontent());
                         tbvo.setJudge_standard(pbody.getCjudstd());
                         tbvo.setProject_status(1);//下达
                         tbvo.setStatus(2);
