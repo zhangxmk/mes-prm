@@ -90,9 +90,9 @@ public class InspectionRegionServiceImpl implements IInspectionRegionService {
         // service.addAfterRule(rule);
         // 设置填充字段
         // TODO
-        if (checkUnique(vo)) {
-            ExceptionUtils.wrapBusinessException("区域编码、名称存在重复，请检查。");
-        }
+//        if (checkUnique(vo)) {
+//            ExceptionUtils.wrapBusinessException("区域编码、名称存在重复，请检查。");
+//        }
         List<?> list = service.save(new AbstractMeBillVO[]{vo});
         InspectionRegionBillVO retVo = (InspectionRegionBillVO) list.get(0);
 

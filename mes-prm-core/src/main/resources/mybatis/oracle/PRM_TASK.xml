@@ -603,7 +603,10 @@
 			   h.modifiedtime		modifiedtime,
 			   
 			   p.pk_region_name		pk_region_name,
-			   p.routeflag			routeflag
+			   p.routeflag			routeflag,
+			   h.userid 			userid,
+			   h.userid_name 		userid_name,
+			   h.released_time 		released_time
 			   
 		from prm_task h left join prm_plan p on h.planid = p.id
 		where h.dr=0 
