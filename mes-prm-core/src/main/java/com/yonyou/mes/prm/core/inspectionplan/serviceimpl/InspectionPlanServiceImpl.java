@@ -14,12 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.yonyou.iuap.mvc.type.SearchParams;
 import com.yonyou.me.entity.AbstractMeBillVO;
-import com.yonyou.me.entity.EnableStateVO;
 import com.yonyou.me.entity.MeSuperVO;
 import com.yonyou.me.utils.exception.ExceptionUtils;
 import com.yonyou.me.utils.repository.BillPersistent;
-import com.yonyou.me.utils.service.EnableStateServiceImpl;
-import com.yonyou.me.utils.service.IEnableStateService;
+import com.yonyou.me.utils.rule.CommonInsertBeforeRule;
+import com.yonyou.me.utils.rule.CommonUpdateBeforeRule;
 import com.yonyou.me.utils.service.bill.BillDeleteService;
 import com.yonyou.me.utils.service.bill.BillSaveService;
 import com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanBillVO;
@@ -30,7 +29,6 @@ import com.yonyou.mes.prm.core.inspectionplan.repository.InspectionPlanBodyPersi
 import com.yonyou.mes.prm.core.inspectionplan.repository.InspectionPlanHeadMapper;
 import com.yonyou.mes.prm.core.inspectionplan.repository.InspectionPlanHeadPersistent;
 import com.yonyou.mes.prm.core.inspectionplan.service.IInspectionPlanService;
-import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskHeadVO;
 
 @Service
 public class InspectionPlanServiceImpl implements IInspectionPlanService {
@@ -38,9 +36,12 @@ public class InspectionPlanServiceImpl implements IInspectionPlanService {
 	@Autowired
 	InspectionPlanHeadMapper headMapper;
 	
-//	//唯一性校验规则
-//	@Autowired
-//	UniqueCommonInsertRule uniqueRule;
+	//唯一性校验规则
+	@Autowired
+	CommonInsertBeforeRule insertBeforeRule;
+	
+	@Autowired
+	CommonUpdateBeforeRule updateBeforeRule;
 
 	// 子表mapper
 	@Autowired
@@ -69,7 +70,7 @@ public class InspectionPlanServiceImpl implements IInspectionPlanService {
 		BillSaveService service = new BillSaveService(dao);
 
 		 //保存前后规则
-//		 service.addBeforeRule(uniqueRule);
+		 service.addBeforeRule(insertBeforeRule);
 		// service.addAfterRule(rule);
 		// 设置填充字段
 		// TODO
@@ -90,7 +91,7 @@ public class InspectionPlanServiceImpl implements IInspectionPlanService {
 		BillSaveService service = new BillSaveService(dao);
 
 //		 //保存前后规则
-//		 service.addBeforeRule(uniqueRule);
+		 service.addBeforeRule(updateBeforeRule);
 		// service.addAfterRule(rule);
 		// 设置填充字段
 		// TODO

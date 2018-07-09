@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import com.yonyou.me.entity.MeSuperVO;
+import com.yonyou.me.utils.annotation.Validation;
 
 
 
@@ -15,7 +16,9 @@ public class InspectionPlanHeadVO extends MeSuperVO{
 	
 	private String pk_dept;
 	private String pk_dept_name;
+	@Validation(description="巡检方案编码",unique = true)
 	private String code;
+	@Validation(description="巡检方案名称",unique = true)
 	private String name;
 	private String pk_region;
 	private String pk_region_name;
