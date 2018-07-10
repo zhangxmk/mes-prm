@@ -14,6 +14,8 @@ import com.yonyou.me.entity.AbstractMeBillVO;
 import com.yonyou.me.entity.EnableStateVO;
 import com.yonyou.me.utils.exception.ExceptionUtils;
 import com.yonyou.me.utils.repository.BillPersistent;
+import com.yonyou.me.utils.rule.CommonInsertBeforeRule;
+import com.yonyou.me.utils.rule.CommonUpdateBeforeRule;
 import com.yonyou.me.utils.service.EnableStateServiceImpl;
 import com.yonyou.me.utils.service.IBaseQueryBS;
 import com.yonyou.me.utils.service.IEnableStateService;
@@ -40,11 +42,14 @@ public class InspectionRegionServiceImpl implements IInspectionRegionService {
 
     @Autowired
     IBaseQueryBS dao;
+    
+	//唯一性校验规则
+	@Autowired
+	CommonInsertBeforeRule insertBeforeRule;
+	
+	@Autowired
+	CommonUpdateBeforeRule updateBeforeRule;
 
-		/*// 子表mapper
-		@Autowired
-		MeasurePointTypeBodyMapper bodyMapper;
-*/
 
     //VODeleteService vodeleteservice;
 
@@ -86,7 +91,7 @@ public class InspectionRegionServiceImpl implements IInspectionRegionService {
         BillSaveService service = new BillSaveService(dao);
 
         // 保存前后规则
-        // service.addBeforeRule(rule);
+         service.addBeforeRule(insertBeforeRule);
         // service.addAfterRule(rule);
         // 设置填充字段
         // TODO
@@ -113,7 +118,7 @@ public class InspectionRegionServiceImpl implements IInspectionRegionService {
         BillSaveService service = new BillSaveService(dao);
 
         // 保存前后规则
-        // service.addBeforeRule(rule);
+         service.addBeforeRule(updateBeforeRule);
         // service.addAfterRule(rule);
         // 设置填充字段
         // TODO

@@ -3,6 +3,7 @@ package com.yonyou.mes.prm.core.inspectionregion.entity;
 import java.sql.Timestamp;
 
 import com.yonyou.me.entity.MeSuperVO;
+import com.yonyou.me.utils.annotation.Validation;
 
 
 
@@ -19,7 +20,9 @@ public class InspectionRegionVO extends MeSuperVO {
 	private String pk_workshop_name;
 	private String pk_section;
 	private String pk_section_name;
+	@Validation(description="巡检方区域名称",unique = true)
 	private String name;
+	@Validation(description="巡检方区域编码",unique = true)
 	private String code;
 	private String tenantid;
 	private String sysid;
