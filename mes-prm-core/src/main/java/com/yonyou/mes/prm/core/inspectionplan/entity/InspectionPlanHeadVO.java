@@ -20,8 +20,8 @@ public class InspectionPlanHeadVO extends MeSuperVO{
 	private String code;
 	@Validation(description="巡检方案名称",unique = true)
 	private String name;
-	private String pk_region;
-	private String pk_region_name;
+	private String pk_process;
+	private String pk_process_name;
 	private Integer enablestate;
 	private Integer defplan;
 	private String id;
@@ -84,21 +84,21 @@ public class InspectionPlanHeadVO extends MeSuperVO{
 	}
 
 
-	public String getPk_region() {
-		return this.pk_region;
+	public String getPk_process() {
+		return this.pk_process;
 	}
 
-	public void setPk_region(String pk_region) {
-		this.pk_region = pk_region;
+	public void setPk_process(String pk_process) {
+		this.pk_process = pk_process;
 	}
 
 
-	public String getPk_region_name() {
-		return this.pk_region_name;
+	public String getPk_process_name() {
+		return this.pk_process_name;
 	}
 
-	public void setPk_region_name(String pk_region_name) {
-		this.pk_region_name = pk_region_name;
+	public void setPk_process_name(String pk_process_name) {
+		this.pk_process_name = pk_process_name;
 	}
 
 

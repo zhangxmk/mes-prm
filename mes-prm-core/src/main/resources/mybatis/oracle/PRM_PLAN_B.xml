@@ -6,6 +6,8 @@
 		<result column="PK_ER_PROJECT" property="pk_er_project"/>
 		<result column="ER_PROJECT_CODE" property="er_project_code"/>
 		<result column="ER_PROJECT_NAME" property="er_project_name"/>
+		<result column="PK_REGION" property="pk_region"/>
+		<result column="PK_REGION_NAME" property="pk_region_name"/>
 		<result column="PK_PLAN" property="pk_plan"/>
 		<result column="PLAN_ORDER" property="plan_order"/>
 		<result column="TENANTID" property="tenantid"/>
@@ -22,7 +24,7 @@
 		<result column="MODIFIER_NAME" property="modifier_name"/>
     </resultMap>
     <sql id="Base_Column_List">
-		PK_ER_PROJECT,ER_PROJECT_CODE,ER_PROJECT_NAME,PK_PLAN,PLAN_ORDER,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME
+		PK_ER_PROJECT,ER_PROJECT_CODE,ER_PROJECT_NAME,PK_REGION,PK_REGION_NAME,PK_PLAN,PLAN_ORDER,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME
 	</sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -56,12 +58,14 @@
 
     <insert id="insert" parameterType="com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanBodyVO">
 		insert into PRM_PLAN_B (
-		PK_ER_PROJECT,ER_PROJECT_CODE,ER_PROJECT_NAME,PK_PLAN,PLAN_ORDER,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME
+		PK_ER_PROJECT,ER_PROJECT_CODE,ER_PROJECT_NAME,PK_REGION,PK_REGION_NAME,PK_PLAN,PLAN_ORDER,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME
 		)
 		values (
 		#{pk_er_project,jdbcType=VARCHAR},
 		#{er_project_code,jdbcType=VARCHAR},
 		#{er_project_name,jdbcType=VARCHAR},
+		#{pk_region,jdbcType=VARCHAR},
+		#{pk_region_name,jdbcType=VARCHAR},
 		#{pk_plan,jdbcType=VARCHAR},
 		#{plan_order,jdbcType=INTEGER},
 		#{id,jdbcType=VARCHAR},
@@ -82,13 +86,15 @@
 
     <insert id="batchInsert" parameterType="java.util.List">
 		insert into PRM_PLAN_B (
-		PK_ER_PROJECT,ER_PROJECT_CODE,ER_PROJECT_NAME,PK_PLAN,PLAN_ORDER,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME
+		PK_ER_PROJECT,ER_PROJECT_CODE,ER_PROJECT_NAME,PK_REGION,PK_REGION_NAME,PK_PLAN,PLAN_ORDER,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME
 		)
 		<foreach collection="list" item="item" index="index" separator="union" open="(" close=")">
 		select
 		#{item.pk_er_project,jdbcType=VARCHAR},
 		#{item.er_project_code,jdbcType=VARCHAR},
 		#{item.er_project_name,jdbcType=VARCHAR},
+		#{item.pk_region,jdbcType=VARCHAR},
+		#{item.pk_region_name,jdbcType=VARCHAR},
 		#{item.pk_plan,jdbcType=VARCHAR},
 		#{item.plan_order,jdbcType=INTEGER},
 		#{item.id,jdbcType=VARCHAR},
@@ -118,6 +124,12 @@
 			</if>
 			<if test="er_project_name != null">
 				ER_PROJECT_NAME,
+			</if>
+			<if test="pk_region != null">
+				PK_REGION,
+			</if>
+			<if test="pk_region_name != null">
+				PK_REGION_NAME,
 			</if>
 			<if test="pk_plan != null">
 				PK_PLAN,
@@ -174,6 +186,12 @@
 			</if>
 			<if test="er_project_name != null">
 				#{er_project_name,jdbcType=VARCHAR},
+			</if>
+			<if test="pk_region != null">
+				#{pk_region,jdbcType=VARCHAR},
+			</if>
+			<if test="pk_region_name != null">
+				#{pk_region_name,jdbcType=VARCHAR},
 			</if>
 			<if test="pk_plan != null">
 				#{pk_plan,jdbcType=VARCHAR},
@@ -234,6 +252,12 @@
 			<if test="er_project_name != null">
 				ER_PROJECT_NAME = #{er_project_name,jdbcType=VARCHAR},
 			</if>
+			<if test="pk_region != null">
+				PK_REGION = #{pk_region,jdbcType=VARCHAR},
+			</if>
+			<if test="pk_region_name != null">
+				PK_REGION_NAME = #{pk_region_name,jdbcType=VARCHAR},
+			</if>
 			<if test="pk_plan != null">
 				PK_PLAN = #{pk_plan,jdbcType=VARCHAR},
 			</if>
@@ -289,6 +313,8 @@
 				PK_ER_PROJECT = #{pk_er_project,jdbcType=VARCHAR},
 				ER_PROJECT_CODE = #{er_project_code,jdbcType=VARCHAR},
 				ER_PROJECT_NAME = #{er_project_name,jdbcType=VARCHAR},
+				PK_REGION = #{pk_region,jdbcType=VARCHAR},
+				PK_REGION_NAME = #{pk_region_name,jdbcType=VARCHAR},
 				PK_PLAN = #{pk_plan,jdbcType=VARCHAR},
 				PLAN_ORDER = #{plan_order,jdbcType=INTEGER},
 				TENANTID = #{tenantid,jdbcType=VARCHAR},
@@ -312,6 +338,8 @@
 				PK_ER_PROJECT = #{item.pk_er_project,jdbcType=VARCHAR},
 				ER_PROJECT_CODE = #{item.er_project_code,jdbcType=VARCHAR},
 				ER_PROJECT_NAME = #{item.er_project_name,jdbcType=VARCHAR},
+				PK_REGION = #{item.pk_region,jdbcType=VARCHAR},
+				PK_REGION_NAME = #{item.pk_region_name,jdbcType=VARCHAR},
 				PK_PLAN = #{item.pk_plan,jdbcType=VARCHAR},
 				PLAN_ORDER = #{item.plan_order,jdbcType=INTEGER},
 				TENANTID = #{item.tenantid,jdbcType=VARCHAR},

@@ -14,6 +14,8 @@ public class InspectionPlanBodyVO extends MeSuperVO{
 	private String pk_er_project;
 	private String er_project_code;
 	private String er_project_name;
+	private String pk_region;
+	private String pk_region_name;
 	private String pk_plan;
 	private Integer plan_order;
 	private String id;
@@ -48,6 +50,23 @@ public class InspectionPlanBodyVO extends MeSuperVO{
 
 	public void setEr_project_code(String er_project_code) {
 		this.er_project_code = er_project_code;
+	}
+	
+	public String getPk_region() {
+		return this.pk_region;
+	}
+
+	public void setPk_region(String pk_region) {
+		this.pk_region = pk_region;
+	}
+
+
+	public String getPk_region_name() {
+		return this.pk_region_name;
+	}
+
+	public void setPk_region_name(String pk_region_name) {
+		this.pk_region_name = pk_region_name;
 	}
 
 

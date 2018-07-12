@@ -7,8 +7,8 @@
 		<result column="PK_DEPT_NAME" property="pk_dept_name"/>
 		<result column="CODE" property="code"/>
 		<result column="NAME" property="name"/>
-		<result column="PK_REGION" property="pk_region"/>
-		<result column="PK_REGION_NAME" property="pk_region_name"/>
+		<result column="PK_PROCESS" property="pk_process"/>
+		<result column="PK_PROCESS_NAME" property="pk_process_name"/>
 		<result column="ENABLESTATE" property="enablestate"/>
 		<result column="DEFPLAN" property="defplan"/>
 		<result column="INVALIDATE" property="invalidate"/>
@@ -32,7 +32,7 @@
 		<result column="VNOTE" property="vnote"/>
     </resultMap>
     <sql id="Base_Column_List">
-		PK_DEPT,PK_DEPT_NAME,CODE,NAME,PK_REGION,PK_REGION_NAME,ENABLESTATE,DEFPLAN,INVALIDATE,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,PK_POST,PK_POST_NAME,CYCLE,ROUTEFLAG,IVERSION,VNOTE
+		PK_DEPT,PK_DEPT_NAME,CODE,NAME,PK_PROCESS,PK_PROCESS_NAME,ENABLESTATE,DEFPLAN,INVALIDATE,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,PK_POST,PK_POST_NAME,CYCLE,ROUTEFLAG,IVERSION,VNOTE
 	</sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -59,15 +59,15 @@
 
     <insert id="insert" parameterType="com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanHeadVO">
 		insert into PRM_PLAN (
-		PK_DEPT,PK_DEPT_NAME,CODE,NAME,PK_REGION,PK_REGION_NAME,ENABLESTATE,DEFPLAN,INVALIDATE,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,PK_POST,PK_POST_NAME,CYCLE,ROUTEFLAG,IVERSION,VNOTE
+		PK_DEPT,PK_DEPT_NAME,CODE,NAME,PK_PROCESS,PK_PROCESS_NAME,ENABLESTATE,DEFPLAN,INVALIDATE,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,PK_POST,PK_POST_NAME,CYCLE,ROUTEFLAG,IVERSION,VNOTE
 		)
 		values (
 		#{pk_dept,jdbcType=VARCHAR},
 		#{pk_dept_name,jdbcType=VARCHAR},
 		#{code,jdbcType=VARCHAR},
 		#{name,jdbcType=VARCHAR},
-		#{pk_region,jdbcType=VARCHAR},
-		#{pk_region_name,jdbcType=VARCHAR},
+		#{pk_process,jdbcType=VARCHAR},
+		#{pk_process_name,jdbcType=VARCHAR},
 		#{enablestate,jdbcType=INTEGER},
 		#{defplan,jdbcType=INTEGER},
 		#{invalidate,jdbcType=TIMESTAMP},
@@ -95,7 +95,7 @@
 
     <insert id="batchInsert" parameterType="java.util.List">
 		insert into PRM_PLAN (
-		PK_DEPT,PK_DEPT_NAME,CODE,NAME,PK_REGION,PK_REGION_NAME,ENABLESTATE,DEFPLAN,INVALIDATE,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,PK_POST,PK_POST_NAME,CYCLE,ROUTEFLAG,IVERSION,VNOTE
+		PK_DEPT,PK_DEPT_NAME,CODE,NAME,PK_PROCESS,PK_PROCESS_NAME,ENABLESTATE,DEFPLAN,INVALIDATE,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,PK_POST,PK_POST_NAME,CYCLE,ROUTEFLAG,IVERSION,VNOTE
 		)
 		<foreach collection="list" item="item" index="index" separator="union" open="(" close=")">
 		select
@@ -103,8 +103,8 @@
 		#{item.pk_dept_name,jdbcType=VARCHAR},
 		#{item.code,jdbcType=VARCHAR},
 		#{item.name,jdbcType=VARCHAR},
-		#{item.pk_region,jdbcType=VARCHAR},
-		#{item.pk_region_name,jdbcType=VARCHAR},
+		#{item.pk_process,jdbcType=VARCHAR},
+		#{item.pk_process_name,jdbcType=VARCHAR},
 		#{item.enablestate,jdbcType=INTEGER},
 		#{defplan,jdbcType=INTEGER},
 		#{invalidate,jdbcType=TIMESTAMP},
@@ -145,11 +145,11 @@
 			<if test="name != null">
 				NAME,
 			</if>
-			<if test="pk_region != null">
-				PK_REGION,
+			<if test="pk_process != null">
+				PK_PROCESS,
 			</if>
-			<if test="pk_region_name != null">
-				PK_REGION_NAME,
+			<if test="pk_process_name != null">
+				PK_PROCESS_NAME,
 			</if>
 			<if test="enablestate != null">
 				ENABLESTATE,
@@ -231,11 +231,11 @@
 			<if test="name != null">
 				#{name,jdbcType=VARCHAR},
 			</if>
-			<if test="pk_region != null">
-				#{pk_region,jdbcType=VARCHAR},
+			<if test="pk_process != null">
+				#{pk_process,jdbcType=VARCHAR},
 			</if>
-			<if test="pk_region_name != null">
-				#{pk_region_name,jdbcType=VARCHAR},
+			<if test="pk_process_name != null">
+				#{pk_process_name,jdbcType=VARCHAR},
 			</if>
 			<if test="enablestate != null">
 				#{enablestate,jdbcType=INTEGER},
@@ -320,11 +320,11 @@
 			<if test="name != null">
 				NAME = #{name,jdbcType=VARCHAR},
 			</if>
-			<if test="pk_region != null">
-				PK_REGION = #{pk_region,jdbcType=VARCHAR},
+			<if test="pk_process != null">
+				PK_PROCESS = #{pk_process,jdbcType=VARCHAR},
 			</if>
-			<if test="pk_region_name != null">
-				PK_REGION_NAME = #{pk_region_name,jdbcType=VARCHAR},
+			<if test="pk_process_name != null">
+				PK_PROCESS_NAME = #{pk_process_name,jdbcType=VARCHAR},
 			</if>
 			<if test="enablestate != null">
 				ENABLESTATE = #{enablestate,jdbcType=INTEGER},
@@ -400,8 +400,8 @@
 				PK_DEPT_NAME = #{pk_dept_name,jdbcType=VARCHAR},
 				CODE = #{code,jdbcType=VARCHAR},
 				NAME = #{name,jdbcType=VARCHAR},
-				PK_REGION = #{pk_region,jdbcType=VARCHAR},
-				PK_REGION_NAME = #{pk_region_name,jdbcType=VARCHAR},
+				PK_PROCESS = #{pk_process,jdbcType=VARCHAR},
+				PK_PROCESS_NAME = #{pk_process_name,jdbcType=VARCHAR},
 				ENABLESTATE = #{enablestate,jdbcType=INTEGER},
 				DEFPLAN = #{defplan,jdbcType=INTEGER},
 				TENANTID = #{tenantid,jdbcType=VARCHAR},
@@ -432,8 +432,8 @@
 				PK_DEPT_NAME = #{item.pk_dept_name,jdbcType=VARCHAR},
 				CODE = #{item.code,jdbcType=VARCHAR},
 				NAME = #{item.name,jdbcType=VARCHAR},
-				PK_REGION = #{item.pk_region,jdbcType=VARCHAR},
-				PK_REGION_NAME = #{item.pk_region_name,jdbcType=VARCHAR},
+				PK_PROCESS = #{item.pk_process,jdbcType=VARCHAR},
+				PK_PROCESS_NAME = #{item.pk_process_name,jdbcType=VARCHAR},
 				ENABLESTATE = #{item.enablestate,jdbcType=INTEGER},
 				DEFPLAN = #{item.defplan,jdbcType=INTEGER},
 				TENANTID = #{item.tenantid,jdbcType=VARCHAR},

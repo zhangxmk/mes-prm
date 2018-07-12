@@ -73,7 +73,7 @@ public class InspectionPlanController extends BaseController {
     private static Map<String, String> headDisplayID2Name = new HashMap<String, String>() {
         {
             put("pk_dept", "pk_dept_name");// 部门
-            put("pk_region", "pk_region_name");// 巡检区域
+            put("pk_process", "pk_process_name");// 工段
             put("pk_post", "pk_post_name");// 岗位
             put("orgid", "orgid_name");//工厂
         }
@@ -84,7 +84,7 @@ public class InspectionPlanController extends BaseController {
     private static Map<String, String> bodyDisplayID2Name = new HashMap<String, String>() {
         {
             put("pk_er_project", "er_project_code");// 项目编码
-
+            put("pk_region", "pk_region_name");// 巡检区域
         }
     };
     /**
