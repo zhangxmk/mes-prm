@@ -9,17 +9,10 @@ public class InspectionProjectBodyVO extends MeSuperVO {
 	
 	public static final String PARENTID = "cparentid";
 
+	
 	private String cprjcontent;
-
-	public String getCprjcontent_name() {
-		return cprjcontent_name;
-	}
-
-	public void setCprjcontent_name(String cprjcontent_name) {
-		this.cprjcontent_name = cprjcontent_name;
-	}
-
 	private String cprjcontent_name;
+	private String prjcontent;
 	private String cjudstd;
 	private Integer fvaluetype;
 	private String bautocollect;
@@ -45,6 +38,30 @@ public class InspectionProjectBodyVO extends MeSuperVO {
 	public InspectionProjectBodyVO() {
 	}
 
+	
+	
+	
+	public String getPrjcontent() {
+		return prjcontent;
+	}
+
+
+
+
+	public void setPrjcontent(String prjcontent) {
+		this.prjcontent = prjcontent;
+	}
+
+
+
+
+	public String getCprjcontent_name() {
+		return cprjcontent_name;
+	}
+
+	public void setCprjcontent_name(String cprjcontent_name) {
+		this.cprjcontent_name = cprjcontent_name;
+	}
 	public String getCprjcontent() {
 		return this.cprjcontent;
 	}

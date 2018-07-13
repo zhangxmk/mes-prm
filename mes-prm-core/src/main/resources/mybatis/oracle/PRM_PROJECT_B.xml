@@ -6,6 +6,7 @@
 		<result column="CROWNO" property="crowno"/>
 		<result column="CPRJCONTENT" property="cprjcontent"/>
 		<result column="CPRJCONTENT_NAME" property="cprjcontent_name"/>
+		<result column="PRJCONTENT" property="prjcontent"/>
 		<result column="CJUDSTD" property="cjudstd"/>
 		<result column="FVALUETYPE" property="fvaluetype"/>
 		<result column="BAUTOCOLLECT" property="bautocollect"/>
@@ -25,7 +26,7 @@
 		<result column="MODIFIEDTIME" property="modifiedtime"/>
 	</resultMap>
 	<sql id="Base_Column_List">
-		CROWNO,CPRJCONTENT,CPRJCONTENT_NAME,CJUDSTD,FVALUETYPE,BAUTOCOLLECT,CDATALABEL,CDATALABEL_NAME,BREQUIRED,CPARENTID,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME
+		CROWNO,CPRJCONTENT,CPRJCONTENT_NAME,PRJCONTENT,CJUDSTD,FVALUETYPE,BAUTOCOLLECT,CDATALABEL,CDATALABEL_NAME,BREQUIRED,CPARENTID,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -73,11 +74,12 @@
 
 	<insert id="insert" parameterType="com.yonyou.mes.prm.core.inspectionproject.entity.InspectionProjectBodyVO">
 		insert into PRM_PROJECT_B (
-		CROWNO,CPRJCONTENT,CPRJCONTENT_NAME,CJUDSTD,FVALUETYPE,BAUTOCOLLECT,CDATALABEL,CDATALABEL_NAME,BREQUIRED,CPARENTID,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME)
+		CROWNO,CPRJCONTENT,CPRJCONTENT_NAME,PRJCONTENT,CJUDSTD,FVALUETYPE,BAUTOCOLLECT,CDATALABEL,CDATALABEL_NAME,BREQUIRED,CPARENTID,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME)
 		values (
 		#{crowno,jdbcType=INTEGER},
 		#{cprjcontent,jdbcType=VARCHAR},
 		#{cprjcontent_name,jdbcType=VARCHAR},
+		#{prjcontent,jdbcType=VARCHAR},
 		#{cjudstd,jdbcType=VARCHAR},
 		#{fvaluetype,jdbcType=INTEGER},
 		#{bautocollect,jdbcType=VARCHAR},
@@ -101,13 +103,14 @@
 
 	<insert id="batchInsert" parameterType="java.util.List">
 		insert into PRM_PROJECT_B (
-		CROWNO,CPRJCONTENT,CPRJCONTENT_NAME,CJUDSTD,FVALUETYPE,BAUTOCOLLECT,CDATALABEL,CDATALABEL_NAME,BREQUIRED,CPARENTID,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME
+		CROWNO,CPRJCONTENT,CPRJCONTENT_NAME,PRJCONTENT,CJUDSTD,FVALUETYPE,BAUTOCOLLECT,CDATALABEL,CDATALABEL_NAME,BREQUIRED,CPARENTID,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME
 		)
 		<foreach collection="list" item="item" separator="union" open="(" close=")">
 		select
 		#{item.crowno,jdbcType=INTEGER},
 		#{item.cprjcontent,jdbcType=VARCHAR},
 		#{item.cprjcontent_name,jdbcType=VARCHAR},
+		#{item.prjcontent,jdbcType=VARCHAR},
 		#{item.cjudstd,jdbcType=VARCHAR},
 		#{item.fvaluetype,jdbcType=INTEGER},
 		#{item.bautocollect,jdbcType=VARCHAR},
@@ -139,6 +142,9 @@
 			</if>
 			<if test="cprjcontent_name != null">
 				CPRJCONTENT_name,
+			</if>
+			<if test="prjcontent != null">
+				PRJCONTENT,
 			</if>
 			<if test="cjudstd != null">
 				CJUDSTD,
@@ -210,6 +216,9 @@
 			</if>
 			<if test="cprjcontent_name != null">
 				#{cprjcontent_name,jdbcType=VARCHAR},
+			</if>
+			<if test="prjcontent != null">
+				#{prjcontent,jdbcType=VARCHAR},
 			</if>
 			<if test="cjudstd != null">
 				#{cjudstd,jdbcType=VARCHAR},
@@ -285,6 +294,9 @@
 			<if test="cprjcontent_name != null">
 				CPRJCONTENT_NAME = #{cprjcontent_name,jdbcType=VARCHAR},
 			</if>
+			<if test="prjcontent != null">
+				PRJCONTENT = #{prjcontent,jdbcType=VARCHAR},
+			</if>
 			<if test="cjudstd != null">
 				CJUDSTD = #{cjudstd,jdbcType=VARCHAR},
 			</if>
@@ -354,6 +366,7 @@
 				CROWNO = #{crowno,jdbcType=INTEGER},
 				CPRJCONTENT = #{cprjcontent,jdbcType=VARCHAR},
 				CPRJCONTENT_NAME = #{cprjcontent_name,jdbcType=VARCHAR},
+				PRJCONTENT = #{prjcontent,jdbcType=VARCHAR},
 				CJUDSTD = #{cjudstd,jdbcType=VARCHAR},
 				FVALUETYPE = #{fvaluetype,jdbcType=INTEGER},
 				BAUTOCOLLECT = #{bautocollect,jdbcType=VARCHAR},
@@ -375,6 +388,7 @@
 				CROWNO = #{item.crowno,jdbcType=INTEGER},
 				CPRJCONTENT = #{item.cprjcontent,jdbcType=VARCHAR},
 				CPRJCONTENT_NAME = #{item.cprjcontent_name,jdbcType=VARCHAR},
+				PRJCONTENT = #{item.prjcontent,jdbcType=VARCHAR},
 				CJUDSTD = #{item.cjudstd,jdbcType=VARCHAR},
 				FVALUETYPE = #{item.fvaluetype,jdbcType=INTEGER},
 				BAUTOCOLLECT = #{item.bautocollect,jdbcType=VARCHAR},
