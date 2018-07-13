@@ -169,6 +169,17 @@ public class TempTask4AppController {
 			String h_cqcprojectid = head.getString("cqcprojectid");
 			if (h_cqcprojectid != "null") 
 			{headVO.setCqcprojectid(h_cqcprojectid);}
+
+			String dtsource = head.getString("dtsource");
+			if(dtsource!=null&&!dtsource.equals("null")){
+				headVO.setDtsource(dtsource);
+			}
+			String deptid = head.getString("deptid");
+			String deptid_name = head.getString("deptid_name");
+			if(!deptid.equals("null")&&!deptid_name.equals("null")) {
+				headVO.setCdeptid(deptid);
+				headVO.setVdeptname(deptid_name);
+			}
 			
 //			String h_vbillcode = head.getString("vbillcode");
 //			if (h_vbillcode != "null") 

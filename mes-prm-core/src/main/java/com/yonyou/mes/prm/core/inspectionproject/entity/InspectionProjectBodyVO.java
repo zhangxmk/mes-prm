@@ -7,7 +7,7 @@ import com.yonyou.me.entity.MeSuperVO;
  */
 public class InspectionProjectBodyVO extends MeSuperVO {
 	
-	public static final String PARENTID = "cparentid";
+//	public static final String PARENTID = "cparentid";
 
 	
 	private String cprjcontent;

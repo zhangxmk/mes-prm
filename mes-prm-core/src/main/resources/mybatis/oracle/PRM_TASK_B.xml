@@ -2,67 +2,69 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.yonyou.mes.prm.core.inspectiontask.repository.TaskBodyMapper">
     <resultMap id="BaseResultMap" type="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBodyVO">
-		<id column="ID" property="id"/>
-		<result column="PK_TASK" property="pk_task"/>
-		<result column="PLAN_ORDER" property="plan_order"/>
-		<result column="PROJECTID" property="projectid"/>
-		<result column="PROJECTID_CODE" property="projectid_code"/>		
-		<result column="PROJECTID_NAME" property="projectid_name"/>
-		<result column="FACT_ORDER" property="fact_order"/>
-		<result column="PROJECT_STATUS" property="project_status"/>
-		<result column="PROJECT_CONTENT" property="project_content"/>
-		<result column="PROJECT_CONTENTID" property="project_contentid"/>
-		<result column="JUDGE_STANDARD" property="judge_standard"/>
-		<result column="POLLING_VALUE" property="polling_value"/>
-		<result column="POLLING_RESULT" property="polling_result"/>
-		<result column="PIC_URL" property="pic_url"/>
-		<result column="CROWNO" property="crowno"/>
-		<result column="TENANTID" property="tenantid"/>
-		<result column="SYSID" property="sysid"/>
-		<result column="ORGID" property="orgid"/>
-		<result column="ORGID_NAME" property="orgid_name"/>
-		<result column="TS" property="ts"/>
-		<result column="DR" property="dr"/>
-		<result column="CREATOR" property="creator"/>
-		<result column="CREATIONTIME" property="creationtime"/>
-		<result column="MODIFIER" property="modifier"/>
-		<result column="MODIFIEDTIME" property="modifiedtime"/>
-		<result column="COMPLETE_TIME" property="complete_time"/>
-		<result column="CREATOR_NAME" property="creator_name"/>
-		<result column="MODIFIER_NAME" property="modifier_name"/>
-		<result column="ERRDESCRIBE" property="errdescribe"/>
-		<result column="RDBVALUE" property="rdbvalue"/>
-		<result column="FVALUETYPE" property="fvaluetype"/>
+        <id column="ID" property="id"/>
+        <result column="PK_TASK" property="pk_task"/>
+        <result column="PLAN_ORDER" property="plan_order"/>
+        <result column="PROJECTID" property="projectid"/>
+        <result column="PROJECTID_CODE" property="projectid_code"/>
+        <result column="PROJECTID_NAME" property="projectid_name"/>
+        <result column="FACT_ORDER" property="fact_order"/>
+        <result column="PROJECT_STATUS" property="project_status"/>
+        <result column="PROJECT_CONTENT" property="project_content"/>
+        <result column="PROJECT_CONTENTID" property="project_contentid"/>
+        <result column="JUDGE_STANDARD" property="judge_standard"/>
+        <result column="POLLING_VALUE" property="polling_value"/>
+        <result column="POLLING_RESULT" property="polling_result"/>
+        <result column="PIC_URL" property="pic_url"/>
+        <result column="CROWNO" property="crowno"/>
+        <result column="FACTUSER" property="factuser"/>
+        <result column="FACTUSER_NAME" property="factuser_name"/>
+        <result column="TENANTID" property="tenantid"/>
+        <result column="SYSID" property="sysid"/>
+        <result column="ORGID" property="orgid"/>
+        <result column="ORGID_NAME" property="orgid_name"/>
+        <result column="TS" property="ts"/>
+        <result column="DR" property="dr"/>
+        <result column="CREATOR" property="creator"/>
+        <result column="CREATIONTIME" property="creationtime"/>
+        <result column="MODIFIER" property="modifier"/>
+        <result column="MODIFIEDTIME" property="modifiedtime"/>
+        <result column="COMPLETE_TIME" property="complete_time"/>
+        <result column="CREATOR_NAME" property="creator_name"/>
+        <result column="MODIFIER_NAME" property="modifier_name"/>
+        <result column="ERRDESCRIBE" property="errdescribe"/>
+        <result column="RDBVALUE" property="rdbvalue"/>
+        <result column="FVALUETYPE" property="fvaluetype"/>
     </resultMap>
     <sql id="Base_Column_List">
-		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,CROWNO,PROJECT_CONTENT,PROJECT_CONTENTID,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,COMPLETE_TIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
+		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,CROWNO,FACTUSER,FACTUSER_NAME,PROJECT_CONTENT,PROJECT_CONTENTID,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,COMPLETE_TIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
 	</sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap"
-		parameterType="java.lang.String">
-		select
-		<include refid="Base_Column_List" />
-		from PRM_TASK_B
-		where ID = #{id}
-	</select>
+            parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from PRM_TASK_B
+        where ID = #{id}
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
 		update  PRM_TASK_B
 		set DR = 1
 		where ID = #{id}
 	</delete>
     <delete id="batchDeleteByPrimaryKey" parameterType="java.util.List">
-		update  PRM_TASK_B
-		set DR = 1
-		where
-		ID in
-		<foreach collection="list" item="item" index="index"
-			separator="," open="(" close=")">
-		#{item}
-		</foreach>
-	</delete>
+        update PRM_TASK_B
+        set DR = 1
+        where
+        ID in
+        <foreach collection="list" item="item" index="index"
+                 separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </delete>
 
     <insert id="insert" parameterType="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBodyVO">
 		insert into PRM_TASK_B (
-		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,PROJECT_CONTENTID,CROWNO,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,COMPLETE_TIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
+		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,PROJECT_CONTENTID,CROWNO,FACTUSER,FACTUSER_NAME,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,COMPLETE_TIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
 		)
 		values (
 		#{pk_task,jdbcType=VARCHAR},
@@ -75,6 +77,8 @@
 		#{project_content,jdbcType=VARCHAR},
 		#{project_contentid,jdbcType=VARCHAR},
 		#{crowno,jdbcType=INTEGER},
+		#{factuser,jdbcType=VARCHAR},
+		#{factuser_name,jdbcType=VARCHAR},
 		#{judge_standard,jdbcType=VARCHAR},
 		#{polling_value,jdbcType=VARCHAR},
 		#{polling_result,jdbcType=INTEGER},		
@@ -99,433 +103,458 @@
 	</insert>
 
     <insert id="batchInsert" parameterType="java.util.List">
-		insert into PRM_TASK_B (
-		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,PROJECT_CONTENTID,CROWNO,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,COMPLETE_TIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
-		)
-		<foreach collection="list" item="item" index="index" separator="union" open="(" close=")">
-		select
-		#{item.pk_task,jdbcType=VARCHAR},
-		#{item.plan_order,jdbcType=INTEGER},
-		#{item.projectid,jdbcType=VARCHAR},
-		#{item.projectid_code,jdbcType=VARCHAR},
-		#{item.projectid_name,jdbcType=VARCHAR},
-		#{item.fact_order,jdbcType=INTEGER},
-		#{item.project_status,jdbcType=INTEGER},
-		#{item.project_content,jdbcType=VARCHAR},
-		#{item.project_contentid,jdbcType=VARCHAR},
-		#{item.crowno,jdbcType=INTEGER},
-		#{item.judge_standard,jdbcType=VARCHAR},
-		#{item.polling_value,jdbcType=VARCHAR},
-		#{item.polling_result,jdbcType=INTEGER},
-		
-		#{item.pic_url,jdbcType=VARCHAR},
-		#{item.id,jdbcType=VARCHAR},
-		#{item.tenantid,jdbcType=VARCHAR},
-		#{item.sysid,jdbcType=VARCHAR},
-		#{item.orgid,jdbcType=VARCHAR},
-		#{item.orgid_name,jdbcType=VARCHAR},
-		#{item.ts,jdbcType=TIMESTAMP},
-		#{item.dr,jdbcType=INTEGER},
-		#{item.creator,jdbcType=VARCHAR},
-		#{item.creationtime,jdbcType=TIMESTAMP},
-		#{item.modifier,jdbcType=VARCHAR},
-		#{item.modifiedtime,jdbcType=TIMESTAMP},
-		#{item.complete_time,jdbcType=TIMESTAMP},
-		#{item.creator_name,jdbcType=VARCHAR},
-		#{item.modifier_name,jdbcType=VARCHAR},
-		#{item.errdescribe,jdbcType=VARCHAR},
-		#{item.rdbvalue,jdbcType=VARCHAR}
-		from dual
-		</foreach>
-	</insert>
-    <insert id="insertSelective" parameterType="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBodyVO">
-		insert into PRM_TASK_B
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="pk_task != null">
-				PK_TASK,
-			</if>
-			<if test="plan_order != null">
-				PLAN_ORDER,
-			</if>
-			<if test="projectid != null">
-				PROJECTID,
-			</if>
-			<if test="projectid_code != null">
-				PROJECTID_CODE,
-			</if>
-			<if test="projectid_name != null">
-				PROJECTID_NAME,
-			</if>
-			<if test="fact_order != null">
-				FACT_ORDER,
-			</if>
-			<if test="crowno != null">
-				CROWNO,
-			</if>
-			<if test="project_status != null">
-				PROJECT_STATUS,
-			</if>
-			<if test="project_content != null">
-				PROJECT_CONTENT,
-			</if>
-			<if test="project_contentid != null">
-				PROJECT_CONTENTID,
-			</if>
-			<if test="judge_standard != null">
-				JUDGE_STANDARD,
-			</if>
-			<if test="polling_value != null">
-				POLLING_VALUE,
-			</if>
-			<if test="polling_result != null">
-				POLLING_RESULT,
-			</if>
-			<if test="pic_url != null">
-				PIC_URL,
-			</if>
-			<if test="id != null">
-				ID,
-			</if>
-			<if test="tenantid != null">
-				TENANTID,
-			</if>
-			<if test="sysid != null">
-				SYSID,
-			</if>
-			<if test="orgid != null">
-				ORGID,
-			</if>
-			<if test="orgid_name != null">
-				ORGID_NAME,
-			</if>
-			<if test="ts != null">
-				TS,
-			</if>
-			<if test="dr != null">
-				DR,
-			</if>
-			<if test="creator != null">
-				CREATOR,
-			</if>
-			<if test="creationtime != null">
-				CREATIONTIME,
-			</if>
-			<if test="modifier != null">
-				MODIFIER,
-			</if>
-			<if test="modifiedtime != null">
-				MODIFIEDTIME,
-			</if>
-			<if test="complete_time != null">
-				COMPLETE_TIME,
-			</if>
-			<if test="creator_name != null">
-				CREATOR_NAME,
-			</if>
-			<if test="modifier_name != null">
-				MODIFIER_NAME,
-			</if>
-			<if test="errdescribe != null">
-				ERRDESCRIBE,
-			</if>
-			<if test="rdbvalue != null">
-				RDBVALUE,
-			</if>
-		</trim>
-		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="pk_task != null">
-				#{pk_task,jdbcType=VARCHAR},
-			</if>
-			<if test="plan_order != null">
-				#{plan_order,jdbcType=INTEGER},
-			</if>
-			<if test="projectid != null">
-				#{projectid,jdbcType=VARCHAR},
-			</if>
-			<if test="projectid_code != null">
-				#{projectid_code,jdbcType=VARCHAR},
-			</if>
-			<if test="projectid_name != null">
-				#{projectid_name,jdbcType=VARCHAR},
-			</if>
-			<if test="fact_order != null">
-				#{fact_order,jdbcType=INTEGER},
-			</if>
-			<if test="crowno != null">
-				#{crowno,jdbcType=INTEGER},
-			</if>
-			<if test="project_status != null">
-				#{project_status,jdbcType=INTEGER},
-			</if>
-			<if test="project_content != null">
-				#{project_content,jdbcType=VARCHAR},
-			</if>
-			<if test="project_contentid != null">
-				#{project_contentid,jdbcType=VARCHAR},
-			</if>
-			<if test="judge_standard != null">
-				#{judge_standard,jdbcType=VARCHAR},
-			</if>
-			<if test="polling_value != null">
-				#{polling_value,jdbcType=VARCHAR},
-			</if>
-			<if test="polling_result != null">
-				#{polling_result,jdbcType=INTEGER},
-			</if>
-			<if test="pic_url != null">
-				#{pic_url,jdbcType=VARCHAR},
-			</if>
-			<if test="id != null">
-				#{id,jdbcType=VARCHAR},
-			</if>
-			<if test="tenantid != null">
-				#{tenantid,jdbcType=VARCHAR},
-			</if>
-			<if test="sysid != null">
-				#{sysid,jdbcType=VARCHAR},
-			</if>
-			<if test="orgid != null">
-				#{orgid,jdbcType=VARCHAR},
-			</if>
-			<if test="orgid_name != null">
-				#{orgid_name,jdbcType=VARCHAR},
-			</if>
-			<if test="ts != null">
-				#{ts,jdbcType=TIMESTAMP},
-			</if>
-			<if test="dr != null">
-				#{dr,jdbcType=INTEGER},
-			</if>
-			<if test="creator != null">
-				#{creator,jdbcType=VARCHAR},
-			</if>
-			<if test="creationtime != null">
-				#{creationtime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="modifier != null">
-				#{modifier,jdbcType=VARCHAR},
-			</if>
-			<if test="modifiedtime != null">
-				#{modifiedtime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="complete_time != null">
-				#{complete_time,jdbcType=TIMESTAMP},
-			</if>
-			<if test="creator_name != null">
-				#{creator_name,jdbcType=VARCHAR},
-			</if>
-			<if test="modifier_name != null">
-				#{modifier_name,jdbcType=VARCHAR},
-			</if>
-			<if test="errdescribe != null">
-				#{errdescribe,jdbcType=VARCHAR},
-			</if>
-			<if test="rdbvalue != null">
-				#{rdbvalue,jdbcType=VARCHAR},
-			</if>
-		</trim>
-	</insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBodyVO">
-		update PRM_TASK_B
-		<set>
-			<if test="pk_task != null">
-				PK_TASK = #{pk_task,jdbcType=VARCHAR},
-			</if>
-			<if test="plan_order != null">
-				PLAN_ORDER = #{plan_order,jdbcType=INTEGER},
-			</if>
-			<if test="projectid != null">
-				PROJECTID = #{projectid,jdbcType=VARCHAR},
-			</if>
-			<if test="projectid_code != null">
-				PROJECTID_CODE = #{projectid_code,jdbcType=VARCHAR},
-			</if>
-			<if test="projectid_name != null">
-				PROJECTID_NAME = #{projectid_name,jdbcType=VARCHAR},
-			</if>
-			<if test="fact_order != null">
-				FACT_ORDER = #{fact_order,jdbcType=INTEGER},
-			</if>
-			<if test="crowno != null">
-				CROWNO = #{crowno,jdbcType=INTEGER},
-			</if>
-			<if test="project_status != null">
-				PROJECT_STATUS = #{project_status,jdbcType=INTEGER},
-			</if>
-			<if test="project_content != null">
-				PROJECT_CONTENT = #{project_content,jdbcType=VARCHAR},
-			</if>
-			<if test="project_contentid != null">
-				PROJECT_CONTENTID = #{project_contentid,jdbcType=VARCHAR},
-			</if>
-			<if test="judge_standard != null">
-				JUDGE_STANDARD = #{judge_standard,jdbcType=VARCHAR},
-			</if>
-			<if test="polling_value != null">
-				POLLING_VALUE = #{polling_value,jdbcType=VARCHAR},
-			</if>
-			<if test="polling_result != null">
-				POLLING_RESULT = #{polling_value,jdbcType=INTEGER},
-			</if>
-			<if test="pic_url != null">
-				PIC_URL = #{pic_url,jdbcType=VARCHAR},
-			</if>
-			<if test="id != null">
-				ID = #{id,jdbcType=VARCHAR},
-			</if>
-			<if test="tenantid != null">
-				TENANTID = #{tenantid,jdbcType=VARCHAR},
-			</if>
-			<if test="sysid != null">
-				SYSID = #{sysid,jdbcType=VARCHAR},
-			</if>
-			<if test="orgid != null">
-				ORGID = #{orgid,jdbcType=VARCHAR},
-			</if>
-			<if test="orgid_name != null">
-				ORGID_NAME = #{orgid_name,jdbcType=VARCHAR},
-			</if>
-			<if test="ts != null">
-				TS = #{ts,jdbcType=TIMESTAMP},
-			</if>
-			<if test="dr != null">
-				DR = #{dr,jdbcType=INTEGER},
-			</if>
-			<if test="creator != null">
-				CREATOR = #{creator,jdbcType=VARCHAR},
-			</if>
-			<if test="creationtime != null">
-				CREATIONTIME = #{creationtime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="modifier != null">
-				MODIFIER = #{modifier,jdbcType=VARCHAR},
-			</if>
-			<if test="modifiedtime != null">
-				MODIFIEDTIME = #{modifiedtime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="complete_time != null">
-				COMPLETE_TIME = #{complete_time,jdbcType=TIMESTAMP},
-			</if>
-			<if test="creator_name != null">
-				CREATOR_NAME = #{creator_name,jdbcType=VARCHAR},
-			</if>
-			<if test="modifier_name != null">
-				MODIFIER_NAME = #{modifier_name,jdbcType=VARCHAR},
-			</if>
-			<if test="errdescribe != null">
-				ERRDESCRIBE = #{errdescribe,jdbcType=VARCHAR},
-			</if>
-			<if test="rdbvalue != null">
-				RDBVALUE = #{rdbvalue,jdbcType=VARCHAR},
-			</if>
-		</set>
-		where ID = #{id} 
-		<!--and ts = #ts-->
-	</update>
-    <update id="updateByPrimaryKey" parameterType="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBodyVO">
-		update PRM_TASK_B
-		set
-				PK_TASK = #{pk_task,jdbcType=VARCHAR},
-				PLAN_ORDER = #{plan_order,jdbcType=INTEGER},
-				PROJECTID = #{projectid,jdbcType=VARCHAR},
-				PROJECTID_CODE = #{projectid_code,jdbcType=VARCHAR},
-				PROJECTID_NAME = #{projectid_name,jdbcType=VARCHAR},
-				FACT_ORDER = #{fact_order,jdbcType=INTEGER},
-				CROWNO = #{crowno,jdbcType=INTEGER},
-				PROJECT_STATUS = #{project_status,jdbcType=INTEGER},
-				PROJECT_CONTENT = #{project_content,jdbcType=VARCHAR},
-				PROJECT_CONTENTID = #{project_contentid,jdbcType=VARCHAR},
-				JUDGE_STANDARD = #{judge_standard,jdbcType=VARCHAR},
-				POLLING_VALUE = #{polling_value,jdbcType=VARCHAR},
-				POLLING_RESULT = #{polling_result,jdbcType=INTEGER},				
-				PIC_URL = #{pic_url,jdbcType=VARCHAR},
-				TENANTID = #{tenantid,jdbcType=VARCHAR},
-				SYSID = #{sysid,jdbcType=VARCHAR},
-				ORGID = #{orgid,jdbcType=VARCHAR},
-				ORGID_NAME = #{orgid_name,jdbcType=VARCHAR},
-				TS = #{ts,jdbcType=TIMESTAMP},
-				DR = #{dr,jdbcType=INTEGER},
-				CREATOR = #{creator,jdbcType=VARCHAR},
-				CREATIONTIME = #{creationtime,jdbcType=TIMESTAMP},
-				MODIFIER = #{modifier,jdbcType=VARCHAR},
-				MODIFIEDTIME = #{modifiedtime,jdbcType=TIMESTAMP},
-				COMPLETE_TIME = #{complete_time,jdbcType=TIMESTAMP},
-				CREATOR_NAME = #{creator_name,jdbcType=VARCHAR},
-				MODIFIER_NAME = #{modifier_name,jdbcType=VARCHAR},
-				ERRDESCRIBE = #{errdescribe,jdbcType=VARCHAR},
-				RDBVALUE = #{rdbvalue,jdbcType=VARCHAR}
+        insert into PRM_TASK_B (
+        PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,PROJECT_CONTENTID,CROWNO,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,COMPLETE_TIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
+        )
+        <foreach collection="list" item="item" index="index" separator="union" open="(" close=")">
+            select
+            #{item.pk_task,jdbcType=VARCHAR},
+            #{item.plan_order,jdbcType=INTEGER},
+            #{item.projectid,jdbcType=VARCHAR},
+            #{item.projectid_code,jdbcType=VARCHAR},
+            #{item.projectid_name,jdbcType=VARCHAR},
+            #{item.fact_order,jdbcType=INTEGER},
+            #{item.project_status,jdbcType=INTEGER},
+            #{item.project_content,jdbcType=VARCHAR},
+            #{item.project_contentid,jdbcType=VARCHAR},
+            #{item.crowno,jdbcType=INTEGER},
+            #{item.factuser,jdbcType=VARCHAR},
+            #{item.factuser_name,jdbcType=VARCHAR},
+            #{item.judge_standard,jdbcType=VARCHAR},
+            #{item.polling_value,jdbcType=VARCHAR},
+            #{item.polling_result,jdbcType=INTEGER},
 
-		where ID = #{id}
-		<!-- and ts = #ts-->
-	</update>
+            #{item.pic_url,jdbcType=VARCHAR},
+            #{item.id,jdbcType=VARCHAR},
+            #{item.tenantid,jdbcType=VARCHAR},
+            #{item.sysid,jdbcType=VARCHAR},
+            #{item.orgid,jdbcType=VARCHAR},
+            #{item.orgid_name,jdbcType=VARCHAR},
+            #{item.ts,jdbcType=TIMESTAMP},
+            #{item.dr,jdbcType=INTEGER},
+            #{item.creator,jdbcType=VARCHAR},
+            #{item.creationtime,jdbcType=TIMESTAMP},
+            #{item.modifier,jdbcType=VARCHAR},
+            #{item.modifiedtime,jdbcType=TIMESTAMP},
+            #{item.complete_time,jdbcType=TIMESTAMP},
+            #{item.creator_name,jdbcType=VARCHAR},
+            #{item.modifier_name,jdbcType=VARCHAR},
+            #{item.errdescribe,jdbcType=VARCHAR},
+            #{item.rdbvalue,jdbcType=VARCHAR}
+            from dual
+        </foreach>
+    </insert>
+    <insert id="insertSelective" parameterType="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBodyVO">
+        insert into PRM_TASK_B
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pk_task != null">
+                PK_TASK,
+            </if>
+            <if test="plan_order != null">
+                PLAN_ORDER,
+            </if>
+            <if test="projectid != null">
+                PROJECTID,
+            </if>
+            <if test="projectid_code != null">
+                PROJECTID_CODE,
+            </if>
+            <if test="projectid_name != null">
+                PROJECTID_NAME,
+            </if>
+            <if test="fact_order != null">
+                FACT_ORDER,
+            </if>
+            <if test="crowno != null">
+                CROWNO,
+            </if>
+            <if test="factuser != null">
+                FACTUSER,
+            </if>
+            <if test="factuser_name != null">
+                FACTUSER_NAME,
+            </if>
+            <if test="project_status != null">
+                PROJECT_STATUS,
+            </if>
+            <if test="project_content != null">
+                PROJECT_CONTENT,
+            </if>
+            <if test="project_contentid != null">
+                PROJECT_CONTENTID,
+            </if>
+            <if test="judge_standard != null">
+                JUDGE_STANDARD,
+            </if>
+            <if test="polling_value != null">
+                POLLING_VALUE,
+            </if>
+            <if test="polling_result != null">
+                POLLING_RESULT,
+            </if>
+            <if test="pic_url != null">
+                PIC_URL,
+            </if>
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="tenantid != null">
+                TENANTID,
+            </if>
+            <if test="sysid != null">
+                SYSID,
+            </if>
+            <if test="orgid != null">
+                ORGID,
+            </if>
+            <if test="orgid_name != null">
+                ORGID_NAME,
+            </if>
+            <if test="ts != null">
+                TS,
+            </if>
+            <if test="dr != null">
+                DR,
+            </if>
+            <if test="creator != null">
+                CREATOR,
+            </if>
+            <if test="creationtime != null">
+                CREATIONTIME,
+            </if>
+            <if test="modifier != null">
+                MODIFIER,
+            </if>
+            <if test="modifiedtime != null">
+                MODIFIEDTIME,
+            </if>
+            <if test="complete_time != null">
+                COMPLETE_TIME,
+            </if>
+            <if test="creator_name != null">
+                CREATOR_NAME,
+            </if>
+            <if test="modifier_name != null">
+                MODIFIER_NAME,
+            </if>
+            <if test="errdescribe != null">
+                ERRDESCRIBE,
+            </if>
+            <if test="rdbvalue != null">
+                RDBVALUE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pk_task != null">
+                #{pk_task,jdbcType=VARCHAR},
+            </if>
+            <if test="plan_order != null">
+                #{plan_order,jdbcType=INTEGER},
+            </if>
+            <if test="projectid != null">
+                #{projectid,jdbcType=VARCHAR},
+            </if>
+            <if test="projectid_code != null">
+                #{projectid_code,jdbcType=VARCHAR},
+            </if>
+            <if test="projectid_name != null">
+                #{projectid_name,jdbcType=VARCHAR},
+            </if>
+            <if test="fact_order != null">
+                #{fact_order,jdbcType=INTEGER},
+            </if>
+            <if test="crowno != null">
+                #{crowno,jdbcType=INTEGER},
+            </if>
+            <if test="factuser != null">
+                #{factuser,jdbcType=VARCHAR},
+            </if>
+            <if test="factuser_name != null">
+                #{factuser_name,jdbcType=VARCHAR},
+            </if>
+            <if test="project_status != null">
+                #{project_status,jdbcType=INTEGER},
+            </if>
+            <if test="project_content != null">
+                #{project_content,jdbcType=VARCHAR},
+            </if>
+            <if test="project_contentid != null">
+                #{project_contentid,jdbcType=VARCHAR},
+            </if>
+            <if test="judge_standard != null">
+                #{judge_standard,jdbcType=VARCHAR},
+            </if>
+            <if test="polling_value != null">
+                #{polling_value,jdbcType=VARCHAR},
+            </if>
+            <if test="polling_result != null">
+                #{polling_result,jdbcType=INTEGER},
+            </if>
+            <if test="pic_url != null">
+                #{pic_url,jdbcType=VARCHAR},
+            </if>
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="tenantid != null">
+                #{tenantid,jdbcType=VARCHAR},
+            </if>
+            <if test="sysid != null">
+                #{sysid,jdbcType=VARCHAR},
+            </if>
+            <if test="orgid != null">
+                #{orgid,jdbcType=VARCHAR},
+            </if>
+            <if test="orgid_name != null">
+                #{orgid_name,jdbcType=VARCHAR},
+            </if>
+            <if test="ts != null">
+                #{ts,jdbcType=TIMESTAMP},
+            </if>
+            <if test="dr != null">
+                #{dr,jdbcType=INTEGER},
+            </if>
+            <if test="creator != null">
+                #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="creationtime != null">
+                #{creationtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifier != null">
+                #{modifier,jdbcType=VARCHAR},
+            </if>
+            <if test="modifiedtime != null">
+                #{modifiedtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="complete_time != null">
+                #{complete_time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creator_name != null">
+                #{creator_name,jdbcType=VARCHAR},
+            </if>
+            <if test="modifier_name != null">
+                #{modifier_name,jdbcType=VARCHAR},
+            </if>
+            <if test="errdescribe != null">
+                #{errdescribe,jdbcType=VARCHAR},
+            </if>
+            <if test="rdbvalue != null">
+                #{rdbvalue,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective"
+            parameterType="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBodyVO">
+        update PRM_TASK_B
+        <set>
+            <if test="pk_task != null">
+                PK_TASK = #{pk_task,jdbcType=VARCHAR},
+            </if>
+            <if test="plan_order != null">
+                PLAN_ORDER = #{plan_order,jdbcType=INTEGER},
+            </if>
+            <if test="projectid != null">
+                PROJECTID = #{projectid,jdbcType=VARCHAR},
+            </if>
+            <if test="projectid_code != null">
+                PROJECTID_CODE = #{projectid_code,jdbcType=VARCHAR},
+            </if>
+            <if test="projectid_name != null">
+                PROJECTID_NAME = #{projectid_name,jdbcType=VARCHAR},
+            </if>
+            <if test="fact_order != null">
+                FACT_ORDER = #{fact_order,jdbcType=INTEGER},
+            </if>
+            <if test="crowno != null">
+                CROWNO = #{crowno,jdbcType=INTEGER},
+            </if>
+            <if test="factuser != null">
+                FACTUSER = #{factuser,jdbcType=VARCHAR},
+            </if>
+            <if test="factuser_name != null">
+                FACTUSER_NAME = #{factuser_name,jdbcType=VARCHAR},
+            </if>
+            <if test="project_status != null">
+                PROJECT_STATUS = #{project_status,jdbcType=INTEGER},
+            </if>
+            <if test="project_content != null">
+                PROJECT_CONTENT = #{project_content,jdbcType=VARCHAR},
+            </if>
+            <if test="project_contentid != null">
+                PROJECT_CONTENTID = #{project_contentid,jdbcType=VARCHAR},
+            </if>
+            <if test="judge_standard != null">
+                JUDGE_STANDARD = #{judge_standard,jdbcType=VARCHAR},
+            </if>
+            <if test="polling_value != null">
+                POLLING_VALUE = #{polling_value,jdbcType=VARCHAR},
+            </if>
+            <if test="polling_result != null">
+                POLLING_RESULT = #{polling_value,jdbcType=INTEGER},
+            </if>
+            <if test="pic_url != null">
+                PIC_URL = #{pic_url,jdbcType=VARCHAR},
+            </if>
+            <if test="id != null">
+                ID = #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="tenantid != null">
+                TENANTID = #{tenantid,jdbcType=VARCHAR},
+            </if>
+            <if test="sysid != null">
+                SYSID = #{sysid,jdbcType=VARCHAR},
+            </if>
+            <if test="orgid != null">
+                ORGID = #{orgid,jdbcType=VARCHAR},
+            </if>
+            <if test="orgid_name != null">
+                ORGID_NAME = #{orgid_name,jdbcType=VARCHAR},
+            </if>
+            <if test="ts != null">
+                TS = #{ts,jdbcType=TIMESTAMP},
+            </if>
+            <if test="dr != null">
+                DR = #{dr,jdbcType=INTEGER},
+            </if>
+            <if test="creator != null">
+                CREATOR = #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="creationtime != null">
+                CREATIONTIME = #{creationtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifier != null">
+                MODIFIER = #{modifier,jdbcType=VARCHAR},
+            </if>
+            <if test="modifiedtime != null">
+                MODIFIEDTIME = #{modifiedtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="complete_time != null">
+                COMPLETE_TIME = #{complete_time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creator_name != null">
+                CREATOR_NAME = #{creator_name,jdbcType=VARCHAR},
+            </if>
+            <if test="modifier_name != null">
+                MODIFIER_NAME = #{modifier_name,jdbcType=VARCHAR},
+            </if>
+            <if test="errdescribe != null">
+                ERRDESCRIBE = #{errdescribe,jdbcType=VARCHAR},
+            </if>
+            <if test="rdbvalue != null">
+                RDBVALUE = #{rdbvalue,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id}
+        <!--and ts = #ts-->
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBodyVO">
+        update PRM_TASK_B
+        set
+        PK_TASK = #{pk_task,jdbcType=VARCHAR},
+        PLAN_ORDER = #{plan_order,jdbcType=INTEGER},
+        PROJECTID = #{projectid,jdbcType=VARCHAR},
+        PROJECTID_CODE = #{projectid_code,jdbcType=VARCHAR},
+        PROJECTID_NAME = #{projectid_name,jdbcType=VARCHAR},
+        FACT_ORDER = #{fact_order,jdbcType=INTEGER},
+        CROWNO = #{crowno,jdbcType=INTEGER},
+        FACTUSER = #{factuser,jdbcType=VARCHAR},
+        FACTUSER_NAME = #{factuser_name,jdbcType=VARCHAR},
+        PROJECT_STATUS = #{project_status,jdbcType=INTEGER},
+        PROJECT_CONTENT = #{project_content,jdbcType=VARCHAR},
+        PROJECT_CONTENTID = #{project_contentid,jdbcType=VARCHAR},
+        JUDGE_STANDARD = #{judge_standard,jdbcType=VARCHAR},
+        POLLING_VALUE = #{polling_value,jdbcType=VARCHAR},
+        POLLING_RESULT = #{polling_result,jdbcType=INTEGER},
+        PIC_URL = #{pic_url,jdbcType=VARCHAR},
+        TENANTID = #{tenantid,jdbcType=VARCHAR},
+        SYSID = #{sysid,jdbcType=VARCHAR},
+        ORGID = #{orgid,jdbcType=VARCHAR},
+        ORGID_NAME = #{orgid_name,jdbcType=VARCHAR},
+        TS = #{ts,jdbcType=TIMESTAMP},
+        DR = #{dr,jdbcType=INTEGER},
+        CREATOR = #{creator,jdbcType=VARCHAR},
+        CREATIONTIME = #{creationtime,jdbcType=TIMESTAMP},
+        MODIFIER = #{modifier,jdbcType=VARCHAR},
+        MODIFIEDTIME = #{modifiedtime,jdbcType=TIMESTAMP},
+        COMPLETE_TIME = #{complete_time,jdbcType=TIMESTAMP},
+        CREATOR_NAME = #{creator_name,jdbcType=VARCHAR},
+        MODIFIER_NAME = #{modifier_name,jdbcType=VARCHAR},
+        ERRDESCRIBE = #{errdescribe,jdbcType=VARCHAR},
+        RDBVALUE = #{rdbvalue,jdbcType=VARCHAR}
+
+        where ID = #{id}
+        <!-- and ts = #ts-->
+    </update>
 
     <update id="batchUpdate" parameterType="java.util.List">
-    	begin
-		<foreach collection="list" item="item" index="index" open=""
-			close="" separator=";">
-			update PRM_TASK_B
-			<set>
-				PK_TASK = #{item.pk_task,jdbcType=VARCHAR},
-				PLAN_ORDER = #{item.plan_order,jdbcType=INTEGER},
-				PROJECTID = #{item.projectid,jdbcType=VARCHAR},
-				PROJECTID_CODE = #{item.projectid_code,jdbcType=VARCHAR},
-				PROJECTID_NAME = #{item.projectid_name,jdbcType=VARCHAR},
-				FACT_ORDER = #{item.fact_order,jdbcType=INTEGER},
-				PROJECT_STATUS = #{item.project_status,jdbcType=INTEGER},
-				PROJECT_CONTENT = #{item.project_content,jdbcType=VARCHAR},
-				PROJECT_CONTENTID = #{item.project_contentid,jdbcType=VARCHAR},
-				CROWNO = #{item.crowno,jdbcType=INTEGER},
-				JUDGE_STANDARD = #{item.judge_standard,jdbcType=VARCHAR},
-				POLLING_VALUE = #{item.polling_value,jdbcType=VARCHAR},
-				POLLING_RESULT = #{item.polling_result,jdbcType=INTEGER},
-				
-				PIC_URL = #{item.pic_url,jdbcType=VARCHAR},
-				TENANTID = #{item.tenantid,jdbcType=VARCHAR},
-				SYSID = #{item.sysid,jdbcType=VARCHAR},
-				ORGID = #{item.orgid,jdbcType=VARCHAR},
-				ORGID_NAME = #{item.orgid_name,jdbcType=VARCHAR},
-				TS = #{item.ts,jdbcType=TIMESTAMP},
-				DR = #{item.dr,jdbcType=INTEGER},
-				CREATOR = #{item.creator,jdbcType=VARCHAR},
-				CREATIONTIME = #{item.creationtime,jdbcType=TIMESTAMP},
-				MODIFIER = #{item.modifier,jdbcType=VARCHAR},
-				MODIFIEDTIME = #{item.modifiedtime,jdbcType=TIMESTAMP},
-				COMPLETE_TIME = #{item.complete_time,jdbcType=TIMESTAMP},
-				CREATOR_NAME = #{item.creator_name,jdbcType=VARCHAR},
-				MODIFIER_NAME = #{item.modifier_name,jdbcType=VARCHAR},
-				ERRDESCRIBE = #{item.errdescribe,jdbcType=VARCHAR},
-				RDBVALUE = #{item.rdbvalue,jdbcType=VARCHAR}
-			</set>
-			where ID = #{item.id} 
-		</foreach>
-		;end;
-	</update>
+        begin
+        <foreach collection="list" item="item" index="index" open=""
+                 close="" separator=";">
+            update PRM_TASK_B
+            <set>
+                PK_TASK = #{item.pk_task,jdbcType=VARCHAR},
+                PLAN_ORDER = #{item.plan_order,jdbcType=INTEGER},
+                PROJECTID = #{item.projectid,jdbcType=VARCHAR},
+                PROJECTID_CODE = #{item.projectid_code,jdbcType=VARCHAR},
+                PROJECTID_NAME = #{item.projectid_name,jdbcType=VARCHAR},
+                FACT_ORDER = #{item.fact_order,jdbcType=INTEGER},
+                PROJECT_STATUS = #{item.project_status,jdbcType=INTEGER},
+                PROJECT_CONTENT = #{item.project_content,jdbcType=VARCHAR},
+                PROJECT_CONTENTID = #{item.project_contentid,jdbcType=VARCHAR},
+                CROWNO = #{item.crowno,jdbcType=INTEGER},
+                FACTUSER = #{item.factuser,jdbcType=VARCHAR},
+                FACTUSER_NAME = #{item.factuser_name,jdbcType=VARCHAR},
+                JUDGE_STANDARD = #{item.judge_standard,jdbcType=VARCHAR},
+                POLLING_VALUE = #{item.polling_value,jdbcType=VARCHAR},
+                POLLING_RESULT = #{item.polling_result,jdbcType=INTEGER},
+
+                PIC_URL = #{item.pic_url,jdbcType=VARCHAR},
+                TENANTID = #{item.tenantid,jdbcType=VARCHAR},
+                SYSID = #{item.sysid,jdbcType=VARCHAR},
+                ORGID = #{item.orgid,jdbcType=VARCHAR},
+                ORGID_NAME = #{item.orgid_name,jdbcType=VARCHAR},
+                TS = #{item.ts,jdbcType=TIMESTAMP},
+                DR = #{item.dr,jdbcType=INTEGER},
+                CREATOR = #{item.creator,jdbcType=VARCHAR},
+                CREATIONTIME = #{item.creationtime,jdbcType=TIMESTAMP},
+                MODIFIER = #{item.modifier,jdbcType=VARCHAR},
+                MODIFIEDTIME = #{item.modifiedtime,jdbcType=TIMESTAMP},
+                COMPLETE_TIME = #{item.complete_time,jdbcType=TIMESTAMP},
+                CREATOR_NAME = #{item.creator_name,jdbcType=VARCHAR},
+                MODIFIER_NAME = #{item.modifier_name,jdbcType=VARCHAR},
+                ERRDESCRIBE = #{item.errdescribe,jdbcType=VARCHAR},
+                RDBVALUE = #{item.rdbvalue,jdbcType=VARCHAR}
+            </set>
+            where ID = #{item.id}
+        </foreach>
+        ;end;
+    </update>
 
 
-	<select id="selectAllByPage" resultMap="BaseResultMap"
-		resultType="java.util.List">
-		SELECT
-		<include refid="Base_Column_List" />
-		from PRM_TASK_B where DR=0
-		<if test="search.searchMap != null">
-			<if
-				test="search.searchMap.id!=null and search.searchMap.id!='' ">
-				and PK_TASK = #{search.searchMap.id}
-			</if>
+    <select id="selectAllByPage" resultMap="BaseResultMap"
+            resultType="java.util.List">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from PRM_TASK_B where DR=0
+        <if test="search.searchMap != null">
+            <if
+                    test="search.searchMap.id!=null and search.searchMap.id!='' ">
+                and PK_TASK = #{search.searchMap.id}
+            </if>
         </if>
         order by plan_order,crowno
     </select>
-    
-	<select id="selectByParentKey" resultMap="BaseResultMap"
-		parameterType="java.lang.String">
-		select
-		<include refid="Base_Column_List" />
-		from PRM_TASK_B
-		where PK_TASK = #{id} and DR=0
-	</select>
-	
-	<select id="queryProjectAndContent" resultMap="BaseResultMap"
-		parameterType="java.lang.String">
+
+    <select id="selectByParentKey" resultMap="BaseResultMap"
+            parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from PRM_TASK_B
+        where PK_TASK = #{id} and DR=0
+    </select>
+
+    <select id="queryProjectAndContent" resultMap="BaseResultMap"
+            parameterType="java.lang.String">
 		  SELECT PLANB.PK_ER_PROJECT   PROJECTID,
 		         PLANB.ER_PROJECT_CODE PROJECTID_CODE,
 		         PLANB.ER_PROJECT_NAME PROJECTID_NAME,
@@ -542,9 +571,9 @@
 		     AND PROJECTB.DR = 0
 		     AND PLAN.ID = #{planid} order by PLANB.PLAN_ORDER,PROJECTB.CROWNO
 	</select>
-	
-	<select id="queryTaskDetail4App" resultMap="BaseResultMap"
-		parameterType="java.lang.String">
+
+    <select id="queryTaskDetail4App" resultMap="BaseResultMap"
+            parameterType="java.lang.String">
 		select b.* 
 			from prm_task_b b 
 		inner join prm_task h on b.pk_task = h.id
@@ -552,149 +581,155 @@
 			and (billstatus = 1 or billstatus = 2)
 			and h.postid = #{postid} 
 	</select>
-	
-	<select id="queryTaskDetailsByID" resultMap="BaseResultMap"
-		parameterType="java.util.List">
-		select
-		
-		b.pk_task 				pk_task,
- 	    b.plan_order			plan_order,
-		b.projectid				projectid,
-		b.projectid_code		projectid_code,
-		b.projectid_name		projectid_name,
-		b.fact_order			fact_order,
-		b.crowno				crowno,
-		b.project_status		project_status,
-		b.project_content		project_content,
-		b.project_contentid		project_contentid,
-		b.judge_standard		judge_standard,
-		b.polling_value			polling_value,
-		b.polling_result		polling_result,
-		b.pic_url				pic_url,
-		b.id					id,
-		b.tenantid				tenantid,
-		b.sysid					sysid,
-		b.orgid					orgid,
-		b.orgid_name			orgid_name,
-		b.ts					ts,
-		b.dr					dr,
-		b.creator				creator,
-		b.creationtime			creationtime,
-		b.modifier				modifier,
-		b.modifiedtime			modifiedtime,
-		b.creator_name			creator_name,
-		b.modifier_name			modifier_name,
-		b.errdescribe			errdescribe,
-		pb.fvaluetype			fvaluetype
-		
-		from prm_task h left join prm_task_b b on h.id=b.pk_task left join prm_project_b pb on b.projectid=pb.id
-		where b.dr=0 and h.dr=0 and (pb.dr=0 or pb.dr is null)
-		and (billstatus = 1 or billstatus = 2)
-		and h.id in
-		<foreach collection="list" item="item" index="index"
-			separator="," open="(" close=")">
-		#{item}
-		</foreach>
-		order by PLAN_ORDER
-	</select>
-	
-	<update id="batchUpdateByPrimaryKeySelective" parameterType="java.util.List">
-    	begin
-		<foreach collection="list" item="item" index="index" open=""
-			close="" separator=";">
-			update PRM_TASK_B
-			<set>
-				<if test="item.pk_task != null">
-				PK_TASK = #{item.pk_task,jdbcType=VARCHAR},
-			</if>
-			<if test="item.plan_order != null">
-				PLAN_ORDER = #{item.plan_order,jdbcType=INTEGER},
-			</if>
-			<if test="item.projectid != null">
-				PROJECTID = #{item.projectid,jdbcType=VARCHAR},
-			</if>
-			<if test="item.projectid_code != null">
-				PROJECTID_CODE = #{item.projectid_code,jdbcType=VARCHAR},
-			</if>
-			<if test="item.projectid_name != null">
-				PROJECTID_NAME = #{item.projectid_name,jdbcType=VARCHAR},
-			</if>
-			<if test="item.fact_order != null">
-				FACT_ORDER = #{item.fact_order,jdbcType=INTEGER},
-			</if>
-			<if test="item.crowno != null">
-				CROWNO = #{item.crowno,jdbcType=INTEGER},
-			</if>
-			<if test="item.project_status != null">
-				PROJECT_STATUS = #{item.project_status,jdbcType=INTEGER},
-			</if>
-			<if test="item.project_content != null">
-				PROJECT_CONTENT = #{item.project_content,jdbcType=VARCHAR},
-			</if>
-			<if test="item.project_contentid != null">
-				PROJECT_CONTENTID = #{item.project_contentid,jdbcType=VARCHAR},
-			</if>
-			<if test="item.judge_standard != null">
-				JUDGE_STANDARD = #{item.judge_standard,jdbcType=VARCHAR},
-			</if>
-			<if test="item.polling_value != null">
-				POLLING_VALUE = #{item.polling_value,jdbcType=VARCHAR},
-			</if>
-			<if test="item.pic_url != null">
-				PIC_URL = #{item.pic_url,jdbcType=VARCHAR},
-			</if>
-			<if test="item.id != null">
-				ID = #{item.id,jdbcType=VARCHAR},
-			</if>
-			<if test="item.tenantid != null">
-				TENANTID = #{item.tenantid,jdbcType=VARCHAR},
-			</if>
-			<if test="item.sysid != null">
-				SYSID = #{item.sysid,jdbcType=VARCHAR},
-			</if>
-			<if test="item.orgid != null">
-				ORGID = #{item.orgid,jdbcType=VARCHAR},
-			</if>
-			<if test="item.orgid_name != null">
-				ORGID_NAME = #{item.orgid_name,jdbcType=VARCHAR},
-			</if>
-			<if test="item.ts != null">
-				TS = #{item.ts,jdbcType=TIMESTAMP},
-			</if>
-			<if test="item.dr != null">
-				DR = #{item.dr,jdbcType=INTEGER},
-			</if>
-			<if test="item.creator != null">
-				CREATOR = #{item.creator,jdbcType=VARCHAR},
-			</if>
-			<if test="item.creationtime != null">
-				CREATIONTIME = #{item.creationtime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="item.modifier != null">
-				MODIFIER = #{item.modifier,jdbcType=VARCHAR},
-			</if>
-			<if test="item.modifiedtime != null">
-				MODIFIEDTIME = #{item.modifiedtime,jdbcType=TIMESTAMP},
-			</if>
-			<if test="item.complete_time != null">
-				COMPLETE_TIME = #{item.complete_time,jdbcType=TIMESTAMP},
-			</if>
-			<if test="item.creator_name != null">
-				CREATOR_NAME = #{item.creator_name,jdbcType=VARCHAR},
-			</if>
-			<if test="item.modifier_name != null">
-				MODIFIER_NAME = #{item.modifier_name,jdbcType=VARCHAR},
-			</if>
-				<if test="item.errdescribe != null">
-					ERRDESCRIBE = #{item.errdescribe,jdbcType=VARCHAR},
-				</if>
-				<if test="item.rdbvalue != null">
-					RDBVALUE = #{item.rdbvalue,jdbcType=VARCHAR}
-				</if>
-			</set>
-			where ID = #{item.id} 
-		</foreach>
-		;end;
-	</update>
-	
+
+    <select id="queryTaskDetailsByID" resultMap="BaseResultMap"
+            parameterType="java.util.List">
+        select
+
+        b.pk_task pk_task,
+        b.plan_order plan_order,
+        b.projectid projectid,
+        b.projectid_code projectid_code,
+        b.projectid_name projectid_name,
+        b.fact_order fact_order,
+        b.crowno crowno,
+        b.project_status project_status,
+        b.project_content project_content,
+        b.project_contentid project_contentid,
+        b.judge_standard judge_standard,
+        b.polling_value polling_value,
+        b.polling_result polling_result,
+        b.pic_url pic_url,
+        b.id id,
+        b.tenantid tenantid,
+        b.sysid sysid,
+        b.orgid orgid,
+        b.orgid_name orgid_name,
+        b.ts ts,
+        b.dr dr,
+        b.creator creator,
+        b.creationtime creationtime,
+        b.modifier modifier,
+        b.modifiedtime modifiedtime,
+        b.creator_name creator_name,
+        b.modifier_name modifier_name,
+        b.errdescribe errdescribe,
+        pb.fvaluetype fvaluetype
+
+        from prm_task h left join prm_task_b b on h.id=b.pk_task left join prm_project_b pb on b.projectid=pb.id
+        where b.dr=0 and h.dr=0 and (pb.dr=0 or pb.dr is null)
+        and (billstatus = 1 or billstatus = 2)
+        and h.id in
+        <foreach collection="list" item="item" index="index"
+                 separator="," open="(" close=")">
+            #{item}
+        </foreach>
+        order by PLAN_ORDER
+    </select>
+
+    <update id="batchUpdateByPrimaryKeySelective" parameterType="java.util.List">
+        begin
+        <foreach collection="list" item="item" index="index" open=""
+                 close="" separator=";">
+            update PRM_TASK_B
+            <set>
+                <if test="item.pk_task != null">
+                    PK_TASK = #{item.pk_task,jdbcType=VARCHAR},
+                </if>
+                <if test="item.plan_order != null">
+                    PLAN_ORDER = #{item.plan_order,jdbcType=INTEGER},
+                </if>
+                <if test="item.projectid != null">
+                    PROJECTID = #{item.projectid,jdbcType=VARCHAR},
+                </if>
+                <if test="item.projectid_code != null">
+                    PROJECTID_CODE = #{item.projectid_code,jdbcType=VARCHAR},
+                </if>
+                <if test="item.projectid_name != null">
+                    PROJECTID_NAME = #{item.projectid_name,jdbcType=VARCHAR},
+                </if>
+                <if test="item.fact_order != null">
+                    FACT_ORDER = #{item.fact_order,jdbcType=INTEGER},
+                </if>
+                <if test="item.crowno != null">
+                    CROWNO = #{item.crowno,jdbcType=INTEGER},
+                </if>
+                <if test="item.factuser != null">
+                    FACTUSER = #{item.factuser,jdbcType=VARCHAR},
+                </if>
+                <if test="item.factuser_name != null">
+                    FACTUSER_NAME = #{item.factuser_name,jdbcType=VARCHAR},
+                </if>
+                <if test="item.project_status != null">
+                    PROJECT_STATUS = #{item.project_status,jdbcType=INTEGER},
+                </if>
+                <if test="item.project_content != null">
+                    PROJECT_CONTENT = #{item.project_content,jdbcType=VARCHAR},
+                </if>
+                <if test="item.project_contentid != null">
+                    PROJECT_CONTENTID = #{item.project_contentid,jdbcType=VARCHAR},
+                </if>
+                <if test="item.judge_standard != null">
+                    JUDGE_STANDARD = #{item.judge_standard,jdbcType=VARCHAR},
+                </if>
+                <if test="item.polling_value != null">
+                    POLLING_VALUE = #{item.polling_value,jdbcType=VARCHAR},
+                </if>
+                <if test="item.pic_url != null">
+                    PIC_URL = #{item.pic_url,jdbcType=VARCHAR},
+                </if>
+                <if test="item.id != null">
+                    ID = #{item.id,jdbcType=VARCHAR},
+                </if>
+                <if test="item.tenantid != null">
+                    TENANTID = #{item.tenantid,jdbcType=VARCHAR},
+                </if>
+                <if test="item.sysid != null">
+                    SYSID = #{item.sysid,jdbcType=VARCHAR},
+                </if>
+                <if test="item.orgid != null">
+                    ORGID = #{item.orgid,jdbcType=VARCHAR},
+                </if>
+                <if test="item.orgid_name != null">
+                    ORGID_NAME = #{item.orgid_name,jdbcType=VARCHAR},
+                </if>
+                <if test="item.ts != null">
+                    TS = #{item.ts,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.dr != null">
+                    DR = #{item.dr,jdbcType=INTEGER},
+                </if>
+                <if test="item.creator != null">
+                    CREATOR = #{item.creator,jdbcType=VARCHAR},
+                </if>
+                <if test="item.creationtime != null">
+                    CREATIONTIME = #{item.creationtime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.modifier != null">
+                    MODIFIER = #{item.modifier,jdbcType=VARCHAR},
+                </if>
+                <if test="item.modifiedtime != null">
+                    MODIFIEDTIME = #{item.modifiedtime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.complete_time != null">
+                    COMPLETE_TIME = #{item.complete_time,jdbcType=TIMESTAMP},
+                </if>
+                <if test="item.creator_name != null">
+                    CREATOR_NAME = #{item.creator_name,jdbcType=VARCHAR},
+                </if>
+                <if test="item.modifier_name != null">
+                    MODIFIER_NAME = #{item.modifier_name,jdbcType=VARCHAR},
+                </if>
+                <if test="item.errdescribe != null">
+                    ERRDESCRIBE = #{item.errdescribe,jdbcType=VARCHAR},
+                </if>
+                <if test="item.rdbvalue != null">
+                    RDBVALUE = #{item.rdbvalue,jdbcType=VARCHAR}
+                </if>
+            </set>
+            where ID = #{item.id}
+        </foreach>
+        ;end;
+    </update>
+
 </mapper>

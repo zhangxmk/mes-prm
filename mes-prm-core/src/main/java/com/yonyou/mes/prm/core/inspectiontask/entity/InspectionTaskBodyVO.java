@@ -42,6 +42,24 @@ public class InspectionTaskBodyVO extends MeSuperVO{
 	private Timestamp complete_time;
 	private String errdescribe;
 	private	Integer fvaluetype;
+	private String factuser;
+	private String factuser_name;
+
+	public String getFactuser() {
+		return factuser;
+	}
+
+	public void setFactuser(String factuser) {
+		this.factuser = factuser;
+	}
+
+	public String getFactuser_name() {
+		return factuser_name;
+	}
+
+	public void setFactuser_name(String factuser_name) {
+		this.factuser_name = factuser_name;
+	}
 
 	public String getRdbvalue() {
 		return rdbvalue;

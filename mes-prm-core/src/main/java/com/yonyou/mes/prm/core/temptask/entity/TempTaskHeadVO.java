@@ -18,6 +18,16 @@ public class TempTaskHeadVO extends MeSuperVO{
 	private String vqcprojectcode;
 	private String vqcprojectname;
 	private String vbillcode;
+
+	public String getDtsource() {
+		return dtsource;
+	}
+
+	public void setDtsource(String dtsource) {
+		this.dtsource = dtsource;
+	}
+
+	private String dtsource;
 	private String cstationid;
 	private String vstationname;
 	private Timestamp tqctime;
