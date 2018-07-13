@@ -9,6 +9,8 @@
 		<result column="POSTID_NAME" property="postid_name"/>
 		<result column="PLANID" property="planid"/>
 		<result column="PLANID_NAME" property="planid_name"/>
+		<result column="PROCESSID" property="processid"/>
+		<result column="PROCESSID_NAME" property="processid_name"/>
 		<result column="TEAM" property="team"/>
 		<result column="TEAM_NAME" property="team_name"/>
 		<result column="SHIFT" property="shift"/>
@@ -51,7 +53,7 @@
 		<result column="UNFINISHCOUNT" property="unfinishcount"/>
     </resultMap>
     <sql id="Base_Column_List">
-		TASK_NO,TASKTYPE,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,USERID,USERID_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME,RELEASED_TIME,DEPTID,DEPTID_NAME
+		TASK_NO,TASKTYPE,POSTID,POSTID_NAME,PLANID,PLANID_NAME,PROCESSID,PROCESSID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,USERID,USERID_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME,RELEASED_TIME,DEPTID,DEPTID_NAME
 	</sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -78,7 +80,7 @@
 
     <insert id="insert" parameterType="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskHeadVO">
 		insert into PRM_TASK (
-		TASK_NO,TASKTYPE,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,USERID,USERID_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME,RELEASED_TIME,DEPTID,DEPTID_NAME
+		TASK_NO,TASKTYPE,POSTID,POSTID_NAME,PLANID,PLANID_NAME,PROCESSID,PROCESSID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,USERID,USERID_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME,RELEASED_TIME,DEPTID,DEPTID_NAME
 		)
 		values (
 		#{task_no,jdbcType=VARCHAR},
@@ -87,6 +89,8 @@
 		#{postid_name,jdbcType=VARCHAR},
 		#{planid,jdbcType=VARCHAR},
 		#{planid_name,jdbcType=VARCHAR},
+		#{processid,jdbcType=VARCHAR},
+		#{processid_name,jdbcType=VARCHAR},
 		#{team,jdbcType=VARCHAR},
 		#{team_name,jdbcType=VARCHAR},
 		#{shift,jdbcType=VARCHAR},
@@ -116,7 +120,7 @@
 
     <insert id="batchInsert" parameterType="java.util.List">
 		insert into PRM_TASK (
-		TASK_NO,TASKTYPE,POSTID,POSTID_NAME,PLANID,PLANID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,USERID,USERID_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME,RELEASED_TIME,DEPTID,DEPTID_NAME
+		TASK_NO,TASKTYPE,POSTID,POSTID_NAME,PLANID,PLANID_NAME,PROCESSID,PROCESSID_NAME,TEAM,TEAM_NAME,SHIFT,SHIFT_NAME,USERID,USERID_NAME,BILLSTATUS,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,CREATOR_NAME,MODIFIER_NAME,ASSIGN_TIME,RELEASED_TIME,DEPTID,DEPTID_NAME
 		)
 		values
 		<foreach collection="list" item="item" index="index"
@@ -128,6 +132,8 @@
 		#{item.postid_name,jdbcType=VARCHAR},
 		#{item.planid,jdbcType=VARCHAR},
 		#{item.planid_name,jdbcType=VARCHAR},
+		#{item.processid,jdbcType=VARCHAR},
+		#{item.processid_name,jdbcType=VARCHAR},
 		#{item.team,jdbcType=VARCHAR},
 		#{item.team_name,jdbcType=VARCHAR},
 		#{item.shift,jdbcType=VARCHAR},
@@ -175,6 +181,12 @@
 			</if>
 			<if test="planid_name != null">
 				PLANID_NAME,
+			</if>
+			<if test="processid != null">
+				PROCESSID,
+			</if>
+			<if test="processid_name != null">
+				PROCESSID_NAME,
 			</if>
 			<if test="team != null">
 				TEAM,
@@ -267,6 +279,12 @@
 			</if>
 			<if test="planid_name != null">
 				#{planid_name,jdbcType=VARCHAR},
+			</if>
+			<if test="processid != null">
+				#{processid,jdbcType=VARCHAR},
+			</if>
+			<if test="processid_name != null">
+				#{processid_name,jdbcType=VARCHAR},
 			</if>
 			<if test="team != null">
 				#{team,jdbcType=VARCHAR},
@@ -363,6 +381,12 @@
 			<if test="planid_name != null">
 				PLANID_NAME = #{planid_name,jdbcType=VARCHAR},
 			</if>
+			<if test="processid != null">
+				PROCESSID = #{processid,jdbcType=VARCHAR},
+			</if>
+			<if test="processid_name != null">
+				PROCESSID_NAME = #{processid_name,jdbcType=VARCHAR},
+			</if>
 			<if test="team != null">
 				TEAM = #{team,jdbcType=VARCHAR},
 			</if>
@@ -448,6 +472,8 @@
 				POSTID_NAME = #{postid_name,jdbcType=VARCHAR},
 				PLANID = #{planid,jdbcType=VARCHAR},
 				PLANID_NAME = #{planid_name,jdbcType=VARCHAR},
+				PROCESSID = #{processid,jdbcType=VARCHAR},
+				PROCESSID_NAME = #{processid_name,jdbcType=VARCHAR},
 				TEAM = #{team,jdbcType=VARCHAR},
 				TEAM_NAME = #{team_name,jdbcType=VARCHAR},
 				SHIFT = #{shift,jdbcType=VARCHAR},
@@ -487,6 +513,8 @@
 				POSTID_NAME = #{item.postid_name,jdbcType=VARCHAR},
 				PLANID = #{item.planid,jdbcType=VARCHAR},
 				PLANID_NAME = #{item.planid_name,jdbcType=VARCHAR},
+				PROCESSID = #{item.processid,jdbcType=VARCHAR},
+				PROCESSID_NAME = #{item.processid_name,jdbcType=VARCHAR},
 				TEAM = #{item.team,jdbcType=VARCHAR},
 				TEAM_NAME = #{item.team_name,jdbcType=VARCHAR},
 				SHIFT = #{item.shift,jdbcType=VARCHAR},
@@ -551,10 +579,13 @@
 					and  '${search.searchMap.endtime}'>=to_char(ASSIGN_TIME,'YYYY-MM-DD')
 				</if>
 				<if test="search.searchMap.team!=null">
-					and postid_name	like '%'||#{search.searchMap.team,jdbcType=VARCHAR}||'%'
+					and team like '%'||#{search.searchMap.team,jdbcType=VARCHAR}||'%'
 				</if>
 				<if test="search.searchMap.shift!=null">
-					and postid_name	like '%'||#{search.searchMap.shift,jdbcType=VARCHAR}||'%'
+					and shift like '%'||#{search.searchMap.shift,jdbcType=VARCHAR}||'%'
+				</if>
+				<if test="search.searchMap.processid!=null">
+					and processid like '%'||#{search.searchMap.processid,jdbcType=VARCHAR}||'%'
 				</if>
 
 			</if>

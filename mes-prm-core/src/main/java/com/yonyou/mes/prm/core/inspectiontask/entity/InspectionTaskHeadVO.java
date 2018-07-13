@@ -17,6 +17,8 @@ public class InspectionTaskHeadVO extends MeSuperVO{
 	private String postid_name;
 	private String planid;
 	private String planid_name;
+	private String processid;
+	private String processid_name;
 	private String deptid;
 
 	public String getDeptid() {
@@ -97,6 +99,25 @@ public class InspectionTaskHeadVO extends MeSuperVO{
 
 	public void setPostid_name(String postid_name) {
 		this.postid_name = postid_name;
+	}
+	
+	public String getProcessid() {
+		return processid;
+	}
+
+
+	public void setProcessid(String processid) {
+		this.processid = processid;
+	}
+
+
+	public String getProcessid_name() {
+		return processid_name;
+	}
+
+
+	public void setProcessid_name(String processid_name) {
+		this.processid_name = processid_name;
 	}
 
 

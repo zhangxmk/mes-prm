@@ -171,6 +171,8 @@ public class InspectionPlanController extends BaseController {
                 nhead.setDeptid_name(head.getPk_dept_name());
                 nhead.setPlanid(head.getId());
                 nhead.setPlanid_name(head.getName());
+                nhead.setProcessid(head.getPk_process());
+                nhead.setProcessid_name(head.getPk_process_name());
                 nhead.setPostid(head.getPk_post());
                 nhead.setPostid_name(head.getPk_post_name());
                 nhead.setSysid(head.getSysid());

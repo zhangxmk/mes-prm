@@ -71,6 +71,7 @@ public class InspectionTaskController extends BaseController {
 			put("orgid", "orgid_name");// 工厂
 			put("planid", "planid_name");// 巡检方案
 			put("postid", "postid_name");// 岗位
+			put("processid", "processid_name");// 工段
 			put("deptid", "deptid_name");
 			put("shift", "shift_name");
 			put("userid", "userid_name");
