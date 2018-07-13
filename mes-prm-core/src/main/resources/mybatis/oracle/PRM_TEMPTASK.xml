@@ -9,6 +9,7 @@
 		<result column="VQCPROJECTCODE" property="vqcprojectcode"/>
 		<result column="VQCPROJECTNAME" property="vqcprojectname"/>
 		<result column="VBILLCODE" property="vbillcode"/>
+		<result column="DTSOURCE" property="dtsource"/>
 		<result column="CSTATIONID" property="cstationid"/>
 		<result column="VSTATIONNAME" property="vstationname"/>
 		<result column="ERRDESCRIBE" property="errdescribe"/>
@@ -27,7 +28,7 @@
 		<result column="MODIFIEDTIME" property="modifiedtime"/>
     </resultMap>
     <sql id="Base_Column_List">
-		ID,CDEPTID,VDEPTNAME,CQCPROJECTID,VQCPROJECTCODE,VQCPROJECTNAME,VBILLCODE,CSTATIONID,VSTATIONNAME,ERRDESCRIBE,TQCTIME,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
+		ID,CDEPTID,VDEPTNAME,CQCPROJECTID,VQCPROJECTCODE,VQCPROJECTNAME,VBILLCODE,DTSOURCE,CSTATIONID,VSTATIONNAME,ERRDESCRIBE,TQCTIME,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
 	</sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -65,7 +66,7 @@
 
     <insert id="insert" parameterType="com.yonyou.mes.prm.core.temptask.entity.TempTaskHeadVO">
 		insert into PRM_TEMPTASK (
-		ID,CDEPTID,VDEPTNAME,CQCPROJECTID,VQCPROJECTCODE,VQCPROJECTNAME,VBILLCODE,CSTATIONID,VSTATIONNAME,ERRDESCRIBE,TQCTIME,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
+		ID,CDEPTID,VDEPTNAME,CQCPROJECTID,VQCPROJECTCODE,VQCPROJECTNAME,VBILLCODE,DTSOURCE,CSTATIONID,VSTATIONNAME,ERRDESCRIBE,TQCTIME,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
 		)
 		values (
 		#{id,jdbcType=VARCHAR},
@@ -75,6 +76,7 @@
 		#{vqcprojectcode,jdbcType=VARCHAR},
 		#{vqcprojectname,jdbcType=VARCHAR},
 		#{vbillcode,jdbcType=VARCHAR},
+		#{dtsource,jdbcType=VARCHAR},
 		#{cstationid,jdbcType=VARCHAR},
 		#{vstationname,jdbcType=VARCHAR},
 		#{errdescribe,jdbcType=VARCHAR},
@@ -96,7 +98,7 @@
 
     <insert id="batchInsert" parameterType="java.util.List">
 		insert into PRM_TEMPTASK (
-		ID,CDEPTID,VDEPTNAME,CQCPROJECTID,VQCPROJECTCODE,VQCPROJECTNAME,CSTATIONID,VSTATIONNAME,ERRDESCRIBE,TQCTIME,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
+		ID,CDEPTID,VDEPTNAME,CQCPROJECTID,VQCPROJECTCODE,VQCPROJECTNAME,VBILLCODE,DTSOURCE,CSTATIONID,VSTATIONNAME,ERRDESCRIBE,TQCTIME,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
 		)
 		<foreach collection="list" item="item" index="index" separator="union" open="(" close=")">
 		select
@@ -149,6 +151,9 @@
 			</if>
 			<if test="vbillcode != null">
 				VBILLCODE,
+			</if>
+			<if test="dtsource != null">
+				DTSOURCE,
 			</if>
 			<if test="cstationid != null">
 				CSTATIONID,
@@ -220,6 +225,9 @@
 			</if>
 			<if test="vbillcode != null">
 				#{vbillcode,jdbcType=VARCHAR},
+			</if>
+			<if test="dtsource != null">
+				#{dtsource,jdbcType=VARCHAR},
 			</if>
 			<if test="cstationid != null">
 				#{cstationid,jdbcType=VARCHAR},
@@ -295,6 +303,9 @@
 			<if test="vbillcode != null">
 				VBILLCODE = #{vbillcode,jdbcType=VARCHAR},
 			</if>
+			<if test="dtsource != null">
+				DTSOURCE = #{dtsource,jdbcType=VARCHAR},
+			</if>
 			<if test="cstationid != null">
 				CSTATIONID = #{cstationid,jdbcType=VARCHAR},
 			</if>
@@ -356,6 +367,7 @@
 				VQCPROJECTCODE = #{vqcprojectcode,jdbcType=VARCHAR},
 				VQCPROJECTNAME = #{vqcprojectname,jdbcType=VARCHAR},
 				VBILLCODE = #{vbillcode,jdbcType=VARCHAR},
+				DTSOURCE = #{dtsource,jdbcType=VARCHAR},
 				CSTATIONID = #{cstationid,jdbcType=VARCHAR},
 				VSTATIONNAME = #{vstationname,jdbcType=VARCHAR},
 				ERRDESCRIBE = #{errdescribe,jdbcType=VARCHAR},
@@ -380,6 +392,7 @@
 				VQCPROJECTCODE = #{item.vqcprojectcode,jdbcType=VARCHAR},
 				VQCPROJECTNAME = #{item.vqcprojectname,jdbcType=VARCHAR},
 				VBILLCODE = #{item.vbillcode,jdbcType=VARCHAR},
+				DTSOURCE = #{item.dtsource,jdbcType=VARCHAR},
 				CSTATIONID = #{item.cstationid,jdbcType=VARCHAR},
 				VSTATIONNAME = #{item.vstationname,jdbcType=VARCHAR},
 				ERRDESCRIBE = #{item.errdescribe,jdbcType=VARCHAR},

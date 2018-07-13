@@ -623,8 +623,8 @@
 			   h.dr					dr,
 			   h.ts					ts,
 			   
-			   p.pk_region 			creator, 
-			   p.pk_region_name 	creator_name, 
+-- 			   p.pk_region 			creator,
+-- 			   p.pk_region_name 	creator_name,
 			   
 			   h.creationtime		creationtime,
 			   
@@ -633,7 +633,7 @@
 			   h.modifier_name		modifier_name,
 			   h.modifiedtime		modifiedtime,
 			   
-			   p.pk_region_name		pk_region_name,
+-- 			   p.pk_region_name		pk_region_name,
 			   p.routeflag			routeflag,
 			   h.userid 			userid,
 			   h.userid_name 		userid_name,
