@@ -203,6 +203,9 @@ public class InspectionTask4AppController {
                 if(!body.getFactuser().equals(userid)){
                     String rst = "{\"success\":false,\"errorinfo\":\"当前巡检项目已被认领\"}";
                     HttpClientUtil.writeJSON(response, rst);
+                }else{
+                    String rst = "{\"success\":true}";
+                    HttpClientUtil.writeJSON(response, rst);
                 }
             }
 
