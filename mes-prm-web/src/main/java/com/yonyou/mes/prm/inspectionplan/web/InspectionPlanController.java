@@ -379,9 +379,11 @@ public class InspectionPlanController extends BaseController {
             ids.add(((InspectionPlanHeadVO) vo.getHead()).getId());
             // 根据表头id查询主子表
             InspectionPlanBillVO[] billvos = this.service.query(ids);
+            
+            ((InspectionPlanHeadVO)billvos[0].getHead()).setPk_plan_version(((InspectionPlanHeadVO)vo.getHead()).getPk_plan_version());
 
             // 2.调用废除旧版本接口
-            this.service.disableoldplan((InspectionPlanHeadVO) billvos[0].getHead());
+            this.service.disableoldplan((InspectionPlanHeadVO) billvos[0].getHead(), (List<MeSuperVO>)billvos[0].getChildren(InspectionPlanBodyVO.class));
         } catch (Exception e) {
         	log.error(e.getMessage());
             result = ExceptionResult.process(e);

@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yonyou.iuap.mvc.type.SearchParams;
+import com.yonyou.me.entity.MeSuperVO;
 import com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanBillVO;
 import com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanBodyVO;
 import com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanHeadVO;
@@ -58,7 +59,7 @@ public interface IInspectionPlanService {
 	 * @param vo
 	 */
 	@Transactional
-	public void disableoldplan(InspectionPlanHeadVO vo);
+	public void disableoldplan(InspectionPlanHeadVO vo, List<MeSuperVO> vos);
 	
 	/**
 	 * 版本变更

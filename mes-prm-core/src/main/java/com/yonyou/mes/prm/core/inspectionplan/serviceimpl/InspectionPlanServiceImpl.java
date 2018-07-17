@@ -200,10 +200,14 @@ public class InspectionPlanServiceImpl implements IInspectionPlanService {
 	}
 
 	@Override
-	public void disableoldplan(InspectionPlanHeadVO vo) {
+	public void disableoldplan(InspectionPlanHeadVO vo, List<MeSuperVO> vos) {
 		// TODO 自动生成的方法存根
 		vo.setDefplan(0);
+		vo.setDr(1);
 		vo.setModifiedtime(new Timestamp(new Date().getTime()));
+		for(MeSuperVO bodyvo: vos){
+			bodyMapper.deleteByPrimaryKey(bodyvo.getId());
+		}
 		headMapper.updateByPrimaryKey(vo);
 	}
 	

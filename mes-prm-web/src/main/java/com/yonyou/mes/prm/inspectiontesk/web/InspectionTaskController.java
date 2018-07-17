@@ -85,7 +85,7 @@ public class InspectionTaskController extends BaseController {
 		{
 			put("projectid", "projectid_code");// 项目编码
 			put("project_contentid", "project_content");// 项目内容
-
+			put("factuser", "factuser_name");// 实际巡检人
 		}
 	};
 	/**

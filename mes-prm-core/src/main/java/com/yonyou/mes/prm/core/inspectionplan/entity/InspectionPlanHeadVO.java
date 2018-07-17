@@ -44,6 +44,7 @@ public class InspectionPlanHeadVO extends MeSuperVO{
 	private String routeflag;
 	private String iversion;
 	private String vnote;
+	private String pk_plan_version;
 	public InspectionPlanHeadVO() {
 	}
     
@@ -72,6 +73,14 @@ public class InspectionPlanHeadVO extends MeSuperVO{
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+	
+	public String getPk_plan_version() {
+		return this.pk_plan_version;
+	}
+
+	public void setPk_plan_version(String pk_plan_version) {
+		this.pk_plan_version = pk_plan_version;
 	}
 
 
