@@ -9,7 +9,7 @@ public class InspectionProjectBodyVO extends MeSuperVO {
 	
 //	public static final String PARENTID = "cparentid";
 
-	
+
 	private String cprjcontent;
 	private String cprjcontent_name;
 	private String prjcontent;
@@ -36,6 +36,7 @@ public class InspectionProjectBodyVO extends MeSuperVO {
 	private String modifier_name;
 
 	public InspectionProjectBodyVO() {
+//		PARENTID = "cparentid";
 	}
 
 	

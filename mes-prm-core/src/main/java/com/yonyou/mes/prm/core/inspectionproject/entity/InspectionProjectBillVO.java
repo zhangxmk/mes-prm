@@ -21,7 +21,7 @@ public class InspectionProjectBillVO extends AbstractMeBillVO {
 
 	@Override
 	protected void initChildrenFK() {
-		this.addFK(InspectionProjectBodyVO.class, InspectionProjectBodyVO.PARENTID);
+		this.addFK(InspectionProjectBodyVO.class, "cparentid");
 	}
 
 	@Override
