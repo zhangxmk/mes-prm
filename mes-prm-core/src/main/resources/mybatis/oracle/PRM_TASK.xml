@@ -552,7 +552,7 @@
 		from PRM_TASK where DR=0
 		<if test="search != null">
 			<if test="search!=null and search.searchMap!=null">
-				<if test="search.searchMap.orgid!=null">
+				<if test="search.searchMap.orgid!=null and search.searchMap.orgid!=''">
 					and orgid_name like '%'||#{search.searchMap.orgid,jdbcType=VARCHAR}||'%'
 				</if>
 				<if test="search.searchMap.task_no!=null and search.searchMap.task_no!=''">
@@ -564,7 +564,7 @@
 				<if test="search.searchMap.planid!=null and search.searchMap.planid!=''">
 					and planid	like '%'||#{search.searchMap.planid,jdbcType=VARCHAR}||'%'
 				</if>
-				<if test="search.searchMap.billstatus!=null and search.searchMap.billstatus.size>0">
+				<if test="search.searchMap.billstatus!=null and search.searchMap.billstatus!='' and search.searchMap.billstatus.size>0">
 					and BILLSTATUS in
 					<foreach collection="search.searchMap.billstatus" item="item" index="index"
 							 separator="," open="(" close=")">
@@ -578,13 +578,13 @@
 				<if test="search.searchMap.endtime!=null and search.searchMap.endtime!=''">
 					and  '${search.searchMap.endtime}'>=to_char(ASSIGN_TIME,'YYYY-MM-DD')
 				</if>
-				<if test="search.searchMap.team!=null">
+				<if test="search.searchMap.team!=null and search.searchMap.team!=''">
 					and team like '%'||#{search.searchMap.team,jdbcType=VARCHAR}||'%'
 				</if>
-				<if test="search.searchMap.shift!=null">
+				<if test="search.searchMap.shift!=null and search.searchMap.shift!=''">
 					and shift like '%'||#{search.searchMap.shift,jdbcType=VARCHAR}||'%'
 				</if>
-				<if test="search.searchMap.processid!=null">
+				<if test="search.searchMap.processid!=null and search.searchMap.processid!=''">
 					and processid like '%'||#{search.searchMap.processid,jdbcType=VARCHAR}||'%'
 				</if>
 
