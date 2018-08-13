@@ -128,8 +128,8 @@ public class InspectionTask4AppController {
                     }
                     for (InspectionTaskBodyVO tvo :
                             bodys) {
-//                        tvo.setFvaluetype(prjmap.get(tvo.getProjectid()+tvo.getCrowno()).getFvaluetype());
-                        tvo.setFvaluetype(1);
+                        tvo.setFvaluetype(prjmap.get(tvo.getProjectid()+tvo.getCrowno()).getFvaluetype());
+//                        tvo.setFvaluetype(1);
                     }
 
                     //设置表头表体
