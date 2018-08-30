@@ -19,6 +19,7 @@ public class InspectionTaskBodyVO extends MeSuperVO{
 	private Integer fact_order;
 	private Integer crowno;
 	private Integer project_status;
+	private String prjcontent;
 	private String project_content;
 	private String project_contentid;
 	private String judge_standard;
@@ -138,6 +139,14 @@ public class InspectionTaskBodyVO extends MeSuperVO{
 		this.crowno = crowno;
 	}
 
+	public String getPrjcontent() {
+		return this.prjcontent;
+	}
+
+	public void setPrjcontent(String prjcontent) {
+		this.prjcontent = prjcontent;
+	}
+	
 	public String getProject_content() {
 		return this.project_content;
 	}

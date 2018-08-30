@@ -10,6 +10,7 @@
         <result column="PROJECTID_NAME" property="projectid_name"/>
         <result column="FACT_ORDER" property="fact_order"/>
         <result column="PROJECT_STATUS" property="project_status"/>
+        <result column="PRJCONTENT" property="prjcontent"/>
         <result column="PROJECT_CONTENT" property="project_content"/>
         <result column="PROJECT_CONTENTID" property="project_contentid"/>
         <result column="JUDGE_STANDARD" property="judge_standard"/>
@@ -37,7 +38,7 @@
         <result column="FVALUETYPE" property="fvaluetype"/>
     </resultMap>
     <sql id="Base_Column_List">
-		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,CROWNO,FACTUSER,FACTUSER_NAME,PROJECT_CONTENT,PROJECT_CONTENTID,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,COMPLETE_TIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
+		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,CROWNO,FACTUSER,FACTUSER_NAME,PRJCONTENT,PROJECT_CONTENT,PROJECT_CONTENTID,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,COMPLETE_TIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
 	</sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap"
             parameterType="java.lang.String">
@@ -64,7 +65,7 @@
 
     <insert id="insert" parameterType="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBodyVO">
 		insert into PRM_TASK_B (
-		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,PROJECT_CONTENTID,CROWNO,FACTUSER,FACTUSER_NAME,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,COMPLETE_TIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
+		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PRJCONTENT,PROJECT_CONTENT,PROJECT_CONTENTID,CROWNO,FACTUSER,FACTUSER_NAME,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,COMPLETE_TIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
 		)
 		values (
 		#{pk_task,jdbcType=VARCHAR},
@@ -74,6 +75,7 @@
 		#{projectid_name,jdbcType=VARCHAR},
 		#{fact_order,jdbcType=INTEGER},
 		#{project_status,jdbcType=INTEGER},
+		#{prjcontent,jdbcType=VARCHAR},
 		#{project_content,jdbcType=VARCHAR},
 		#{project_contentid,jdbcType=VARCHAR},
 		#{crowno,jdbcType=INTEGER},
@@ -104,7 +106,7 @@
 
     <insert id="batchInsert" parameterType="java.util.List">
         insert into PRM_TASK_B (
-        PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PROJECT_CONTENT,PROJECT_CONTENTID,CROWNO,FACTUSER,FACTUSER_NAME,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,COMPLETE_TIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
+        PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PRJCONTENT,PROJECT_CONTENT,PROJECT_CONTENTID,CROWNO,FACTUSER,FACTUSER_NAME,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,COMPLETE_TIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
         )
         <foreach collection="list" item="item" index="index" separator="union" open="(" close=")">
             select
@@ -115,6 +117,7 @@
             #{item.projectid_name,jdbcType=VARCHAR},
             #{item.fact_order,jdbcType=INTEGER},
             #{item.project_status,jdbcType=INTEGER},
+            #{item.prjcontent,jdbcType=VARCHAR},
             #{item.project_content,jdbcType=VARCHAR},
             #{item.project_contentid,jdbcType=VARCHAR},
             #{item.crowno,jdbcType=INTEGER},
@@ -176,6 +179,9 @@
             </if>
             <if test="project_status != null">
                 PROJECT_STATUS,
+            </if>
+            <if test="prjcontent != null">
+                PRJCONTENT,
             </if>
             <if test="project_content != null">
                 PROJECT_CONTENT,
@@ -274,6 +280,9 @@
             </if>
             <if test="project_status != null">
                 #{project_status,jdbcType=INTEGER},
+            </if>
+            <if test="prjcontent != null">
+                #{prjcontent,jdbcType=VARCHAR},
             </if>
             <if test="project_content != null">
                 #{project_content,jdbcType=VARCHAR},
@@ -377,6 +386,9 @@
             <if test="project_status != null">
                 PROJECT_STATUS = #{project_status,jdbcType=INTEGER},
             </if>
+            <if test="prjcontent != null">
+                PRJCONTENT = #{prjcontent,jdbcType=VARCHAR},
+            </if>
             <if test="project_content != null">
                 PROJECT_CONTENT = #{project_content,jdbcType=VARCHAR},
             </if>
@@ -460,6 +472,7 @@
         FACTUSER = #{factuser,jdbcType=VARCHAR},
         FACTUSER_NAME = #{factuser_name,jdbcType=VARCHAR},
         PROJECT_STATUS = #{project_status,jdbcType=INTEGER},
+        PRJCONTENT = #{prjcontent,jdbcType=VARCHAR},
         PROJECT_CONTENT = #{project_content,jdbcType=VARCHAR},
         PROJECT_CONTENTID = #{project_contentid,jdbcType=VARCHAR},
         JUDGE_STANDARD = #{judge_standard,jdbcType=VARCHAR},
@@ -499,6 +512,7 @@
                 PROJECTID_NAME = #{item.projectid_name,jdbcType=VARCHAR},
                 FACT_ORDER = #{item.fact_order,jdbcType=INTEGER},
                 PROJECT_STATUS = #{item.project_status,jdbcType=INTEGER},
+                PRJCONTENT = #{item.prjcontent,jdbcType=VARCHAR},
                 PROJECT_CONTENT = #{item.project_content,jdbcType=VARCHAR},
                 PROJECT_CONTENTID = #{item.project_contentid,jdbcType=VARCHAR},
                 CROWNO = #{item.crowno,jdbcType=INTEGER},
@@ -560,6 +574,7 @@
 		         PLANB.ER_PROJECT_NAME PROJECTID_NAME,
 		         PROJECTB.CPRJCONTENT  PROJECT_CONTENTID,
 		         PROJECTB.CPRJCONTENT_NAME  PROJECT_CONTENT,
+		         PROJECTB.PRJCONTENT  PRJCONTENT,
 		         PROJECTB.CJUDSTD      JUDGE_STANDARD,
 		         PLANB.PLAN_ORDER      PLAN_ORDER,
 		         PROJECTB.CROWNO       CROWNO
@@ -596,6 +611,7 @@
         b.project_status project_status,
         b.project_content project_content,
         b.project_contentid project_contentid,
+        b.prjcontent prjcontent,
         b.judge_standard judge_standard,
         b.polling_value polling_value,
         b.polling_result polling_result,
@@ -662,6 +678,9 @@
                 </if>
                 <if test="item.project_status != null">
                     PROJECT_STATUS = #{item.project_status,jdbcType=INTEGER},
+                </if>
+                <if test="item.prjcontent != null">
+                    PRJCONTENT = #{item.prjcontent,jdbcType=VARCHAR},
                 </if>
                 <if test="item.project_content != null">
                     PROJECT_CONTENT = #{item.project_content,jdbcType=VARCHAR},
