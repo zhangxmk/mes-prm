@@ -19,6 +19,7 @@ import com.yonyou.mes.prm.core.inspectionproject.entity.InspectionProjectBodyVO;
 import com.yonyou.mes.prm.core.inspectiontask.repository.TaskBodyMapper;
 import com.yonyou.mes.prm.core.inspectiontask.repository.TaskBodyPersistent;
 import com.yonyou.mes.prm.core.inspectiontask.repository.TaskHeadPersistent;
+
 import nc.vo.pub.VOStatus;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -26,8 +27,10 @@ import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -216,9 +219,10 @@ public class InspectionTask4AppController {
     }
 
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
-    public void submit(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public @ResponseBody Object submit(@RequestBody String param) throws Exception {
+    	Result result = new Result();
         try {
-            String param = request.getParameter("param");
+            //String param = request.getParameter("param");
             JSONObject head = JSONObject.fromObject(param);
             JSONArray bodys = JSONArray.fromObject(head.getString("bitems"));
             HashMap<String, InspectionTaskBodyVO> hmap = new HashMap<String, InspectionTaskBodyVO>();
@@ -359,14 +363,17 @@ public class InspectionTask4AppController {
             service.update(billVO);
 
             String rst = "{\"success\":true}";
-            HttpClientUtil.writeJSON(response, rst);
+            result.setData(billVO);
+            //HttpClientUtil.writeJSON(response, rst);
         } catch (Exception e) {
-            try {
-                HttpClientUtil.writeJSON(response, e.getMessage().toString());
-            } catch (Exception ex) {
-                ExceptionUtils.wrapException(ex);
-            }
+        	result = ExceptionResult.process(e);
+//            try {
+//                HttpClientUtil.writeJSON(response, e.getMessage().toString());
+//            } catch (Exception ex) {
+//                ExceptionUtils.wrapException(ex);
+//            }
         }
+        return result ;
     }
 
     private String inSql(String... ids) {
