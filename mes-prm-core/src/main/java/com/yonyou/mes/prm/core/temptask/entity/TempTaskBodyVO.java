@@ -15,6 +15,8 @@ public class TempTaskBodyVO extends MeSuperVO {
 	private String vrowno;
 	private String vprjcontent;
 	private String vprjcriterion;
+	private String project_content;
+	private String project_contentid;
 	private String vqcvalue;
 	private String rdbvalue;
 	private String errdescribe;
@@ -25,6 +27,22 @@ public class TempTaskBodyVO extends MeSuperVO {
 
 	public void setErrdescribe(String errdescribe) {
 		this.errdescribe = errdescribe;
+	}
+	
+	public String getProject_content() {
+		return project_content;
+	}
+
+	public void setProject_content(String project_content) {
+		this.project_content = project_content;
+	}
+	
+	public String getProject_contentid() {
+		return project_contentid;
+	}
+
+	public void setProject_contentid(String project_contentid) {
+		this.project_contentid = project_contentid;
 	}
 	
 	public String getRdbvalue() {
