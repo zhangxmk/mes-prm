@@ -564,7 +564,7 @@
 				<if test="search.searchMap.planid!=null and search.searchMap.planid!=''">
 					and planid	like '%'||#{search.searchMap.planid,jdbcType=VARCHAR}||'%'
 				</if>
-				<if test="search.searchMap.billstatus!=null and search.searchMap.billstatus!='' and search.searchMap.billstatus.size>0">
+				<if test="search.searchMap.billstatus!=null and search.searchMap.billstatus.size>0">
 					and BILLSTATUS in
 					<foreach collection="search.searchMap.billstatus" item="item" index="index"
 							 separator="," open="(" close=")">
