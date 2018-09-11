@@ -273,6 +273,16 @@ public class InspectionTask4AppController {
                 if (fact_order != null && fact_order != "null") {
                     bodyVO.setFact_order(Integer.parseInt(fact_order));
                 }
+                
+                String factuser = body.getString("factuser");
+                if (factuser != null && factuser != "null") {
+                    bodyVO.setFactuser(factuser);
+                }
+                
+                String factuser_name = body.getString("factuser_name");
+                if (factuser_name != null && factuser_name != "null") {
+                    bodyVO.setFactuser_name(factuser_name);
+                }
 
                 hmap.put(body.getString("id"), bodyVO);
             }
@@ -326,6 +336,16 @@ public class InspectionTask4AppController {
                     Integer fact_order = bodyVO.getFact_order();
                     if (fact_order != null) {
                         body.setFact_order(fact_order);
+                    }
+                    
+                    String factuser = bodyVO.getFactuser();
+                    if (factuser != null && factuser != "null") {
+                        body.setFactuser(factuser);
+                    }
+                    
+                    String factuser_name = bodyVO.getFactuser_name();
+                    if (factuser_name != null && factuser_name != "null") {
+                        body.setFactuser_name(factuser_name);
                     }
 
                     body.setProject_status(3);
