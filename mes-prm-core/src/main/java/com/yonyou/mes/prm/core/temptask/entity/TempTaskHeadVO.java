@@ -44,15 +44,6 @@ public class TempTaskHeadVO extends MeSuperVO{
 	private String modifier_name;
 	private Timestamp modifiedtime;
 
-	public String getErrdescribe() {
-		return errdescribe;
-	}
-
-	public void setErrdescribe(String errdescribe) {
-		this.errdescribe = errdescribe;
-	}
-
-	private String errdescribe;
 
 	public TempTaskHeadVO() {
 	}

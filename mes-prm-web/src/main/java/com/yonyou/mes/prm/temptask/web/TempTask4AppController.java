@@ -194,11 +194,6 @@ public class TempTask4AppController {
                 headVO.setVstationname(h_vstationname);
             }
 
-            String h_errdescribe = head.getString("errdescribe");
-            if (h_errdescribe != "null") {
-                headVO.setErrdescribe(h_errdescribe);
-            }
-
             String h_vqcprojectcode = head.getString("vqcprojectcode");
             if (h_vqcprojectcode != "null") {
                 headVO.setVqcprojectcode(h_vqcprojectcode);
@@ -239,6 +234,11 @@ public class TempTask4AppController {
                     bodyVO.setVprjcontent(b_vprjcontent);
                 }
 
+                String errdescribe = body.getString("errdescribe");
+                if (errdescribe != "null") {
+                    bodyVO.setErrdescribe(errdescribe);
+                }
+                
                 String b_vprjcriterion = body.getString("vprjcriterion");
                 if (b_vprjcriterion != "null") {
                     bodyVO.setVprjcriterion(b_vprjcriterion);

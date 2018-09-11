@@ -7,6 +7,7 @@
 		<result column="VPRJCONTENT" property="vprjcontent"/>
 		<result column="VPRJCRITERION" property="vprjcriterion"/>
 		<result column="VQCVALUE" property="vqcvalue"/>
+		<result column="ERRDESCRIBE" property="errdescribe"/>
 		<result column="ISQUALIFIED" property="isqualified"/>
 		<result column="RDBVALUE" property="rdbvalue"/>
 		<result column="PK_TEMPTASK" property="pk_temptask"/>
@@ -24,7 +25,7 @@
 		<result column="MODIFIEDTIME" property="modifiedtime"/>
     </resultMap>
     <sql id="Base_Column_List">
-		ID,VROWNO,VPRJCONTENT,VPRJCRITERION,VQCVALUE,ISQUALIFIED,RDBVALUE,PK_TEMPTASK,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
+		ID,VROWNO,VPRJCONTENT,VPRJCRITERION,VQCVALUE,ERRDESCRIBE,ISQUALIFIED,RDBVALUE,PK_TEMPTASK,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
 	</sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
@@ -56,7 +57,7 @@
 
     <insert id="insert" parameterType="com.yonyou.mes.prm.core.temptask.entity.TempTaskBodyVO">
 		insert into PRM_TEMPTASK_B (
-		ID,VROWNO,VPRJCONTENT,VPRJCRITERION,VQCVALUE,ISQUALIFIED,RDBVALUE,PK_TEMPTASK,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
+		ID,VROWNO,VPRJCONTENT,VPRJCRITERION,VQCVALUE,ERRDESCRIBE,ISQUALIFIED,RDBVALUE,PK_TEMPTASK,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
 		)
 		values (
 		#{id,jdbcType=VARCHAR},
@@ -64,6 +65,7 @@
 		#{vprjcontent,jdbcType=VARCHAR},
 		#{vprjcriterion,jdbcType=VARCHAR},
 		#{vqcvalue,jdbcType=VARCHAR},
+		#{errdescribe,jdbcType=VARCHAR},
 		#{isqualified,jdbcType=INTEGER},
 		#{rdbvalue,jdbcType=VARCHAR},
 		#{pk_temptask,jdbcType=VARCHAR},
@@ -84,7 +86,7 @@
 
     <insert id="batchInsert" parameterType="java.util.List">
 		insert into PRM_TEMPTASK_B (
-		ID,VROWNO,VPRJCONTENT,VPRJCRITERION,VQCVALUE,ISQUALIFIED,RDBVALUE,PK_TEMPTASK,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
+		ID,VROWNO,VPRJCONTENT,VPRJCRITERION,VQCVALUE,ERRDESCRIBE,ISQUALIFIED,RDBVALUE,PK_TEMPTASK,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATOR_NAME,CREATIONTIME,MODIFIER,MODIFIER_NAME,MODIFIEDTIME
 		)
 		<foreach collection="list" item="item" index="index" separator="union" open="(" close=")">
 		select
@@ -93,6 +95,7 @@
 		#{item.vprjcontent,jdbcType=VARCHAR},
 		#{item.vprjcriterion,jdbcType=VARCHAR},
 		#{item.vqcvalue,jdbcType=VARCHAR},
+		#{item.errdescribe,jdbcType=VARCHAR},
 			#{item.isqualified,jdbcType=INTEGER},
 			#{item.rdbvalue,jdbcType=VARCHAR},
 		#{item.pk_temptask,jdbcType=VARCHAR},
@@ -128,6 +131,9 @@
 			</if>
 			<if test="vqcvalue != null">
 				VQCVALUE,
+			</if>
+			<if test="errdescribe != null">
+				ERRDESCRIBE,
 			</if>
 			<if test="isqualified != null">
 				ISQUALIFIED,
@@ -190,6 +196,9 @@
 			</if>
 			<if test="vqcvalue != null">
 				#{vqcvalue,jdbcType=VARCHAR},
+			</if>
+			<if test="errdescribe != null">
+				#{errdescribe,jdbcType=VARCHAR},
 			</if>
 			<if test="isqualified != null">
 				#{isqualified,jdbcType=INTEGER},
@@ -256,6 +265,9 @@
 			<if test="vqcvalue != null">
 				VQCVALUE = #{vqcvalue,jdbcType=VARCHAR},
 			</if>
+			<if test="errdescribe != null">
+				ERRDESCRIBE = #{errdescribe,jdbcType=VARCHAR},
+			</if>
 			<if test="isqualified != null">
 				ISQUALIFIED = #{isqualified,jdbcType=INTEGER},
 			</if>
@@ -312,6 +324,7 @@
 				VPRJCONTENT = #{vprjcontent,jdbcType=VARCHAR},
 				VPRJCRITERION = #{vprjcriterion,jdbcType=VARCHAR},
 				VQCVALUE = #{vqcvalue,jdbcType=VARCHAR},
+				ERRDESCRIBE = #{errdescribe,jdbcType=VARCHAR},
 				ISQUALIFIED = #{isqualified,jdbcType=INTEGER},
 			  	RDBVALUE = #{rdbvalue,jdbcType=VARCHAR},
 				TS = #{ts,jdbcType=TIMESTAMP},
@@ -332,6 +345,7 @@
 				VPRJCONTENT = #{item.vprjcontent,jdbcType=VARCHAR},
 				VPRJCRITERION = #{item.vprjcriterion,jdbcType=VARCHAR},
 				VQCVALUE = #{item.vqcvalue,jdbcType=VARCHAR},
+				ERRDESCRIBE = #{item.errdescribe,jdbcType=VARCHAR},
 				ISQUALIFIED = #{item.isqualified,jdbcType=INTEGER},
 				RDBVALUE = #{item.rdbvalue,jdbcType=VARCHAR},
 				PK_TEMPTASK = #{item.pk_temptask,jdbcType=VARCHAR},

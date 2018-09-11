@@ -17,7 +17,16 @@ public class TempTaskBodyVO extends MeSuperVO {
 	private String vprjcriterion;
 	private String vqcvalue;
 	private String rdbvalue;
+	private String errdescribe;
 
+	public String getErrdescribe() {
+		return errdescribe;
+	}
+
+	public void setErrdescribe(String errdescribe) {
+		this.errdescribe = errdescribe;
+	}
+	
 	public String getRdbvalue() {
 		return rdbvalue;
 	}
