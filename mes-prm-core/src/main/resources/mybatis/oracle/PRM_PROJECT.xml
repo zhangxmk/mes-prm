@@ -59,7 +59,7 @@
 			</otherwise>
 		</choose>
 		</if>
-		order by ORGID,CODE
+		order by ORGID,PK_DEPT,PK_PROCESS,CODE
 	</select>
 	
 	<select id="selectByIDs" resultMap="BaseResultMap"

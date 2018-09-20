@@ -63,22 +63,28 @@ public class StaTableController extends BaseController{
 		try {
 			SearchParams searchParams = new SearchParams();
 			net.sf.json.JSONObject json = net.sf.json.JSONObject.fromObject(ids);
+			Object deptid =  json.get("deptid");
+			Object team =  json.get("team");
+			Object shift =  json.get("shift");
+			Object postid =  json.get("postid");
 			Object deptid_name =  json.get("deptid_name");
-			Object team_name =  json.get("team_name");
-			Object shift_name =  json.get("shift_name");
-			Object postid_name =  json.get("postid_name");
+			Object team_name  =  json.get("team_name");
+			Object shift_name  =  json.get("shift_name");
+			Object postid_name  =  json.get("postid_name");
 			Object starttime =  json.get("starttime");
 			Object finishtime =  json.get("finishtime");
 			Object groupstr =  json.get("groupstr");
+			Object orderby =  json.get("orderby");
 			
 			Map<String,Object> searchmap = new HashMap<String, Object>();
-			searchmap.put("deptid_name", deptid_name);
-			searchmap.put("team_name", team_name);
-			searchmap.put("shift_name", shift_name);
-			searchmap.put("postid_name", postid_name);
+			searchmap.put("deptid", deptid);
+			searchmap.put("team", team);
+			searchmap.put("shift", shift);
+			searchmap.put("postid", postid);
 			searchmap.put("starttime", starttime);
 			searchmap.put("finishtime", finishtime);
 			searchmap.put("groupstr", groupstr);
+			searchmap.put("orderby", orderby);
 			searchParams.setSearchMap(searchmap);
 			
 			Page<TaskForTableVO> pageVOs = service.selectForStaTable(

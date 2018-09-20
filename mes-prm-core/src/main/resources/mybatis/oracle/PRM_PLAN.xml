@@ -512,9 +512,13 @@
 					<if test="search.searchMap.name!=null and search.searchMap.name!='' ">
 						and name like CONCAT(CONCAT('%', #{search.searchMap.name}), '%')
 					</if>
-					<if test="search.searchMap.creator_name!=null and search.searchMap.creator_name!='' ">
-						and creator_name like CONCAT(CONCAT('%', #{search.searchMap.creator_name}), '%')
+					<if test="search.searchMap.qry_deptid!=null and search.searchMap.qry_deptid!='' ">
+						and pk_dept = #{search.searchMap.qry_deptid}
 					</if>
+					<if test="search.searchMap.qry_processid!=null and search.searchMap.qry_processid!='' ">
+						and pk_process = #{search.searchMap.qry_processid}
+					</if>
+					order by orgid,pk_dept,pk_process,code
         		</otherwise>
         	</choose>
 		</if>

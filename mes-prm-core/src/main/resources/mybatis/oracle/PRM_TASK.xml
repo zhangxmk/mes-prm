@@ -587,6 +587,9 @@
 				<if test="search.searchMap.processid!=null and search.searchMap.processid!=''">
 					and processid like '%'||#{search.searchMap.processid,jdbcType=VARCHAR}||'%'
 				</if>
+				<if test="search.searchMap.deptid!=null and search.searchMap.deptid!=''">
+					and deptid like '%'||#{search.searchMap.deptid,jdbcType=VARCHAR}||'%'
+				</if>
 
 			</if>
         </if>
@@ -651,17 +654,17 @@
 		select 
 		<if test="search != null">
 			<if test="search!=null and search.searchMap!=null">
-				<if test="search.searchMap.deptid_name==null">
-					deptid_name,
+				<if test="search.searchMap.deptid==null">
+					deptid, deptid_name,
 				</if>
-				<if test="search.searchMap.team_name==null">
-					team_name,
+				<if test="search.searchMap.team==null">
+					team, team_name,
 				</if>
-				<if test="search.searchMap.shift_name==null">
-					shift_name,
+				<if test="search.searchMap.shift==null">
+					shift, shift_name,
 				</if>
-				<if test="search.searchMap.postid_name==null">
-					postid_name,
+				<if test="search.searchMap.postid==null">
+					postid, postid_name,
 				</if>
 
 			</if>
@@ -675,24 +678,24 @@
 		and to_date('${search.searchMap.finishtime}','yyyy-mm-dd hh24:mi:ss')
 		<if test="search != null">
 			<if test="search!=null and search.searchMap!=null">
-				<if test="search.searchMap.deptid_name!=null">
-					and deptid_name like '%${search.searchMap.deptid_name}%'
+				<if test="search.searchMap.deptid!=null">
+					and deptid like '%${search.searchMap.deptid}%'
 				</if>
-				<if test="search.searchMap.team_name!=null">
-					and team_name like '%${search.searchMap.team_name}%'
+				<if test="search.searchMap.team!=null">
+					and team like '%${search.searchMap.team}%'
 				</if>
-				<if test="search.searchMap.shift_name!=null">
-					and shift_name	like '%${search.searchMap.shift_name}%'
+				<if test="search.searchMap.shift!=null">
+					and shift like '%${search.searchMap.shift}%'
 				</if>
-				<if test="search.searchMap.postid_name!=null">
-					and postid_name	like '%${search.searchMap.postid_name}%'
+				<if test="search.searchMap.postid!=null">
+					and postid like '%${search.searchMap.postid}%'
 				</if>
 			</if>
         </if>
 		<if test="search != null">
 			<if test="search!=null and search.searchMap!=null">
 				<if test="search.searchMap.groupstr!=null">
-					${search.searchMap.groupstr}
+					${search.searchMap.groupstr} ${search.searchMap.orderby}
 				</if>
 			</if>
         </if>

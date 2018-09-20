@@ -361,7 +361,15 @@
 		resultType="java.util.List">
         SELECT
 		<include refid="Base_Column_List" />
-		from PRM_PLAN_B where DR=0
+		from PRM_PLAN_B where 
+		<choose>
+			<when test="search.searchMap.defplan!=null and search.searchMap.defplan!='' and search.searchMap.defplan != 0">
+        				DR=0
+        	</when>
+        	<otherwise>
+        				DR=1
+        	</otherwise>
+		</choose>
 		<if test="search.searchMap != null">
 			<if
 				test="search.searchMap.id!=null and search.searchMap.id!='' ">

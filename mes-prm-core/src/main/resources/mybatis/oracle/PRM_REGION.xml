@@ -434,7 +434,7 @@
 				 and orgid_name like '%${search.searchMap.orgid_name}%'
 			</if>
 		</if>
-		order by code
+		order by ORGID,PK_WORKSHOP,PK_SECTION,CODE
     </select>
 
 </mapper>
