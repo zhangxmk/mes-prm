@@ -206,7 +206,7 @@ public class InspectionPlanServiceImpl implements IInspectionPlanService {
 		vo.setDr(1);
 		vo.setModifiedtime(new Timestamp(new Date().getTime()));
 		for(MeSuperVO bodyvo: vos){
-			bodyMapper.deleteByPrimaryKey(bodyvo.getId());
+			bodyMapper.deleteByPrimaryKeyForVersion(bodyvo.getId());
 		}
 		headMapper.updateByPrimaryKey(vo);
 	}

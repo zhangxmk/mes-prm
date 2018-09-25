@@ -45,6 +45,11 @@
 		set dr = 1
 		where ID = #{id}
 	</delete>
+	<delete id="deleteByPrimaryKeyForVersion" parameterType="java.lang.String">
+		update PRM_PLAN_B 
+		set dr = 2
+		where ID = #{id}
+	</delete>
     <delete id="batchDeleteByPrimaryKey" parameterType="java.util.List">
 		update PRM_PLAN_B 
 		set dr = 1
@@ -367,7 +372,7 @@
         				DR=0
         	</when>
         	<otherwise>
-        				DR=1
+        				DR=2
         	</otherwise>
 		</choose>
 		<if test="search.searchMap != null">

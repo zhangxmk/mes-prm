@@ -14,6 +14,8 @@ import com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanBodyVO;
 @MyBatisRepository
 public interface InspectionPlanBodyMapper {
     int deleteByPrimaryKey(String id);
+    
+    int deleteByPrimaryKeyForVersion(String id);
 
     int insert(InspectionPlanBodyVO record);
 
