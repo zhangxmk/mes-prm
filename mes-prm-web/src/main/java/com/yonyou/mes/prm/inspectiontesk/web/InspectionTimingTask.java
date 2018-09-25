@@ -9,8 +9,10 @@ import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.yonyou.me.constance.StatusConst;
 import com.yonyou.me.entity.MeSuperVO;
+import com.yonyou.me.utils.context.LoginUtil;
 import com.yonyou.me.utils.service.IBaseQueryBS;
 import com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanBillVO;
 import com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanBodyVO;
@@ -101,7 +103,10 @@ public class InspectionTimingTask {
     }
 
     private void executeTask(String planid) throws Exception {
+
         logger.error("任务执行开始");
+
+        new LoginUtil().login_iuapAP("{'username':'zyj','password':'123qwe'}");
 
         List<InspectionPlanHeadVO> plans = qrysrv.queryVOsBySql("select * from prm_plan where dr=0 and defplan=1 and enablestate=1", InspectionPlanHeadVO.class);
         List<String> planids = new ArrayList<>();
@@ -132,9 +137,13 @@ public class InspectionTimingTask {
         for (InspectionPlanHeadVO phead :
                 plans) {
             if (tmap.containsKey(phead.getId())) {
-                LocalTime now = LocalTime.now(TimeZone.getDefault().toZoneId());
-                now = now.minusHours(phead.getCycle().longValue());
-                boolean cancreate = now.compareTo(LocalTime.parse(tmap.get(phead.getId()).getCreationtime().toString().substring(11)))<0?false:true;
+                Date now = new Date();
+                Date origin = new Date(now.getTime()-(1000*60*60*phead.getCycle().longValue())-1000*60*30);
+//                LocalTime now = LocalTime.now(TimeZone.getDefault().toZoneId());
+//                now = now.minusHours(phead.getCycle().longValue());
+
+                boolean cancreate = tmap.get(phead.getId()).getCreationtime().before(origin);
+//                cancreate = true;
                 if(cancreate){
                     if(tmap.get(phead.getId()).getBillstatus()==1||tmap.get(phead.getId()).getBillstatus()==2){
                         InspectionTaskHeadVO thead = tmap.get(phead.getId());
@@ -153,6 +162,10 @@ public class InspectionTimingTask {
                     nhead.setOrgid_name(head.getOrgid_name());
                     nhead.setDeptid(head.getPk_dept());
                     nhead.setDeptid_name(head.getPk_dept_name());
+                    nhead.setProcessid(head.getPk_process());
+                    nhead.setProcessid_name(head.getPk_process_name());
+                    nhead.setReleased_time(new Timestamp(now.getTime()-1000*60*30));
+                    nhead.setBillstatus(1);
                     nhead.setPlanid(head.getId());
                     nhead.setPlanid_name(head.getName());
                     nhead.setPostid(head.getPk_post());
@@ -178,11 +191,13 @@ public class InspectionTimingTask {
                             tbvo.setSysid(phead.getSysid());
                             tbvo.setTenantid(phead.getTenantid());
                             tbvo.setProjectid(phead.getId());
-                            tbvo.setProjectid_code(phead.getCode());
-                            tbvo.setProjectid_name(phead.getName());
+                            tbvo.setProjectid_code(pbody.getCode());
+                            tbvo.setProjectid_name(pbody.getName());
                             tbvo.setPlan_order(bodyvo.getPlan_order());
-                            tbvo.setProject_content(pbody.getCprjcontent());
+                            tbvo.setProject_content(pbody.getCprjcontent_name());//设备name
+                            tbvo.setProject_contentid(pbody.getCprjcontent());//设备
                             tbvo.setJudge_standard(pbody.getCjudstd());
+                            tbvo.setPrjcontent(pbody.getPrjcontent());//项目内容
                             tbvo.setProject_status(1);//下达
                             tbvo.setStatus(2);
                             nlist.add(tbvo);
@@ -202,18 +217,23 @@ public class InspectionTimingTask {
 
                 InspectionPlanHeadVO head = (InspectionPlanHeadVO) bill.getHead();
                 List<MeSuperVO> bodys = bill.getChildren(InspectionPlanBodyVO.class);
+                Date now = new Date();
 
                 InspectionTaskHeadVO nhead = new InspectionTaskHeadVO();
                 nhead.setOrgid(head.getOrgid());
                 nhead.setOrgid_name(head.getOrgid_name());
                 nhead.setDeptid(head.getPk_dept());
                 nhead.setDeptid_name(head.getPk_dept_name());
+                nhead.setProcessid(head.getPk_process());
+                nhead.setProcessid_name(head.getPk_process_name());
+                nhead.setBillstatus(1);
                 nhead.setPlanid(head.getId());
                 nhead.setPlanid_name(head.getName());
                 nhead.setPostid(head.getPk_post());
                 nhead.setPostid_name(head.getPk_post_name());
                 nhead.setSysid(head.getSysid());
                 nhead.setTenantid(head.getTenantid());
+                nhead.setReleased_time(new Timestamp(now.getTime()-1000*60*30));
                 nhead.setStatus(2);
 
                 List<InspectionTaskBodyVO> nlist = new ArrayList<>();
@@ -233,11 +253,13 @@ public class InspectionTimingTask {
                         tbvo.setSysid(phead.getSysid());
                         tbvo.setTenantid(phead.getTenantid());
                         tbvo.setProjectid(phead.getId());
-                        tbvo.setProjectid_code(phead.getCode());
-                        tbvo.setProjectid_name(phead.getName());
+                        tbvo.setProjectid_code(pbody.getCode());
+                        tbvo.setProjectid_name(pbody.getName());
                         tbvo.setPlan_order(bodyvo.getPlan_order());
-                        tbvo.setProject_content(pbody.getCprjcontent());
+                        tbvo.setProject_content(pbody.getCprjcontent_name());//设备name
+                        tbvo.setProject_contentid(pbody.getCprjcontent());//设备
                         tbvo.setJudge_standard(pbody.getCjudstd());
+                        tbvo.setPrjcontent(pbody.getPrjcontent());//项目内容
                         tbvo.setProject_status(1);//下达
                         tbvo.setStatus(2);
                         nlist.add(tbvo);
@@ -345,6 +367,8 @@ public class InspectionTimingTask {
         map.put("id", tasklogid);
         map.put("success", success);
         map.put("resultValue", msg);
+        com.alibaba.fastjson.JSONObject obj = new com.alibaba.fastjson.JSONObject();
+//        obj.put("dept",)
         Map<String, String> result = RestUtils.getInstance().doPostWithSign(url, map, Map.class);
 //	    System.out.println(result);
         logger.error(result.toString());
