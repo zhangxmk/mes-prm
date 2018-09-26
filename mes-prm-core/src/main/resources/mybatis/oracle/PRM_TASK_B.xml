@@ -634,6 +634,7 @@
         b.sysid sysid,
         b.orgid orgid,
         b.orgid_name orgid_name,
+        b.exceptionid exceptionid,
         b.ts ts,
         b.dr dr,
         b.creator creator,
