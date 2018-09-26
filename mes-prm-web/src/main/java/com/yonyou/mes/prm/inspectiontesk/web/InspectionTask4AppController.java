@@ -15,11 +15,13 @@ import com.yonyou.me.utils.repository.VOPersistent;
 import com.yonyou.me.utils.service.IBaseQueryBS;
 import com.yonyou.me.utils.service.bill.BillSaveService;
 import com.yonyou.me.utils.service.vo.VOSaveService;
+import com.yonyou.mes.daq.core.datacollect.service.IRealTimeDataService;
 import com.yonyou.mes.prm.core.inspectionproject.entity.InspectionProjectBodyVO;
 import com.yonyou.mes.prm.core.inspectiontask.repository.TaskBodyMapper;
 import com.yonyou.mes.prm.core.inspectiontask.repository.TaskBodyPersistent;
 import com.yonyou.mes.prm.core.inspectiontask.repository.TaskHeadPersistent;
 
+import com.yonyou.metadata.mybatis.util.publish.model.data.UFDouble;
 import nc.vo.pub.VOStatus;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -54,6 +56,9 @@ public class InspectionTask4AppController {
 
     @Autowired
     private IBaseQueryBS qrybs;
+
+    @Autowired
+    private IRealTimeDataService rtservice;
 
     // 子表mapper
     @Autowired
@@ -211,6 +216,93 @@ public class InspectionTask4AppController {
                     HttpClientUtil.writeJSON(response, rst);
                 }
             }
+
+
+        } catch (Exception e) {
+            HttpClientUtil.writeJSON(response, e.getMessage());
+        }
+    }
+    @RequestMapping(value = "/cancelunique", method = RequestMethod.POST)
+    public void cancelUnique(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        try {
+            String id = request.getParameter("projectbid");
+
+            List<InspectionTaskBodyVO> list = qrybs.queryVOsBySql("select * from prm_task_b where id='" + id + "'",
+                    InspectionTaskBodyVO.class);
+            if (list == null || list.size() == 0) {
+                ExceptionUtils.wrapBusinessException("数据异常");
+            }
+            InspectionTaskBodyVO body = list.get(0);
+//            if(body.getFactuser()==null){
+                body.setStatus(VOStatus.UPDATED);
+                body.setFactuser(null);
+                body.setFactuser_name(null);
+
+                // 创建单据保存器
+                // 注册子表数据库操作
+                TaskBodyPersistent bodyPersistent = new TaskBodyPersistent(
+                        this.bodyMapper);
+                VOSaveService service = new VOSaveService(bodyPersistent);
+                service.save(new InspectionTaskBodyVO[]{body});
+                String rst = "{\"success\":true}";
+                HttpClientUtil.writeJSON(response, rst);
+
+
+
+        } catch (Exception e) {
+            HttpClientUtil.writeJSON(response, e.getMessage());
+        }
+    }
+
+    @RequestMapping(value = "/realdata", method = RequestMethod.POST)
+    public void getRealData(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        try {
+            String projectid = request.getParameter("projectid");
+            String taskid = request.getParameter("taskid");
+
+            List<InspectionProjectBodyVO> bodylist = qrybs.queryVOsBySql("select * from prm_project_b" +
+                    " where dr=0 and cparentid='" + projectid + "'", InspectionProjectBodyVO.class);
+
+            Map<String,UFDouble> datas = rtservice.queryCurrentTagNoValues(bodylist.stream().map(InspectionProjectBodyVO::getCdatalabel).collect(Collectors.toList()).toArray(new String[0]));
+
+            List<InspectionTaskBodyVO> taskbodys = qrybs.queryVOsBySql("select * from prm_task_b" +
+                    " where dr=0 and pk_task='" + taskid + "' and projectid='"+projectid+"'", InspectionTaskBodyVO.class);
+
+            Map<String,Double>  result = new HashMap<>();
+            for (InspectionTaskBodyVO tsk:taskbodys
+                 ) {
+                for (InspectionProjectBodyVO prjb:
+                     bodylist) {
+                    if(tsk.getProject_contentid().equals(prjb.getCprjcontent()) && tsk.getPrjcontent().equals(prjb.getPrjcontent())){
+                        result.put(tsk.getId(),datas.get(prjb.getCdatalabel()).doubleValue());
+                        break;
+                    }
+                }
+            }
+
+
+//            List<InspectionTaskBodyVO> list = qrybs.queryVOsBySql("select * from prm_task_b where id='" + id + "'",
+//                    InspectionTaskBodyVO.class);
+//            if (list == null || list.size() == 0) {
+//                ExceptionUtils.wrapBusinessException("数据异常");
+//            }
+//            InspectionTaskBodyVO body = list.get(0);
+////            if(body.getFactuser()==null){
+//            body.setStatus(VOStatus.UPDATED);
+//            body.setFactuser(null);
+//            body.setFactuser_name(null);
+//
+//            // 创建单据保存器
+//            // 注册子表数据库操作
+//            TaskBodyPersistent bodyPersistent = new TaskBodyPersistent(
+//                    this.bodyMapper);
+//            VOSaveService service = new VOSaveService(bodyPersistent);
+//            service.save(new InspectionTaskBodyVO[]{body});
+
+            Gson gson = new Gson();
+            String rst = gson.toJson(result);
+            HttpClientUtil.writeJSON(response, rst);
+
 
 
         } catch (Exception e) {
