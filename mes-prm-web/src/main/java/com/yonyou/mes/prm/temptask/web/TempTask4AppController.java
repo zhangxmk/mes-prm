@@ -6,10 +6,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.yonyou.me.utils.exception.ExceptionUtils;
+import com.yonyou.me.utils.service.IBaseQueryBS;
+import com.yonyou.mes.daq.core.datacollect.service.IRealTimeDataService;
+import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBodyVO;
+import com.yonyou.metadata.mybatis.util.publish.model.data.UFDouble;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -49,6 +55,11 @@ public class TempTask4AppController {
     private IInspectionProjectService project_service;
     @Autowired
     private ITempTaskService temp_service;
+    @Autowired
+    private IRealTimeDataService rtservice;
+    @Autowired
+    private IBaseQueryBS qrybs;
+
 
     @RequestMapping(value = "/projectlist", method = RequestMethod.POST)
     public void getProjectData(HttpServletRequest request,
@@ -148,6 +159,30 @@ public class TempTask4AppController {
             result = ExceptionResult.process(ex);
         }
     }
+
+    @RequestMapping(value = "/realdata", method = RequestMethod.POST)
+    public void getRealData(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        try {
+            String projectid = request.getParameter("projectid");
+            List<InspectionProjectBodyVO> pbodys = qrybs.queryVOsBySql("select * from prm_project_b where cparentid='" + projectid + "' and dr=0", InspectionProjectBodyVO.class);
+            Map<String, UFDouble> datas = rtservice.queryCurrentTagNoValues(pbodys.stream().map(InspectionProjectBodyVO::getCdatalabel).collect(Collectors.toList()).toArray(new String[0]));
+            HashMap<String, Double> result = new HashMap<>();
+            pbodys.stream().forEach(e->{
+                if(null!=e.getCdatalabel()&&datas.containsKey(e.getCdatalabel())){
+                    result.put(e.getId(), datas.get(e.getCdatalabel()).doubleValue());
+                }
+            });
+            Gson gson = new Gson();
+            String rst = gson.toJson(result);
+            HttpClientUtil.writeJSON(response, rst);
+
+
+        }catch (Exception e){
+            HttpClientUtil.writeJSON(response, e.getMessage());
+        }
+    }
+
+
 
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
     public @ResponseBody

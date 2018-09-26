@@ -20,6 +20,7 @@
         <result column="CROWNO" property="crowno"/>
         <result column="FACTUSER" property="factuser"/>
         <result column="FACTUSER_NAME" property="factuser_name"/>
+        <result column="EXCEPTIONID" property="exceptionid"/>
         <result column="TENANTID" property="tenantid"/>
         <result column="SYSID" property="sysid"/>
         <result column="ORGID" property="orgid"/>
@@ -38,7 +39,7 @@
         <result column="FVALUETYPE" property="fvaluetype"/>
     </resultMap>
     <sql id="Base_Column_List">
-		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,CROWNO,FACTUSER,FACTUSER_NAME,PRJCONTENT,PROJECT_CONTENT,PROJECT_CONTENTID,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,COMPLETE_TIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
+		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,CROWNO,FACTUSER,FACTUSER_NAME,EXCEPTIONID,PRJCONTENT,PROJECT_CONTENT,PROJECT_CONTENTID,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,COMPLETE_TIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
 	</sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap"
             parameterType="java.lang.String">
@@ -65,7 +66,7 @@
 
     <insert id="insert" parameterType="com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBodyVO">
 		insert into PRM_TASK_B (
-		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PRJCONTENT,PROJECT_CONTENT,PROJECT_CONTENTID,CROWNO,FACTUSER,FACTUSER_NAME,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,COMPLETE_TIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
+		PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PRJCONTENT,PROJECT_CONTENT,PROJECT_CONTENTID,CROWNO,FACTUSER,FACTUSER_NAME,EXCEPTIONID,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,COMPLETE_TIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
 		)
 		values (
 		#{pk_task,jdbcType=VARCHAR},
@@ -81,6 +82,7 @@
 		#{crowno,jdbcType=INTEGER},
 		#{factuser,jdbcType=VARCHAR},
 		#{factuser_name,jdbcType=VARCHAR},
+		#{exceptionid,jdbcType=VARCHAR},
 		#{judge_standard,jdbcType=VARCHAR},
 		#{polling_value,jdbcType=VARCHAR},
 		#{polling_result,jdbcType=INTEGER},		
@@ -106,7 +108,7 @@
 
     <insert id="batchInsert" parameterType="java.util.List">
         insert into PRM_TASK_B (
-        PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PRJCONTENT,PROJECT_CONTENT,PROJECT_CONTENTID,CROWNO,FACTUSER,FACTUSER_NAME,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,COMPLETE_TIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
+        PK_TASK,PLAN_ORDER,PROJECTID,PROJECTID_CODE,PROJECTID_NAME,FACT_ORDER,PROJECT_STATUS,PRJCONTENT,PROJECT_CONTENT,PROJECT_CONTENTID,CROWNO,FACTUSER,FACTUSER_NAME,EXCEPTIONID,JUDGE_STANDARD,POLLING_VALUE,POLLING_RESULT,PIC_URL,ID,TENANTID,SYSID,ORGID,ORGID_NAME,TS,DR,CREATOR,CREATIONTIME,MODIFIER,MODIFIEDTIME,COMPLETE_TIME,CREATOR_NAME,MODIFIER_NAME,ERRDESCRIBE,RDBVALUE
         )
         <foreach collection="list" item="item" index="index" separator="union" open="(" close=")">
             select
@@ -123,10 +125,10 @@
             #{item.crowno,jdbcType=INTEGER},
             #{item.factuser,jdbcType=VARCHAR},
             #{item.factuser_name,jdbcType=VARCHAR},
+            #{item.exceptionid,jdbcType=VARCHAR},
             #{item.judge_standard,jdbcType=VARCHAR},
             #{item.polling_value,jdbcType=VARCHAR},
             #{item.polling_result,jdbcType=INTEGER},
-
             #{item.pic_url,jdbcType=VARCHAR},
             #{item.id,jdbcType=VARCHAR},
             #{item.tenantid,jdbcType=VARCHAR},
@@ -176,6 +178,9 @@
             </if>
             <if test="factuser_name != null">
                 FACTUSER_NAME,
+            </if>
+            <if test="exceptionid != null">
+                EXCEPTIONID,
             </if>
             <if test="project_status != null">
                 PROJECT_STATUS,
@@ -277,6 +282,9 @@
             </if>
             <if test="factuser_name != null">
                 #{factuser_name,jdbcType=VARCHAR},
+            </if>
+            <if test="exceptionid != null">
+                #{exceptionid,jdbcType=VARCHAR},
             </if>
             <if test="project_status != null">
                 #{project_status,jdbcType=INTEGER},
@@ -383,6 +391,9 @@
             <if test="factuser_name != null">
                 FACTUSER_NAME = #{factuser_name,jdbcType=VARCHAR},
             </if>
+            <if test="exceptionid != null">
+                EXCEPTIONID = #{exceptionid,jdbcType=VARCHAR},
+            </if>
             <if test="project_status != null">
                 PROJECT_STATUS = #{project_status,jdbcType=INTEGER},
             </if>
@@ -471,6 +482,7 @@
         CROWNO = #{crowno,jdbcType=INTEGER},
         FACTUSER = #{factuser,jdbcType=VARCHAR},
         FACTUSER_NAME = #{factuser_name,jdbcType=VARCHAR},
+        EXCEPTIONID = #{exceptionid,jdbcType=VARCHAR},
         PROJECT_STATUS = #{project_status,jdbcType=INTEGER},
         PRJCONTENT = #{prjcontent,jdbcType=VARCHAR},
         PROJECT_CONTENT = #{project_content,jdbcType=VARCHAR},
@@ -518,6 +530,7 @@
                 CROWNO = #{item.crowno,jdbcType=INTEGER},
                 FACTUSER = #{item.factuser,jdbcType=VARCHAR},
                 FACTUSER_NAME = #{item.factuser_name,jdbcType=VARCHAR},
+                EXCEPTIONID = #{item.exceptionid,jdbcType=VARCHAR},
                 JUDGE_STANDARD = #{item.judge_standard,jdbcType=VARCHAR},
                 POLLING_VALUE = #{item.polling_value,jdbcType=VARCHAR},
                 POLLING_RESULT = #{item.polling_result,jdbcType=INTEGER},
@@ -675,6 +688,9 @@
                 </if>
                 <if test="item.factuser_name != null">
                     FACTUSER_NAME = #{item.factuser_name,jdbcType=VARCHAR},
+                </if>
+                <if test="item.exceptionid != null">
+                    EXCEPTIONID = #{item.exceptionid,jdbcType=VARCHAR},
                 </if>
                 <if test="item.project_status != null">
                     PROJECT_STATUS = #{item.project_status,jdbcType=INTEGER},

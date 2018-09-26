@@ -310,6 +310,34 @@ public class InspectionTask4AppController {
         }
     }
 
+    @RequestMapping(value = "/checkaem", method = RequestMethod.POST)
+    public void setExceptionID(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        try {
+            String taskbid = request.getParameter("taskbid");
+            String aemid = request.getParameter("aemid");
+            List<InspectionTaskBodyVO> blist = qrybs.queryVOsBySql("select * from prm_task_b where id='" + taskbid + "' and dr=0", InspectionTaskBodyVO.class);
+            if(blist.get(0).getExceptionid()!=null&&!blist.get(0).getExceptionid().equals(aemid)){
+                HttpClientUtil.writeJSON(response, "不允许重复提交异常！");
+                return;
+            }
+
+            InspectionTaskBodyVO body = blist.get(0);
+            body.setExceptionid(aemid);
+            body.setStatus(VOStatus.UPDATED);
+
+            TaskBodyPersistent bodyPersistent = new TaskBodyPersistent(
+                    this.bodyMapper);
+            VOSaveService service = new VOSaveService(bodyPersistent);
+            service.save(new InspectionTaskBodyVO[]{body});
+
+            String rst = "{\"success\":true}";
+            HttpClientUtil.writeJSON(response, rst);
+
+        }catch (Exception e){
+            HttpClientUtil.writeJSON(response, e.getMessage());
+        }
+    }
+
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
     public @ResponseBody Object submit(@RequestBody String param) throws Exception {
     	Result result = new Result();

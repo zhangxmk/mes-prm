@@ -45,6 +45,7 @@ public class InspectionTaskBodyVO extends MeSuperVO{
 	private	Integer fvaluetype;
 	private String factuser;
 	private String factuser_name;
+	private String exceptionid;
 
 	public String getFactuser() {
 		return factuser;
@@ -418,4 +419,11 @@ public class InspectionTaskBodyVO extends MeSuperVO{
 	}
 
 
+	public String getExceptionid() {
+		return exceptionid;
+	}
+
+	public void setExceptionid(String exceptionid) {
+		this.exceptionid = exceptionid;
+	}
 }

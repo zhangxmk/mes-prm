@@ -12,6 +12,11 @@
 			<artifactId>mes-util</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		 <dependency>
+			 <groupId>com.yonyou.mes</groupId>
+			 <artifactId>mes-daq-core</artifactId>
+			 <version>0.0.1-SNAPSHOT</version>
+		 </dependency>
 	</dependencies>
   <modules>
   	<module>mes-prm-core</module>
