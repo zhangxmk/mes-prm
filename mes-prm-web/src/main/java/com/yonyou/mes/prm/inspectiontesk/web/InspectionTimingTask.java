@@ -1,30 +1,15 @@
 package com.yonyou.mes.prm.inspectiontesk.web;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-import com.yonyou.me.constance.StatusConst;
-import com.yonyou.me.entity.MeSuperVO;
-import com.yonyou.me.utils.context.LoginUtil;
-import com.yonyou.me.utils.service.IBaseQueryBS;
-import com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanBillVO;
-import com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanBodyVO;
-import com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanHeadVO;
-import com.yonyou.mes.prm.core.inspectionplan.service.IInspectionPlanService;
-import com.yonyou.mes.prm.core.inspectionproject.entity.InspectionProjectBillVO;
-import com.yonyou.mes.prm.core.inspectionproject.entity.InspectionProjectBodyVO;
-import com.yonyou.mes.prm.core.inspectionproject.entity.InspectionProjectHeadVO;
-import com.yonyou.mes.prm.core.inspectionproject.service.IInspectionProjectService;
-import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBillVO;
-import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBodyVO;
-import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskHeadVO;
 import net.sf.json.JSONObject;
 
 import org.slf4j.Logger;
@@ -38,7 +23,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yonyou.iuap.utils.PropertyUtil;
+import com.yonyou.me.constance.StatusConst;
+import com.yonyou.me.entity.MeSuperVO;
 import com.yonyou.me.http.RestUtils;
+import com.yonyou.me.utils.context.LoginUtil;
+import com.yonyou.me.utils.service.IBaseQueryBS;
+import com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanBillVO;
+import com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanBodyVO;
+import com.yonyou.mes.prm.core.inspectionplan.entity.InspectionPlanHeadVO;
+import com.yonyou.mes.prm.core.inspectionplan.service.IInspectionPlanService;
+import com.yonyou.mes.prm.core.inspectionproject.entity.InspectionProjectBillVO;
+import com.yonyou.mes.prm.core.inspectionproject.entity.InspectionProjectBodyVO;
+import com.yonyou.mes.prm.core.inspectionproject.service.IInspectionProjectService;
+import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBillVO;
+import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskBodyVO;
+import com.yonyou.mes.prm.core.inspectiontask.entity.InspectionTaskHeadVO;
 import com.yonyou.mes.prm.core.inspectiontask.service.IInspectionTaskService;
 
 /**
@@ -69,7 +68,7 @@ public class InspectionTimingTask {
         JSONObject postData = JSONObject.fromObject(data);
         JSONObject dataBody = postData.getJSONObject("data");
 
-
+        logger.debug("data:"+dataBody);
         String planid = "";
         if (dataBody != null && !dataBody.isNullObject()) {
             if (dataBody.has("planid")) {
