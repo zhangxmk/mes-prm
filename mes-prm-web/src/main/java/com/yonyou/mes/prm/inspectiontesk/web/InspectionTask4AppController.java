@@ -311,14 +311,17 @@ public class InspectionTask4AppController {
     }
 
     @RequestMapping(value = "/checkaem", method = RequestMethod.POST)
-    public void setExceptionID(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public @ResponseBody Object setExceptionID(@RequestBody String param) throws Exception {
+        Result result = new Result();
+
         try {
-            String taskbid = request.getParameter("taskbid");
-            String aemid = request.getParameter("aemid");
+            JSONObject head = JSONObject.fromObject(param);
+            String taskbid = head.getString("taskbid");
+            String aemid = head.getString("aemid");
             List<InspectionTaskBodyVO> blist = qrybs.queryVOsBySql("select * from prm_task_b where id='" + taskbid + "' and dr=0", InspectionTaskBodyVO.class);
             if(blist.get(0).getExceptionid()!=null&&!blist.get(0).getExceptionid().equals(aemid)){
-                HttpClientUtil.writeJSON(response, "不允许重复提交异常！");
-                return;
+                result = ExceptionResult.process(new Exception("不能重复提交异常!"));
+                return result;
             }
 
             InspectionTaskBodyVO body = blist.get(0);
@@ -330,11 +333,15 @@ public class InspectionTask4AppController {
             VOSaveService service = new VOSaveService(bodyPersistent);
             service.save(new InspectionTaskBodyVO[]{body});
 
-            String rst = "{\"success\":true}";
-            HttpClientUtil.writeJSON(response, rst);
+            JSONObject rst = new JSONObject();
+            rst.put("success",true);
+           result.setData(rst);
+           return result;
+            //HttpClientUtil.writeJSON(response, rst);
 
         }catch (Exception e){
-            HttpClientUtil.writeJSON(response, e.getMessage());
+            result = ExceptionResult.process(e);
+            return result;
         }
     }
 
