@@ -26,6 +26,17 @@
             <repositories>
                
                 <repository>
+                    <id>gy-snapshots</id>
+                    <name>gy-snapshots</name>
+                    <url>http://maven.yonyoucloud.com/nexus/content/repositories/gy-snapshots</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
                     <id>gy-releases</id>
                     <name>gy-releases</name>
                     <url>http://maven.yonyoucloud.com/nexus/content/repositories/gy-releases</url>
