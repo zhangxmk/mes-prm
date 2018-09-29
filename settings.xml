@@ -49,7 +49,7 @@
                 <repository>
                     <id>iUAP-Snapshots</id>
                     <name>iUAP-Snapshots</name>
-                    <url>http://172.16.51.12:8081/nexus/content/repositories/iUAP-Snapshots/</url>
+                    <url>http://maven.yonyoucloud.com/nexus/content/repositories/iUAP-Snapshots/</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
@@ -60,7 +60,7 @@
                 <repository>
                     <id>iUAP-Stagings</id>
                     <name>iUAP-Stagings</name>
-                    <url>http://172.16.51.12:8081/nexus/content/repositories/iUAP-Stagings/</url>
+                    <url>http://maven.yonyoucloud.com/nexus/content/repositories/iUAP-Stagings/</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
@@ -68,7 +68,7 @@
                 <repository>
                     <id>nexus</id>
                     <name>Nexus</name>
-                    <url>http://172.16.51.12:8081/nexus/content/groups/public</url>
+                    <url>http://maven.yonyoucloud.com/nexus/content/groups/public</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
@@ -79,7 +79,7 @@
                 <repository>
                     <id>iWeb</id>
                     <name>iWeb</name>
-                    <url>http://172.16.51.12:8081/nexus/content/repositories/iWeb/</url>
+                    <url>http://maven.yonyoucloud.com/nexus/content/repositories/iWeb/</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
@@ -90,7 +90,7 @@
                 <repository>
                     <id>central</id>
                     <name>central</name>
-                    <url>http://172.16.51.12:8081/nexus/service/local/repositories/central</url>
+                    <url>http://maven.yonyoucloud.com/nexus/service/local/repositories/central</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
@@ -101,7 +101,7 @@
                 <repository>
                     <id>thirdparty</id>
                     <name>thirdparty</name>
-                    <url>http://172.16.51.12:8081/nexus/content/repositories/thirdparty</url>
+                    <url>http://maven.yonyoucloud.com/nexus/content/repositories/thirdparty</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
@@ -112,7 +112,7 @@
                 <repository>
                     <id>3rdsnapshot</id>
                     <name>3rdsnapshot</name>
-                    <url>http://172.16.51.12:8081/nexus/content/repositories/3rdsnapshot</url>
+                    <url>http://maven.yonyoucloud.com/nexus/content/repositories/3rdsnapshot</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
@@ -145,7 +145,7 @@
                 <repository>
                     <id>snapshots</id>
                     <name>snapshots</name>
-                    <url>http://172.16.51.12:8081/nexus/content/repositories/snapshots</url>
+                    <url>http://maven.yonyoucloud.com/nexus/content/repositories/snapshots</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
@@ -156,7 +156,7 @@
                 <repository>
                     <id>UAP_WEB2.0</id>
                     <name>UAP_WEB2.0</name>
-                    <url>http://172.16.51.12:8081/nexus/content/repositories/UAP_WEB2.0</url>
+                    <url>http://maven.yonyoucloud.com/nexus/content/repositories/UAP_WEB2.0</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
@@ -167,7 +167,7 @@
                 <repository>
                     <id>Nuxeo</id>
                     <name>Nuxeo</name>
-                    <url>http://172.16.51.12:8081/nexus/content/repositories/Nuxeo</url>
+                    <url>http://maven.yonyoucloud.com/nexus/content/repositories/Nuxeo</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
@@ -178,7 +178,7 @@
                 <repository>
                     <id>central-m1</id>
                     <name>central-m1</name>
-                    <url>http://172.16.51.12:8081/nexus/content/shadows/central-m1</url>
+                    <url>http://maven.yonyoucloud.com/nexus/content/shadows/central-m1</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
@@ -189,7 +189,7 @@
                 <repository>
                     <id>iUAP</id>
                     <name>iUAP</name>
-                    <url>http://172.16.51.12:8081/nexus/content/repositories/iUAP/</url>
+                    <url>http://maven.yonyoucloud.com/nexus/content/repositories/iUAP/</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
@@ -213,7 +213,7 @@
                 <pluginRepository>
                     <id>iUAP-Snapshots</id>
                     <name>iUAP-Snapshots</name>
-                    <url>http://172.16.51.12:8081/nexus/content/repositories/iUAP-Snapshots/</url>
+                    <url>http://maven.yonyoucloud.com/nexus/content/repositories/iUAP-Snapshots/</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
@@ -224,7 +224,7 @@
                 <pluginRepository>
                     <id>nexus</id>
                     <name>Nexus</name>
-                    <url>http://172.16.51.12:8081/nexus/content/groups/public</url>
+                    <url>http://maven.yonyoucloud.com/nexus/content/groups/public</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
@@ -235,7 +235,7 @@
                 <pluginRepository>
                     <id>iWeb</id>
                     <name>iWeb</name>
-                    <url>http://172.16.51.12:8081/nexus/content/repositories/iWeb/</url>
+                    <url>http://maven.yonyoucloud.com/nexus/content/repositories/iWeb/</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
@@ -246,7 +246,7 @@
                 <pluginRepository>
                     <id>central</id>
                     <name>central</name>
-                    <url>http://172.16.51.12:8081/nexus/service/local/repositories/central</url>
+                    <url>http://maven.yonyoucloud.com/nexus/service/local/repositories/central</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
@@ -257,7 +257,7 @@
                 <!--	<pluginRepository>
                             <id>UAP_WEB2.0</id>
                             <name>UAP_WEB2.0</name>
-                            <url>http://172.16.51.12:8081/nexus/content/repositories/UAP_WEB2.0</url>
+                            <url>http://maven.yonyoucloud.com/nexus/content/repositories/UAP_WEB2.0</url>
                             <releases>
                             <enabled>true</enabled>
                             </releases>
@@ -268,7 +268,7 @@
                 <pluginRepository>
                     <id>thirdparty</id>
                     <name>thirdparty</name>
-                    <url>http://172.16.51.12:8081/nexus/repositories/thirdparty</url>
+                    <url>http://maven.yonyoucloud.com/nexus/repositories/thirdparty</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
@@ -279,7 +279,7 @@
                 <pluginRepository>
                     <id>3rdsnapshot</id>
                     <name>3rdsnapshot</name>
-                    <url>http://172.16.51.12:8081/nexus/repositories/3rdsnapshot</url>
+                    <url>http://maven.yonyoucloud.com/nexus/repositories/3rdsnapshot</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
@@ -290,7 +290,7 @@
                 <pluginRepository>
                     <id>releases</id>
                     <name>releases</name>
-                    <url>http://172.16.51.12:8081/nexus/repositories/releases</url>
+                    <url>http://maven.yonyoucloud.com/nexus/repositories/releases</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
@@ -301,7 +301,7 @@
                 <pluginRepository>
                     <id>snapshots</id>
                     <name>snapshots</name>
-                    <url>http://172.16.51.12:8081/nexus/repositories/snapshots</url>
+                    <url>http://maven.yonyoucloud.com/nexus/repositories/snapshots</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
@@ -312,7 +312,7 @@
                 <pluginRepository>
                     <id>Nuxeo</id>
                     <name>Nuxeo</name>
-                    <url>http://172.16.51.12:8081/nexus/content/repositories/Nuxeo</url>
+                    <url>http://maven.yonyoucloud.com/nexus/content/repositories/Nuxeo</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
@@ -323,7 +323,7 @@
                 <pluginRepository>
                     <id>central-m1</id>
                     <name>central-m1</name>
-                    <url>http://172.16.51.12:8081/nexus/content/shadows/central-m1</url>
+                    <url>http://maven.yonyoucloud.com/nexus/content/shadows/central-m1</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
